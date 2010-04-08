@@ -1,10 +1,6 @@
 = Overview
 
-The {Google Visualization API}[http://code.google.com/apis/visualization/documentation/] enable you to create interactive charts and graphs easily, something that's ever so useful for any dashboard design.
-
-Just write some JavaScript, and you will be able to embed a visualization in your web page.
-
-This Ruby library, GoogleVisualr, is a wrapper around the Google Visualization API and allows you to create the same visualizations with just pure Ruby;
+This Ruby library, GoogleVisualr, is a wrapper around the {Google Visualization API}[http://code.google.com/apis/visualization/documentation/] and allows you to create the same visualizations with just pure Ruby;
 you don't have to write any JavaScript at all.
 
 Good for any Ruby on Rails setup whereby you prefer to work your logic in models or controllers.
