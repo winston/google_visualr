@@ -6,13 +6,13 @@ This Ruby library, GoogleVisualr, is a wrapper around the Google Visualization A
 
 == The Gist
 
-In your model or controller, write Ruby code to create your visualization (e.g. Area Chart, Bar Chart, even Spark Lines etc). Configure your visualization with all the options as listed in Google Visualization API Docs. E.g. {Area Chart's configuration options}[link:http://code.google.com/apis/visualization/documentation/gallery/areachart.html#Configuration_Options]. In your view, just call a visualization.render(div_id) method that will magically generate and insert JavaScript into the final HTML output. You get your visualization, and you didn't write any JavaScript!
+In your model or controller, write Ruby code to create your visualization (e.g. Area Chart, Bar Chart, even Spark Lines etc). Configure your visualization with all the options as listed in Google Visualization API Docs. E.g. {Area Chart's configuration options}[http://code.google.com/apis/visualization/documentation/gallery/areachart.html#Configuration_Options]. In your view, just call a visualization.render(div_id) method that will magically generate and insert JavaScript into the final HTML output. You get your visualization, and you didn't write any JavaScript!
 
 == Limitations
 
 Do note that GoogleVisualr is not a 100% complete wrapper for the Google Visualization API. These are not implemented for sake of simplicity:
-* JavaScript Methods for use after a visualization has been rendered in a view. E.g. {Area Chart's methods}[link:http://code.google.com/apis/visualization/documentation/gallery/areachart.html#Methods].
-* JavaScript Events for use after a visualization has been rendered in a view. E.g. {Area Chart's events}[link:http://code.google.com/apis/visualization/documentation/gallery/areachart.html#Events].
+* JavaScript Methods for use after a visualization has been rendered in a view. E.g. {Area Chart's methods}[http://code.google.com/apis/visualization/documentation/gallery/areachart.html#Methods].
+* JavaScript Events for use after a visualization has been rendered in a view. E.g. {Area Chart's events}[http://code.google.com/apis/visualization/documentation/gallery/areachart.html#Events].
 * Visualizations not created by Google, and a few image-only charts.
 
 = Install
@@ -20,7 +20,7 @@ Do note that GoogleVisualr is not a 100% complete wrapper for the Google Visuali
 Just install the GitHub repository into your app/vendor/plugin folder.
 
   > rails my_app; cd my_app;
-  > script/plugin install 
+  > script/plugin install git@github.com:winston/google_visualr.git
 
 = Basics
 
@@ -66,13 +66,15 @@ Just install the GitHub repository into your app/vendor/plugin folder.
 
 = Support
 
-TBF
+Please submit all feedback, bugs and feature-requests on {GitHub Issues Tracker}[http://github.com/winston/google_visualr/issues].
+
+Please also feel free to Git clone the project, and improve it further!
 
 = Author
 
 GoogleVisualr is maintained by {Winston Teo}[mailto:winstonyw+googlevisualr@gmail.com], and his Ninja Penguin.
 
-Who is Winston Teo? Find out more on {WinstonYW}[link:http://www.winstonyw.com], {LinkedIn}[http://sg.linkedin.com/in/winstonyw], or {follow Winston on Twitter}[http://www.twitter.com/winstonyw].
+Who is Winston Teo? Find out more on {WinstonYW}[http://www.winstonyw.com], {LinkedIn}[http://sg.linkedin.com/in/winstonyw], or {follow Winston on Twitter}[http://www.twitter.com/winstonyw].
 
 = License
 
