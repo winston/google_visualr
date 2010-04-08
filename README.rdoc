@@ -1,12 +1,18 @@
 = Overview
 
-The Google Visualization API enable you to create interactive charts and graphs easily, something that's ever so useful for any dashboard design. Just write some JavaScript, and you will be able to embed a visualization in your web page.
+The Google Visualization API enable you to create interactive charts and graphs easily, something that's ever so useful for any dashboard design.
+Just write some JavaScript, and you will be able to embed a visualization in your web page.
 
-This Ruby library, GoogleVisualr, is a wrapper around the Google Visualization API and allows you to create the same visualizations with just Ruby; you don't have to write any JavaScript at all. Good for any Ruby on Rails setup whereby you prefer to work your logic in models or controllers. Please refer to the visualization examples for a complete list of visualizations that you can create with GoogleVisualr.
+This Ruby library, GoogleVisualr, is a wrapper around the Google Visualization API and allows you to create the same visualizations with just Ruby;
+you don't have to write any JavaScript at all. Good for any Ruby on Rails setup whereby you prefer to work your logic in models or controllers.
+Please refer to the visualization examples for a complete list of visualizations that you can create with GoogleVisualr.
 
 == The Gist
 
-In your model or controller, write Ruby code to create your visualization (e.g. Area Chart, Bar Chart, even Spark Lines etc). Configure your visualization with all the options as listed in Google Visualization API Docs. E.g. {Area Chart's configuration options}[http://code.google.com/apis/visualization/documentation/gallery/areachart.html#Configuration_Options]. In your view, just call a visualization.render(div_id) method that will magically generate and insert JavaScript into the final HTML output. You get your visualization, and you didn't write any JavaScript!
+* In your model or controller, write Ruby code to create your visualization (e.g. Area Chart, Bar Chart, even Spark Lines etc).
+* Configure your visualization with all the options as listed in Google Visualization API Docs. E.g. {Area Chart's configuration options}[http://code.google.com/apis/visualization/documentation/gallery/areachart.html#Configuration_Options].
+* In your view, just call a visualization.render(div_id) method that will magically generate and insert JavaScript into the final HTML output.
+* You get your visualization, and you didn't write any JavaScript!
 
 == Limitations
 
@@ -66,9 +72,9 @@ Just install the GitHub repository into your app/vendor/plugin folder.
 
 = Support
 
-Please submit all feedback, bugs and feature-requests on {GitHub Issues Tracker}[http://github.com/winston/google_visualr/issues].
+Please submit all feedback, bugs and feature-requests to {GitHub Issues Tracker}[http://github.com/winston/google_visualr/issues].
 
-Please also feel free to Git clone the project, and improve it further!
+Please also feel free to clone/fork the project, and improve it further!
 
 = Author
 
