@@ -5,7 +5,7 @@ you don't have to write any JavaScript at all.
 
 Good for any Ruby on Rails setup whereby you prefer to work your logic in models or controllers.
 
-Please refer to the visualization examples for a complete list of visualizations that you can create with GoogleVisualr.
+Please refer to the {GoogleVisualr reference site}[http://googlevisualr.heroku.com/] for a complete list of visualizations that you can create with GoogleVisualr.
 
 == The Gist
 
@@ -32,7 +32,7 @@ Just install the GitHub repository into your app/vendor/plugin folder.
 
 This section describes a basic implementation of the GoogleVisualr::AreaChart class.
 
-Please review the Docs for detailed documentation and advanced implementation of constructors and methods.
+Please review the {Docs}[http://googlevisualr.heroku.com/docs] for detailed documentation and advanced implementation of constructors and methods.
 ---
 
 In your Rails layout, load Google Ajax API in the head tag, at the very top.
