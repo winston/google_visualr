@@ -26,11 +26,12 @@ module GoogleVisualr
     #   cols is an array of objects describing the ID and type of each column. Each property is an object with the following properties (case-sensitive):
     #
     #   * type            [Required] The data type of the data in the column. Supports the following string values:
-    #     - 'string'    : String value. Example values: v:'hello'
-    #     - 'number'    : Number value. Example values: v:7 , v:3.14, v:-55
-    #     - 'date'      : Date object, with the time truncated. Example values: v:Date.parse('2010-01-01')
-    #     - 'datetime'  : Date object including the time. Example values: v:Date.parse('2010-01-01 14:20:25')
-    #     - 'boolean'   : Boolean value ('true' or 'false'). Example values: v: true
+    #     - 'string'    : String value. Example values: v:'foo', :v:'bar'
+    #     - 'number'    : Number value. Example values: v:7, v:3.14, v:-55
+    #     - 'boolean'   : Boolean value ('true' or 'false'). Example values: v:true, v:false
+    #     - 'date'      : Date object, with the time truncated. Example value: v:Date.parse('2010-01-01')
+    #     - 'datetime'  : DateTime/Time object, time inclusive. Example value: v:DateTime.parse('2010-01-01 14:20:25')
+    #     - 'timeofday' : Array of 3 numbers or 4 numbers, [Hour,Minute,Second,(Optional) Milliseconds]. Example value: v:[8, 15, 0]
     #   * label           [Optional] A string value that some visualizations display for this column. Example: label:'Height'
     #   * id              [Optional] A unique (basic alphanumeric) string ID of the column. Be careful not to choose a JavaScript keyword. Example: id:'col_1'
     #
