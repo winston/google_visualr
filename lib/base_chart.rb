@@ -170,7 +170,7 @@ module GoogleVisualr
     def format(*formatters)
 
       @formatters ||= Array.new
-      @formatters  << formatters
+      @formatters  += formatters
 
     end
 
