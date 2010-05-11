@@ -20,11 +20,11 @@ module GoogleVisualr
     def script(options)
 
       script   = "var formatter = new google.visualization.#{options[:formatter]}("
-      script  +=  options[:formatter_options]
-      script  += ");"
+      script  <<  options[:formatter_options]
+      script  << ");"
 
       @columns.each do |column|
-       script += "formatter.format(chart_data, #{column});"
+       script << "formatter.format(chart_data, #{column});"
       end
 
       return script
@@ -124,15 +124,15 @@ module GoogleVisualr
       script  = "var formatter = new google.visualization.ColorFormat();"
 
       @ranges.each do |r|
-        script += "formatter.addRange( #{r[:from]}, #{r[:to]}, '#{r[:color]}', '#{r[:bgcolor]}' );"
+        script << "formatter.addRange( #{r[:from]}, #{r[:to]}, '#{r[:color]}', '#{r[:bgcolor]}' );"
       end
 
       @gradient_ranges.each do |r|
-        script += "formatter.addGradientRange( #{r[:from]}, #{r[:to]}, '#{r[:color]}', '#{r[:fromBgColor]}', '#{r[:toBgColor]}' );"
+        script << "formatter.addGradientRange( #{r[:from]}, #{r[:to]}, '#{r[:color]}', '#{r[:fromBgColor]}', '#{r[:toBgColor]}' );"
       end
 
       @columns.each do |column|
-        script += "formatter.format(chart_data, #{column});"
+        script << "formatter.format(chart_data, #{column});"
       end
 
       return script

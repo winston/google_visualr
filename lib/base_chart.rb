@@ -1,4 +1,4 @@
-module GoogleVisualr 
+module GoogleVisualr
 
   class BaseChart
 
@@ -78,7 +78,7 @@ module GoogleVisualr
     #   * label           [Optional] A string value that some visualizations display for this column. Example: label:'Height'
     #   * id              [Optional] A unique (basic alphanumeric) string ID of the column. Be careful not to choose a JavaScript keyword. Example: id:'col_1'
     def add_column (type, label="", id="")
-      @chart_data += "chart_data.addColumn('#{type}', '#{label}', '#{id}');"
+      @chart_data << "chart_data.addColumn('#{type}', '#{label}', '#{id}');"
     end
 
     # Adds multiple columns to the visualization.
@@ -104,7 +104,7 @@ module GoogleVisualr
     def add_row(row)
 
       if row.empty?
-        @chart_data += "chart_data.addRow();"  # Empty Row
+        @chart_data << "chart_data.addRow();"  # Empty Row
       else
 
         attributes = Array.new
@@ -112,7 +112,7 @@ module GoogleVisualr
           attributes << add_row_cell(cell)
         end
 
-        @chart_data += "chart_data.addRow( [" +  attributes.join(",")  + "] );"
+        @chart_data << "chart_data.addRow( [" +  attributes.join(",")  + "] );"
 
       end
 
@@ -131,7 +131,7 @@ module GoogleVisualr
           add_row(row)
         end
       else
-        @chart_data += "chart_data.addRows(#{array_or_num});"
+        @chart_data << "chart_data.addRows(#{array_or_num});"
       end
 
     end
@@ -145,11 +145,11 @@ module GoogleVisualr
     #   * formatted_value [Optional] A string version of value, formatted strictly for display only. If omitted, a string version of value will be used.
     def set_cell  (row_index, column_index, value, formatted_value=nil, properties=nil)
 
-      @chart_data += "chart_data.setCell("
-      @chart_data += "#{row_index}, #{column_index}, #{typecast(value)}"
-      @chart_data += ", '#{formatted_value}'" unless formatted_value.blank?
-      @chart_data += ", '#{properties}'"      unless properties.blank?
-      @chart_data += ");"
+      @chart_data << "chart_data.setCell("
+      @chart_data << "#{row_index}, #{column_index}, #{typecast(value)}"
+      @chart_data << ", '#{formatted_value}'" unless formatted_value.blank?
+      @chart_data << ", '#{properties}'"      unless properties.blank?
+      @chart_data << ");"
 
     end
 
@@ -160,7 +160,7 @@ module GoogleVisualr
     #   * column_index    [Required] A number greater than or equal to zero, but smaller than the total number of columns.
     #   * value           [Required] The cell value. The data type should match the column data type.
     def set_value (row_index, column_index, value)
-      @chart_data += "chart_data.setCell(#{row_index}, #{column_index}, #{typecast(value)});"
+      @chart_data << "chart_data.setCell(#{row_index}, #{column_index}, #{typecast(value)});"
     end
 
     # Applies one or more formatters to the visualization to format the columns as specified by the formatter/s.
@@ -170,7 +170,7 @@ module GoogleVisualr
     def format(*formatters)
 
       @formatters ||= Array.new
-      @formatters  += formatters
+      @formatters  << formatters
 
     end
 
@@ -181,18 +181,22 @@ module GoogleVisualr
     #
     # Note: This is the super method.
     def render(options)
-      [
-        "",
-        "<script type='text/javascript'>",
-        "  google.load('visualization','1', {packages: ['#{options[:package].downcase}'], callback: function() {",
-        "    #{@chart_data}",
-        @formatters ? @formatters.collect{|formatter| formatter.script} : [],
-        "    var chart = new google.visualization.#{options[:package]}(document.getElementById('#{options[:element_id]}'));",
-        "    chart.draw(chart_data, #{options[:chart_style]});",
-        "  }});",
-        "</script>",
-        ""
-      ].flatten.join("\n")
+
+      script  = "\n<script type='text/javascript'>"
+      script << "\n  google.load('visualization','1', {packages: ['#{options[:package].downcase}'], callback: function() {"
+      script << "\n    #{@chart_data}"
+      if @formatters
+        @formatters.each do |formatter|
+          script << formatter.script
+        end
+      end
+      script << "\n    var chart = new google.visualization.#{options[:package]}(document.getElementById('#{options[:element_id]}'));"
+      script << "\n    chart.draw(chart_data, #{options[:chart_style]});"
+      script << "\n  }});"
+      script << "\n</script>"
+
+      return script
+
     end
 
     private
