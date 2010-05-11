@@ -1,4 +1,4 @@
-module GoogleVisualr
+module GoogleVisualr 
 
   class BaseChart
 
@@ -181,22 +181,18 @@ module GoogleVisualr
     #
     # Note: This is the super method.
     def render(options)
-
-      script  = "\n<script type='text/javascript'>"
-      script += "\n  google.load('visualization','1', {packages: ['#{options[:package].downcase}']});"
-      script += "\n  google.setOnLoadCallback(GoogleVisualrChart);"
-      script += "\n  function GoogleVisualrChart() {"
-      script += "\n    #{@chart_data}"
-      if @formatters
-        @formatters.each do |formatter|
-          script += formatter.script
-        end
-      end
-      script += "\n    var chart = new google.visualization.#{options[:package]}(document.getElementById('#{options[:element_id]}'));"
-      script += "\n    chart.draw(chart_data, #{options[:chart_style]});"
-      script += "\n  }"
-      script += "\n</script>"
-
+      [
+        "",
+        "<script type='text/javascript'>",
+        "  google.load('visualization','1', {packages: ['#{options[:package].downcase}'], callback: function() {",
+        "    #{@chart_data}",
+        @formatters ? @formatters.collect{|formatter| formatter.script} : [],
+        "    var chart = new google.visualization.#{options[:package]}(document.getElementById('#{options[:element_id]}'));",
+        "    chart.draw(chart_data, #{options[:chart_style]});",
+        "  }});",
+        "</script>",
+        ""
+      ].flatten.join("\n")
     end
 
     private
