@@ -238,7 +238,7 @@ module GoogleVisualr
         when value.is_a?(DateTime)  ||  value.is_a?(Time)
           return "new Date(#{value.year}, #{value.month-1}, #{value.day}, #{value.hour}, #{value.min}, #{value.sec})"
         when value.is_a?(Array)
-          return "[#{value.join(',')}]"
+          return "[" + value.collect { |item| typecast(item) }.join(",") + "]"
         else
           return value
       end
@@ -252,7 +252,7 @@ module GoogleVisualr
         next if instance_variable == "@chart_data" || instance_variable == "@formatters"
         key         = instance_variable.gsub("@", "")
         value       = instance_variable_get(instance_variable)
-        attribute   = key + ":" + (value.is_a?(String) ? "'" + value + "'" : value.to_s)
+        attribute   = "#{key}:#{typecast(value)}"
         attributes << attribute
       end
 
