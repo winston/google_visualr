@@ -160,7 +160,9 @@ module GoogleVisualr
     #   * column_index    [Required] A number greater than or equal to zero, but smaller than the total number of columns.
     #   * value           [Required] The cell value. The data type should match the column data type.
     def set_value (row_index, column_index, value)
+
       @chart_data << "chart_data.setCell(#{row_index}, #{column_index}, #{typecast(value)});"
+
     end
 
     # Applies one or more formatters to the visualization to format the columns as specified by the formatter/s.
@@ -171,6 +173,18 @@ module GoogleVisualr
 
       @formatters ||= Array.new
       @formatters  += formatters
+
+    end
+
+    # Sets chart configuration options with a hash.
+    #
+    # Parameters:
+    #  *options            [Required] A hash of configuration options.
+    def set_options(options)
+
+      options.each_pair do | key, value |
+        send "#{key}=", value
+      end
 
     end
 
@@ -261,7 +275,9 @@ module GoogleVisualr
     end
 
     def escape_single_quotes(str)
+
       str.gsub(/[']/, '\\\\\'')
+
     end
 
   end
