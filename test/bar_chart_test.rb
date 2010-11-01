@@ -1,6 +1,7 @@
+require 'test/unit'
 require File.dirname(__FILE__) + '/../lib/base_chart.rb'
 require File.dirname(__FILE__) + '/../lib/bar_chart.rb'
-require 'test/unit'
+
 class BarChartTest < Test::Unit::TestCase	
 	def test_bar_chart
 		@chart = GoogleVisualr::BarChart.new
@@ -26,16 +27,14 @@ class BarChartTest < Test::Unit::TestCase
 			@chart.send "#{key}=", value
 		end
 	
-		puts @chart.render('chart')
-
 		expected_render = "\n<script type='text/javascript'>
-  google.load('visualization','1', {packages: ['barchart'], callback: function() {
+  google.load('visualization','1', {packages: ['corechart'], callback: function() {
     var chart_data = new google.visualization.DataTable();chart_data.addColumn('string', 'Year', '');chart_data.addColumn('number', 'Sales', '');chart_data.addColumn('number', 'Expenses', '');chart_data.addRows(4);chart_data.setCell(0, 0, '2004');chart_data.setCell(0, 1, 1000);chart_data.setCell(0, 2, 400);chart_data.setCell(1, 0, '2005');chart_data.setCell(1, 1, 1170);chart_data.setCell(1, 2, 460);chart_data.setCell(2, 0, '2006');chart_data.setCell(2, 1, 1500);chart_data.setCell(2, 2, 660);chart_data.setCell(3, 0, '2007');chart_data.setCell(3, 1, 1030);chart_data.setCell(3, 2, 540);
     var chart = new google.visualization.BarChart(document.getElementById('chart'));
     chart.draw(chart_data, {width:400,height:240,title:'Company Performance'});
   }});
 </script>"
 	
-		assert_equal @chart.render('chart'), expected_render
+		assert_equal @chart.render('chart'), expected_render, "There was a discrepency between the actual and expected render"
 	end
 end

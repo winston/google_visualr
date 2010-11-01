@@ -208,7 +208,7 @@ module GoogleVisualr
     #
     # Note: This is the super method.
     def render(options)
-			corecharts = ['area', 'bar', 'column', 'line', 'pie', 'scater']
+			corecharts = ['areachart', 'barchart', 'columnchart', 'linechart', 'piechart', 'scatterchart']
 
       script  = "\n<script type='text/javascript'>"
 			if corecharts.index(options[:package].downcase) != nil
