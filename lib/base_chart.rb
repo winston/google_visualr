@@ -1,4 +1,17 @@
 module GoogleVisualr
+	class TextStyle
+		attr_accessor :color
+		attr_accessor :fontName
+		attr_accessor :fontSize
+		
+		def to_s
+			attributes = Array.new
+			instance_variable_names.each do |instance_variable|
+				attributes << "#{key}:#{value}"
+			end
+			return "{#{attributes.join(',')}}"
+		end
+	end
 
   class BaseChart
 
@@ -195,9 +208,14 @@ module GoogleVisualr
     #
     # Note: This is the super method.
     def render(options)
+			corecharts = ['area', 'bar', 'column', 'line', 'pie', 'scater']
 
       script  = "\n<script type='text/javascript'>"
-      script << "\n  google.load('visualization','1', {packages: ['#{options[:package].downcase}'], callback: function() {"
+			if baseCharts.index(options[:package].downcase) != nil
+				script << "\n  google.load('visualization','1', {packages: ['corechart'], callback: function() {"
+			else
+      	script << "\n  google.load('visualization','1', {packages: ['#{options[:package].downcase}'], callback: function() {"
+      end
       script << "\n    #{@chart_data}"
       if @formatters
         @formatters.each do |formatter|
@@ -262,13 +280,30 @@ module GoogleVisualr
     def collect_parameters
 
       attributes = Array.new
+      hAxisAttributes = Array.new
+      vAxisAttributes = Array.new
       instance_variable_names.each do |instance_variable|
         next if instance_variable == "@chart_data" || instance_variable == "@formatters"
+        # Ignore the @hAxis and @vAxis variables so that we can collect them into their own objects
         key         = instance_variable.gsub("@", "")
         value       = instance_variable_get(instance_variable)
         attribute   = "#{key}:#{typecast(value)}"
-        attributes << attribute
+        if instance_variable.index('hAxis') == 0 
+       		hAxisAttributes << instance_variable 
+				elsif instance_variable.index('vAxis') == 0
+					vAxisAttributes << instance_variable
+				else
+					attributes << attribute
+				end
       end
+			if not hAxisAttributes.empty?
+				hAxis = "{" + hAxisAttributes.join(",") + "}"
+				attriubtes << hAxis
+			end
+			if not vAxisAttributes.empty?
+				vAxis = "{" + vAxisAttributes.join(",") + "}"
+				attributes << vAxis
+			end
 
       return "{" + attributes.join(",") + "}"
 
