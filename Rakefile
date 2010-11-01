@@ -1,16 +1,22 @@
 # ser23
-require 'rake'
-require 'test/unit'
+require 'rake/testtask'
 
-require File.dirname(__FILE__) + '/lib/base_chart'
-require File.dirname(__FILE__) + '/lib/bar_chart'
+def scope(path)
+	File.join(File.dirname(__FILE__), path)
+end
+
+require scope('/lib/base_chart')
 
 
-task :default
-class BarChartTest < Test::Unit::TestCase
-	
-	def new_bar_chart
-		@chart = GoogleVisualr::BarChart.new
-		assert(@chart, 'The chart was not successfully created!')
+# --- Default: Testing ---
+task :default => :test
+
+desc "Run the GoogleVisualr Test Suite"
+task :test do
+
+	Rake::TestTask.new do |t|
+		test_files = FileList[scope('test/**/*_test.rb')]
+		t.test_files = test_files
+		t.verbose = true
 	end
 end

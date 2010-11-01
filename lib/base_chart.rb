@@ -12,7 +12,7 @@ module GoogleVisualr
 			return "{#{attributes.join(',')}}"
 		end
 	end
-
+  
   class BaseChart
 
     attr_accessor :chart_data
@@ -211,7 +211,7 @@ module GoogleVisualr
 			corecharts = ['area', 'bar', 'column', 'line', 'pie', 'scater']
 
       script  = "\n<script type='text/javascript'>"
-			if baseCharts.index(options[:package].downcase) != nil
+			if corecharts.index(options[:package].downcase) != nil
 				script << "\n  google.load('visualization','1', {packages: ['corechart'], callback: function() {"
 			else
       	script << "\n  google.load('visualization','1', {packages: ['#{options[:package].downcase}'], callback: function() {"
@@ -276,6 +276,11 @@ module GoogleVisualr
       end
 
     end
+
+		# This is part of Rails, but adding here so that tests can be run without loading the whole rails env
+		def instance_variable_names
+			instance_variables.map { |var| var.to_s }
+		end
 
     def collect_parameters
 
