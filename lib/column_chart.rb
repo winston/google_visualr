@@ -6,34 +6,36 @@ module GoogleVisualr
     attr_accessor :element_id
 
     # http://code.google.com/apis/visualization/documentation/gallery/columnchart.html#Configuration_Options
-    attr_accessor :axisColor
-    attr_accessor :axisBackgroundColor
-    attr_accessor :axisFontSize
     attr_accessor :backgroundColor
-    attr_accessor :borderColor
     attr_accessor :colors
     attr_accessor :enableTooltip
     attr_accessor :focusBorderColor
+    attr_accessor :fontSize
+    attr_accessor :fontName
+    attr_accessor :hAxisDirection
+    attr_accessor :hAxisTextStyle
+    attr_accessor :hAxisSlantedText
+    attr_accessor :hAxisSlantedTextAngle
+    attr_accessor :hAxisMaxAlternation
+    attr_accessor :hAxisShowTextEvery
     attr_accessor :height
-    attr_accessor :is3D
     attr_accessor :isStacked
     attr_accessor :legend
-    attr_accessor :legendBackgroundColor
-    attr_accessor :legendFontSize
-    attr_accessor :legendTextColor
-    attr_accessor :logScale
-    attr_accessor :max
-    attr_accessor :min
-    attr_accessor :reverseAxis
+    attr_accessor :legendTextStyle
+    attr_accessor :reverseCategories
     attr_accessor :showCategories
     attr_accessor :title
-    attr_accessor :titleX
-    attr_accessor :titleY
-    attr_accessor :titleColor
-    attr_accessor :titleFontSize
-    attr_accessor :tooltipFontSize
-    attr_accessor :tooltipHeight
-    attr_accessor :tooltipWidth
+    attr_accessor :titleTextStyle
+    attr_accessor :tooltipTextStyle
+    attr_accessor :vAxisBaseline
+    attr_accessor :vAxisBaselineColor
+    attr_accessor :vAxisDirection
+    attr_accessor :vAxisLogScale
+    attr_accessor :vAxisTextStyle
+    attr_accessor :vAxisTitle
+    attr_accessor :vAxisTitleTextStyle
+    attr_accessor :vAxisMaxValue
+    attr_accessor :vAxisMinValue
     attr_accessor :width
 
     def render (element_id)

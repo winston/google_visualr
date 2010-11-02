@@ -1,6 +1,4 @@
-require 'test/unit'
 require File.dirname(__FILE__) + '/test_helper.rb'
-require File.dirname(__FILE__) + '/../lib/base_chart.rb'
 require File.dirname(__FILE__) + '/../lib/bar_chart.rb'
 
 class BarChartTest < Test::Unit::TestCase	
