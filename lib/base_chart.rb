@@ -1,17 +1,37 @@
 module GoogleVisualr
-	class TextStyle
-		attr_accessor :color
-		attr_accessor :fontName
-		attr_accessor :fontSize
-		
-		def to_s
-			attributes = Array.new
-			instance_variable_names.each do |instance_variable|
-				attributes << "#{key}:#{value}"
-			end
-			return "{#{attributes.join(',')}}"
+
+	# If the column type is 'string'    , the value should be a string.
+	# If the column type is 'number'    , the value should be a number.
+	# If the column type is 'boolean'   , the value should be a boolean.
+	# If the column type is 'date'      , the value should be a Date object.
+	# If the column type is 'datetime'  , the value should be a DateTime or Time object.
+	# If the column type is 'timeofday' , the value should be an array of three or four numbers: [hour, minute, second, optional milliseconds].
+	# NOTE: Making this self is usefull, but seems really shady! Check on that
+	def self.typecast(value)
+
+		case
+			when value.is_a?(String)
+				return "'#{GoogleVisualr::escape_single_quotes(value)}'"
+			when value.is_a?(Integer)   || value.is_a?(Float)
+				return value
+			when value.is_a?(TrueClass) || value.is_a?(FalseClass)
+				return "#{value}"
+			when value.is_a?(Date)
+				return "new Date(#{value.year}, #{value.month-1}, #{value.day})"
+			when value.is_a?(DateTime)  ||  value.is_a?(Time)
+				return "new Date(#{value.year}, #{value.month-1}, #{value.day}, #{value.hour}, #{value.min}, #{value.sec})"
+			when value.is_a?(Array)
+				return "[" + value.collect { |item| typecast(item) }.join(",") + "]"
+			else
+				return value
 		end
+
 	end
+
+	def self.escape_single_quotes(str)
+		str.gsub(/[']/, '\\\\\'')
+	end
+	
   
   class BaseChart
 
@@ -159,7 +179,7 @@ module GoogleVisualr
     def set_cell  (row_index, column_index, value, formatted_value=nil, properties=nil)
 
       @chart_data << "chart_data.setCell("
-      @chart_data << "#{row_index}, #{column_index}, #{typecast(value)}"
+      @chart_data << "#{row_index}, #{column_index}, #{GoogleVisualr::typecast(value)}"
       @chart_data << ", '#{formatted_value}'" unless formatted_value.blank?
       @chart_data << ", '#{properties}'"      unless properties.blank?
       @chart_data << ");"
@@ -174,7 +194,7 @@ module GoogleVisualr
     #   * value           [Required] The cell value. The data type should match the column data type.
     def set_value (row_index, column_index, value)
 
-      @chart_data << "chart_data.setCell(#{row_index}, #{column_index}, #{typecast(value)});"
+      @chart_data << "chart_data.setCell(#{row_index}, #{column_index}, #{GoogleVisualr::typecast(value)});"
 
     end
 
@@ -239,48 +259,16 @@ module GoogleVisualr
 
         attributes = Array.new
         cell.each_pair do |key, value|
-          attributes << "#{key}: #{typecast(value)}"
+          attributes << "#{key}: #{GoogleVisualr::typecast(value)}"
         end
 
         return "{" + attributes.join(",") + "}"
 
       else
-        return "#{typecast(cell)}"
+        return "#{GoogleVisualr::typecast(cell)}"
       end
 
     end
-
-    # If the column type is 'string'    , the value should be a string.
-    # If the column type is 'number'    , the value should be a number.
-    # If the column type is 'boolean'   , the value should be a boolean.
-    # If the column type is 'date'      , the value should be a Date object.
-    # If the column type is 'datetime'  , the value should be a DateTime or Time object.
-    # If the column type is 'timeofday' , the value should be an array of three or four numbers: [hour, minute, second, optional milliseconds].
-    def typecast(value)
-
-      case
-        when value.is_a?(String)
-          return "'#{escape_single_quotes(value)}'"
-        when value.is_a?(Integer)   || value.is_a?(Float)
-          return value
-        when value.is_a?(TrueClass) || value.is_a?(FalseClass)
-          return "#{value}"
-        when value.is_a?(Date)
-          return "new Date(#{value.year}, #{value.month-1}, #{value.day})"
-        when value.is_a?(DateTime)  ||  value.is_a?(Time)
-          return "new Date(#{value.year}, #{value.month-1}, #{value.day}, #{value.hour}, #{value.min}, #{value.sec})"
-        when value.is_a?(Array)
-          return "[" + value.collect { |item| typecast(item) }.join(",") + "]"
-        else
-          return value
-      end
-
-    end
-
-		# This is part of Rails, but adding here so that tests can be run without loading the whole rails env
-		def instance_variable_names
-			instance_variables.map { |var| var.to_s }
-		end
 
     def collect_parameters
 
@@ -292,7 +280,7 @@ module GoogleVisualr
         # Ignore the @hAxis and @vAxis variables so that we can collect them into their own objects
         key         = instance_variable.gsub("@", "")
         value       = instance_variable_get(instance_variable)
-        attribute   = "#{key}:#{typecast(value)}"
+        attribute   = "#{key}:#{GoogleVisualr::typecast(value)}"
         if instance_variable.index('hAxis') == 0 
        		hAxisAttributes << instance_variable 
 				elsif instance_variable.index('vAxis') == 0
@@ -311,12 +299,6 @@ module GoogleVisualr
 			end
 
       return "{" + attributes.join(",") + "}"
-
-    end
-
-    def escape_single_quotes(str)
-
-      str.gsub(/[']/, '\\\\\'')
 
     end
 

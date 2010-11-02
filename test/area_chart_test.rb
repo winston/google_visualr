@@ -1,5 +1,6 @@
 require 'test/unit'
 require 'date'
+require File.dirname(__FILE__) + '/test_helper.rb'
 require File.dirname(__FILE__) + '/../lib/base_chart.rb'
 require File.dirname(__FILE__) + '/../lib/area_chart.rb'
 

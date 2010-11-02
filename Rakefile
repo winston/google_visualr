@@ -5,9 +5,6 @@ def scope(path)
 	File.join(File.dirname(__FILE__), path)
 end
 
-require scope('/lib/base_chart')
-
-
 # --- Default: Testing ---
 task :default => :test
 
