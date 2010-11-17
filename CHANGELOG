@@ -1,0 +1,33 @@
+2010-11-17 Clif Reeder <clifreeder@gmail.com>
+
+		*Changed the attirbutes in the following charts to reflect the Visualization API as of November 7, 2010
+			-lib/area_chart.rb
+			-lib/bar_chart.rb
+			-lib/base_chart.rb
+			-lib/column_chart.rb
+			-lib/helpers.rb
+			-lib/line_chart.rb
+			-lib/map.rb
+			-lib/pie_chart.rb
+			-lib/scatter_chart.rb
+			-lib/table.rb
+			-lib/text_style.rb
+
+		*Added a TextStyle class to be used for TextStyle type configuration options. For example:
+			titleTextStyle = GoogleVisualr::TextStyle.new
+			titleTextStyle.color = 'blue'
+			titleTextStyle.fontSize = 20
+			options => {:title => 'Chart Title', :titleTextStyle => titleTextStyle}
+			@chart.set_options(options)
+
+		*Added a rudimentary test, just to make sure this renders a proper graph object. It can be run with 'rake',
+		 but it isn't really testing anything. Just plug the printed javascript into a page and see if it works.
+
+		*Note that these changes are not drop in! Because the Google API has changed, I have chosen to set the attributes
+		 as closely as possible with that. I suggest using Googles documentation to look up attribute names. The only 
+		 difference is using underscores to reference attributes of a subobject. For example, Google's documentation
+		 references "vAxis.baseline", which is a member of the vAxis object, but here, you can just reference "vAxis_baseline"
+
+		*Updated the README.rdoc
+
+		*Bumped VERSION to 0.7

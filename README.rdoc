@@ -7,6 +7,7 @@ Good for any Ruby on Rails setup whereby you prefer to work your logic in models
 
 Please refer to the {GoogleVisualr reference site}[http://googlevisualr.heroku.com/] for a complete list of visualizations that you can create with GoogleVisualr.
 
+
 == The Gist
 
 * In your model or controller, write Ruby code to create your visualization (e.g. Area Chart, Bar Chart, even Spark Lines etc).
@@ -74,6 +75,12 @@ In your Rails view, render visualization.
 
   <div id='chart'></div>
   <%= @chart.render('chart') %>
+
+=== Note
+
+The most recent update, to GoogleVisualr, 0.7, is not a drop-in replacment for previous versions.  {GoogleVisualr reference site}[http://googlevisualr.heroku.com/]. Specifically, a number of configuration options have been changed to reflect the current API. When looking at the configuration options on the Google documentation, not that all periods have been replaced with underscores. For example, the 'hAxis.title' option can be set by:
+    
+    chart.hAxis_title = "The Title of the X Axis"
 
 = Support
 
