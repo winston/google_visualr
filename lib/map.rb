@@ -12,6 +12,7 @@ module GoogleVisualr
     attr_accessor :lineColor
     attr_accessor :lineWidth
     attr_accessor :mapType
+    attr_accessor :useMapTypeControl
     attr_accessor :zoomLevel
 
     def render (element_id)
