@@ -236,37 +236,89 @@ module GoogleVisualr
 
     end
 
+		# If the column type is 'string'    , the value should be a string.
+		# If the column type is 'number'    , the value should be a number.
+		# If the column type is 'boolean'   , the value should be a boolean.
+		# If the column type is 'date'      , the value should be a Date object.
+		# If the column type is 'datetime'  , the value should be a DateTime or Time object.
+		# If the column type is 'timeofday' , the value should be an array of three or four numbers: [hour, minute, second, optional milliseconds].
+		def self.typecast(value)
+
+			case
+				when value.is_a?(String)
+					return "'#{GoogleVisualr::escape_single_quotes(value)}'"
+				when value.is_a?(Integer)   || value.is_a?(Float)
+					return value
+				when value.is_a?(TrueClass) || value.is_a?(FalseClass)
+					return "#{value}"
+				when value.is_a?(Date)
+					return "new Date(#{value.year}, #{value.month-1}, #{value.day})"
+				when value.is_a?(DateTime)  ||  value.is_a?(Time)
+					return "new Date(#{value.year}, #{value.month-1}, #{value.day}, #{value.hour}, #{value.min}, #{value.sec})"
+				when value.is_a?(Array)
+					return "[" + value.collect { |item| typecast(item) }.join(",") + "]"
+				else
+					return value
+			end
+
+		end
+
     def collect_parameters
 
       attributes = Array.new
+      backgroundAttributes = Array.new
+      chartAreaAttributes = Array.new
       hAxisAttributes = Array.new
       vAxisAttributes = Array.new
+
       instance_variable_names.each do |instance_variable|
         next if instance_variable == "@chart_data" || instance_variable == "@formatters"
         # Ignore the @hAxis and @vAxis variables so that we can collect them into their own objects
         key         = instance_variable.gsub("@", "")
         value       = instance_variable_get(instance_variable)
-        attribute   = "#{key}:#{GoogleVisualr::typecast(value)}"
-        if instance_variable.index('hAxis') == 0 
-       		hAxisAttributes << instance_variable 
-				elsif instance_variable.index('vAxis') == 0
-					vAxisAttributes << instance_variable
-				else
-					attributes << attribute
+        destination = attributes
+
+        if instance_variable.index('backgroundColor_')
+        	key = key.gsub('backgroundColor_', '')
+        	destination = backgroundAttributes
+				elsif instance_variable.index('chartArea_') == 1
+					key = key.gsub('chartArea_','')
+					destination = chartAreaAttributes
+				elsif instance_variable.index('hAxis_') == 1 
+        	key = key.gsub('hAxis_','')
+       		destination = hAxisAttributes
+				elsif instance_variable.index('vAxis_') == 1
+					key = key.gsub('vAxis_','')
+					destination = vAxisAttributes
 				end
+
+        attribute   = "#{key}:#{GoogleVisualr::typecast(value)}"
+				destination << attribute
       end
+      if not backgroundAttributes.empty?
+      	background = "backroundColor:{" + backgroundAttributes.join(",") + "}"
+      	attributes << background
+      end
+      if not chartAreaAttributes.empty?
+      	chartArea = "chartArea:{" + chartAreaAttributes.join(",") + "}"
+				attributes << chartArea
+			end
 			if not hAxisAttributes.empty?
-				hAxis = "{" + hAxisAttributes.join(",") + "}"
-				attriubtes << hAxis
+				hAxis = "hAxis:{" + hAxisAttributes.join(",") + "}"
+				attributes << hAxis
 			end
 			if not vAxisAttributes.empty?
-				vAxis = "{" + vAxisAttributes.join(",") + "}"
+				vAxis = "vAxis:{" + vAxisAttributes.join(",") + "}"
 				attributes << vAxis
 			end
 
       return "{" + attributes.join(",") + "}"
 
     end
+
+		def self.escape_single_quotes(str)
+			str.gsub(/[']/, '\\\\\'')
+		end
 
   end
 
