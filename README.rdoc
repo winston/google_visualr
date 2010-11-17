@@ -80,19 +80,19 @@ In your Rails view, render visualization.
 
 The most recent update, to GoogleVisualr, 0.7, is not a drop-in replacment for previous versions. Specifically, a number of configuration options have been changed to reflect the current API. One of the major changes is that axis options are passed as an object. You don't have to worry about the details, but you do need to know this:
 
-==When looking at the name of configuration options on the Google documentation, all periods have been replaced with underscores. 
+===When looking at the name of configuration options on the Google documentation, all periods have been replaced with underscores. 
 
 For example, the API now uses an hAxis object with certain attributes to define it. The documentation refer to the 'hAxis.title' as one possible attribute, which you could set as such:
     
-    chart.hAxis_title = "The Title of the X Axis"
+	chart.hAxis_title = "The Title of the X Axis"
 
 There is also a TextStyle object you can use to define TextStyles. for example:
 
-		style = GoogleVisualr::TextStyle.new
-		style.color = 'blue'
-		style.font = 'Helvetica'
-		style.fontSize = '30'
-		chart.titleTextStyle = style
+	style = GoogleVisualr::TextStyle.new
+	style.color = 'blue'
+	style.font = 'Helvetica'
+	style.fontSize = '30'
+	chart.titleTextStyle = style
 
 = Support
 
