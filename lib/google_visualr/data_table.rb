@@ -1,9 +1,9 @@
 module GoogleVisualr
 
-  class BaseChart
+  class DataTable
 
-    attr_accessor :chart_data
-    attr_accessor :formatters
+    attr_accessor :cols
+    attr_accessor :rows
 
     ##############################
     # Constructors
@@ -13,7 +13,7 @@ module GoogleVisualr
     # Creates an empty visualization instance. Use add_columns, add_rows and set_value or set_cell methods to populate the visualization.
     #
     # GoogleVisualr::visualization.new(data object):
-    # reates a visualization by passing a JavaScript-string-literal like data object into the data parameter. This object can contain formatting options.
+    # creates a visualization by passing a JavaScript-string-literal like data object into the data parameter. This object can contain formatting options.
     #
     ##############################
     # Syntax Description of Data Object
@@ -48,14 +48,15 @@ module GoogleVisualr
     #
     #   To indicate a null cell, you can either specify null, or set empty string for a cell in an array, or omit trailing array members.
     #   So, to indicate a row with null for the first two cells, you could specify [ '', '', {cell_val}] or [null, null, {cell_val}].
-    def initialize(options={})
+    def initialize(options = {})
 
-      @chart_data  = "var chart_data = new google.visualization.DataTable();"
+      @columns = Array.new
+      @rows    = Array.new
 
-      if !options.empty?
+       unless options.empty?
 
         cols = options[:cols]
-        add_columns(cols)
+        new_columns(cols)
 
         rows = options[:rows]
         rows.each do |row|
@@ -77,20 +78,36 @@ module GoogleVisualr
     #     - 'boolean'   : Boolean value ('true' or 'false'). Example values: v: true
     #   * label           [Optional] A string value that some visualizations display for this column. Example: label:'Height'
     #   * id              [Optional] A unique (basic alphanumeric) string ID of the column. Be careful not to choose a JavaScript keyword. Example: id:'col_1'
-    def add_column (type, label="", id="")
-      @chart_data << "chart_data.addColumn('#{type}', '#{label}', '#{id}');"
-    end
-
+    #
     # Adds multiple columns to the visualization.
     #
     # Parameters:
     #   * columns         [Required] An array of column objects {:type, :label, :id}. Calls add_column for each column object.
-    def add_columns(columns)
+    def new_column(*args)
+
+      columns = args.pop
 
       columns.each do |column|
-        add_column(column[:type], column[:label], column[:id])
+        @columns << { :type => column[:type], :label => column[:label], :id => column[:id] }
       end
 
+    end
+    alias :new_columns :new_column
+
+    def add_column(column_index, column_values)
+
+      if @rows.size < column_values.size
+        1.upto(column_values.size - @rows.size) { @rows << Array.new }
+      end
+
+      column_values.each_with_index do |column_value, row_index|
+        set_cell(row_index, column_index, column_value)
+      end
+
+    end
+
+    def get_column_values(column_index)
+        @rows.transpose[column_index]
     end
 
     # Adds a new row to the visualization.
@@ -101,19 +118,13 @@ module GoogleVisualr
     #     - You can specify a value for a cell (e.g. 'hi') or specify a formatted value using cell objects (e.g. {v:55, f:'Fifty-five'}) as described in the constructor section.
     #     - You can mix simple values and cell objects in the same method call.
     #     - To create an empty cell, use nil or empty string.
-    def add_row(row)
+    def add_row(row_values = [])
 
-      if row.empty?
-        @chart_data << "chart_data.addRow();"  # Empty Row
-      else
+      @rows    << Array.new
+      row_index = @rows.size-1
 
-        attributes = Array.new
-        row.each do |cell|
-          attributes << add_row_cell(cell)
-        end
-
-        @chart_data << "chart_data.addRow( [" +  attributes.join(",")  + "] );"
-
+      row_values.each_with_index do |row_value, column_index|
+        set_cell( row_index, column_index, row_value )
       end
 
     end
@@ -131,9 +142,15 @@ module GoogleVisualr
           add_row(row)
         end
       else
-        @chart_data << "chart_data.addRows(#{array_or_num});"
+        array_or_num.times do
+          add_row
+        end
       end
 
+    end
+
+    def get_row_values(row_index)
+      @rows[row_index]
     end
 
     # Sets the value and/or formatted value of a cell.
@@ -141,96 +158,129 @@ module GoogleVisualr
     # Parameters:
     #   * row_index       [Required] A number greater than or equal to zero, but smaller than the total number of rows.
     #   * column_index    [Required] A number greater than or equal to zero, but smaller than the total number of columns.
-    #   * value           [Required] The cell value. The data type should match the column data type.
-    #   * formatted_value [Optional] A string version of value, formatted strictly for display only. If omitted, a string version of value will be used.
-    def set_cell  (row_index, column_index, value, formatted_value=nil, properties=nil)
+    #   * value           [Required] The cell value. Either a value, or a cell object.
+    def set_cell(row_index, column_index, value)
 
-      @chart_data << "chart_data.setCell("
-      @chart_data << "#{row_index}, #{column_index}, #{typecast(value)}"
-      @chart_data << ", '#{formatted_value}'" unless formatted_value.blank?
-      @chart_data << ", '#{properties}'"      unless properties.blank?
-      @chart_data << ");"
+      if within_range?( row_index, column_index )
 
-    end
+        verify_against_column_type( columns[column_index][:type], value )
 
-    # Sets the value of a cell. Overwrites any existing cell value, and clear out any formatted value for the cell.
-    #
-    # Parameters:
-    #   * row_index       [Required] A number greater than or equal to zero, but smaller than the total number of rows.
-    #   * column_index    [Required] A number greater than or equal to zero, but smaller than the total number of columns.
-    #   * value           [Required] The cell value. The data type should match the column data type.
-    def set_value (row_index, column_index, value)
+        @rows[row_index][column_index] = GoogleVisualr::DataTable::Cell.new(value)
 
-      @chart_data << "chart_data.setCell(#{row_index}, #{column_index}, #{typecast(value)});"
-
-    end
-
-    # Applies one or more formatters to the visualization to format the columns as specified by the formatter/s.
-    #
-    # Parameters:
-    #   * formatter/s     [Required] One, or an array of formatters.
-    def format(*formatters)
-
-      @formatters ||= Array.new
-      @formatters  += formatters
-
-    end
-
-    # Sets chart configuration options with a hash.
-    #
-    # Parameters:
-    #  *options            [Required] A hash of configuration options.
-    def set_options(options)
-
-      options.each_pair do | key, value |
-        send "#{key}=", value
+      else
+        raise RangeError, "row_index and column_index MUST be < @rows.size and @columns.size", caller
       end
 
     end
 
-    # Generates JavaScript and renders the visualization in the final HTML output.
-    #
-    # Parameters:
-    #  *div_id            [Required] The ID of the DIV element that the visualization should be rendered in.
-    #
-    # Note: This is the super method.
-    def render(options)
+    def get_cell(row_index, column_index)
 
-      script  = "\n<script type='text/javascript'>"
-      script << "\n  google.load('visualization','1', {packages: ['#{options[:package].downcase}'], callback: function() {"
-      script << "\n    #{@chart_data}"
-      if @formatters
-        @formatters.each do |formatter|
-          script << formatter.script
-        end
+      if within_range?( row_index, column_index )
+        @rows[row][column]
+      else
+        raise RangeError, "row_index and column_index MUST be < @rows.size and @columns.size", caller
       end
-      script << "\n    var chart = new google.visualization.#{options[:package]}(document.getElementById('#{options[:element_id]}'));"
-      script << "\n    chart.draw(chart_data, #{options[:chart_style]});"
-      script << "\n  }});"
-      script << "\n</script>"
-
-      return script
 
     end
+
+    def to_js
+
+      js = "var chart_data = new google.visualization.DataTable();"
+
+      @columns.each do |column|
+        js += "chart_data.addColumn('#{column[:type]}', '#{column[:label]}', '#{column[:id]}');"
+      end
+
+      js += "chart_data.addRows(#{@rows.size});"
+
+      @rows.each do |row|
+        js += "chart_data.addRow("
+        js += "[ #{row.collect { |cell| cell.to_js }.join(", ")} ]" unless row.empty?
+        js += ");"
+      end
+
+      js
+
+    end
+
+#    def to_csv(*args)
+#
+#      options = args.pop
+#
+#      csv = FasterCSV.generate( { :force_quotes => true } ) do |file|
+#
+#              file << options[:prefix] if options && !options[:prefix].nil?
+#
+#              file << @columns.collect { |column| column[:label] }
+#              @rows.each do |row|
+#                file << row
+#              end
+#
+#              file << options[:suffix] if options && !options[:suffix].nil?
+#
+#            end
+#
+#      csv
+#
+#    end
 
     private
 
-    def add_row_cell(cell)
+    def within_range?(row_index, column_index)
+      row_index < @rows.size && column_index < @columns.size
+    end
 
-      if cell.is_a?(Hash)
+    def verify_against_column_type(type, value)
 
-        attributes = Array.new
-        cell.each_pair do |key, value|
-          attributes << "#{key}: #{typecast(value)}"
-        end
+      v = value.is_a?(Hash) ? value[:v] : value
 
-        return "{" + attributes.join(",") + "}"
+      case
+        when type == "string"
+          raise ArgumentError, "cell value '#{v}' is not a String", caller              unless v.is_a?(String)
+        when type == "number"
+          raise ArgumentError, "cell value '#{v}' is not an Integer or a Float", caller unless v.is_a?(Integer)   || v.is_a?(Float)
+        when type == "date"
+          raise ArgumentError, "cell value '#{v}' is not a Date", caller                unless v.is_a?(Date)
+        when type == 'datetime'
+          raise ArgumentError, "cell value '#{v}' is not a DateTime", caller            unless v.is_a?(DateTime)
+        when type == "boolean"
+          raise ArgumentError, "cell value '#{v}' is not a Boolean", caller             unless v.is_a?(TrueClass) || v.is_a?(FalseClass)
+       end
 
+    end
+
+  end
+
+  class Cell
+
+    attr_accessor :v # value
+    attr_accessor :f # formatted
+    attr_accessor :p # properties
+
+    def initialize(*args)
+
+      options = args.pop
+
+      if options.is_a?(Hash)
+        @v = options[:v]
+        @f = options[:f]
+        @p = options[:p]
       else
-        return "#{typecast(cell)}"
+        @v = options
       end
 
     end
+
+    def to_js
+      js  = "{"
+      js += "v: #{typecast(@v)}"
+      js += ", f: #{@f}" unless @f.nil?
+      js += ", p: #{@p}" unless @p.nil?
+      js += "}"
+      js
+    end
+
+    private
 
     # If the column type is 'string'    , the value should be a string.
     # If the column type is 'number'    , the value should be a number.
@@ -242,7 +292,7 @@ module GoogleVisualr
 
       case
         when value.is_a?(String)
-          return "'#{escape_single_quotes(value)}'"
+          return "'#{value.gsub(/[']/, '\\\\\'')}'"
         when value.is_a?(Integer)   || value.is_a?(Float)
           return value
         when value.is_a?(TrueClass) || value.is_a?(FalseClass)
@@ -251,32 +301,9 @@ module GoogleVisualr
           return "new Date(#{value.year}, #{value.month-1}, #{value.day})"
         when value.is_a?(DateTime)  ||  value.is_a?(Time)
           return "new Date(#{value.year}, #{value.month-1}, #{value.day}, #{value.hour}, #{value.min}, #{value.sec})"
-        when value.is_a?(Array)
-          return "[" + value.collect { |item| typecast(item) }.join(",") + "]"
         else
           return value
       end
-
-    end
-
-    def collect_parameters
-
-      attributes = Array.new
-      instance_variable_names.each do |instance_variable|
-        next if instance_variable == "@chart_data" || instance_variable == "@formatters"
-        key         = instance_variable.gsub("@", "")
-        value       = instance_variable_get(instance_variable)
-        attribute   = "#{key}:#{typecast(value)}"
-        attributes << attribute
-      end
-
-      return "{" + attributes.join(",") + "}"
-
-    end
-
-    def escape_single_quotes(str)
-
-      str.gsub(/[']/, '\\\\\'')
 
     end
 
