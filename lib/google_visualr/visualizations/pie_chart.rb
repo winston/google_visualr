@@ -9,14 +9,14 @@ module GoogleVisualr
 
       # http://code.google.com/apis/visualization/documentation/gallery/piechart.html#Configuration_Options
       attr_accessor :backgroundColor
-      attr_accessor :"backgroundColor.stroke"
-      attr_accessor :"backgroundColor.strokeWidth"
-      attr_accessor :"backgroundColor.fill"
+#      attr_accessor :"backgroundColor.stroke"
+#      attr_accessor :"backgroundColor.strokeWidth"
+#      attr_accessor :"backgroundColor.fill"
       attr_accessor :chartArea
-      attr_accessor :"chartArea.left"
-      attr_accessor :"chartArea.top"
-      attr_accessor :"chartArea.width"
-      attr_accessor :"chartArea.height"
+#      attr_accessor :"chartArea.left"
+#      attr_accessor :"chartArea.top"
+#      attr_accessor :"chartArea.width"
+#      attr_accessor :"chartArea.height"
       attr_accessor :colors
       attr_accessor :fontSize
       attr_accessor :fontName
