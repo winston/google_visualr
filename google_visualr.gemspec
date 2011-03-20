@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path("../lib/gv/version", __FILE__)
+require File.expand_path("../lib/google_visualr/version", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "google_visualr"
-  s.version     = Gv::VERSION
+  s.version     = GoogleVisualr::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Winston Teo"]
   s.email       = ["winston.yongwei+google_visualr@gmail.com"]

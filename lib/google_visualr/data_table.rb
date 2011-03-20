@@ -50,8 +50,8 @@ module GoogleVisualr
     #   So, to indicate a row with null for the first two cells, you could specify [ '', '', {cell_val}] or [null, null, {cell_val}].
     def initialize(options = {})
 
-      @columns = Array.new
-      @rows    = Array.new
+      @cols = Array.new
+      @rows = Array.new
 
        unless options.empty?
 
@@ -88,7 +88,7 @@ module GoogleVisualr
       columns = args.pop
 
       columns.each do |column|
-        @columns << { :type => column[:type], :label => column[:label], :id => column[:id] }
+        @cols << { :type => column[:type], :label => column[:label], :id => column[:id] }
       end
 
     end
@@ -163,12 +163,12 @@ module GoogleVisualr
 
       if within_range?( row_index, column_index )
 
-        verify_against_column_type( columns[column_index][:type], value )
+        verify_against_column_type( @cols[column_index][:type], value )
 
         @rows[row_index][column_index] = GoogleVisualr::DataTable::Cell.new(value)
 
       else
-        raise RangeError, "row_index and column_index MUST be < @rows.size and @columns.size", caller
+        raise RangeError, "row_index and column_index MUST be < @rows.size and @cols.size", caller
       end
 
     end
@@ -178,7 +178,7 @@ module GoogleVisualr
       if within_range?( row_index, column_index )
         @rows[row][column]
       else
-        raise RangeError, "row_index and column_index MUST be < @rows.size and @columns.size", caller
+        raise RangeError, "row_index and column_index MUST be < @rows.size and @cols.size", caller
       end
 
     end
@@ -187,7 +187,7 @@ module GoogleVisualr
 
       js = "var chart_data = new google.visualization.DataTable();"
 
-      @columns.each do |column|
+      @cols.each do |column|
         js += "chart_data.addColumn('#{column[:type]}', '#{column[:label]}', '#{column[:id]}');"
       end
 
@@ -227,7 +227,7 @@ module GoogleVisualr
     private
 
     def within_range?(row_index, column_index)
-      row_index < @rows.size && column_index < @columns.size
+      row_index < @rows.size && column_index < @cols.size
     end
 
     def verify_against_column_type(type, value)
@@ -249,60 +249,60 @@ module GoogleVisualr
 
     end
 
-  end
+    class Cell
 
-  class Cell
+      attr_accessor :v # value
+      attr_accessor :f # formatted
+      attr_accessor :p # properties
 
-    attr_accessor :v # value
-    attr_accessor :f # formatted
-    attr_accessor :p # properties
+      def initialize(*args)
 
-    def initialize(*args)
+        options = args.pop
 
-      options = args.pop
+        if options.is_a?(Hash)
+          @v = options[:v]
+          @f = options[:f]
+          @p = options[:p]
+        else
+          @v = options
+        end
 
-      if options.is_a?(Hash)
-        @v = options[:v]
-        @f = options[:f]
-        @p = options[:p]
-      else
-        @v = options
       end
 
-    end
+      def to_js
+        js  = "{"
+        js += "v: #{typecast(@v)}"
+        js += ", f: #{@f}" unless @f.nil?
+        js += ", p: #{@p}" unless @p.nil?
+        js += "}"
+        js
+      end
 
-    def to_js
-      js  = "{"
-      js += "v: #{typecast(@v)}"
-      js += ", f: #{@f}" unless @f.nil?
-      js += ", p: #{@p}" unless @p.nil?
-      js += "}"
-      js
-    end
+      private
 
-    private
+      # If the column type is 'string'    , the value should be a string.
+      # If the column type is 'number'    , the value should be a number.
+      # If the column type is 'boolean'   , the value should be a boolean.
+      # If the column type is 'date'      , the value should be a Date object.
+      # If the column type is 'datetime'  , the value should be a DateTime or Time object.
+      # If the column type is 'timeofday' , the value should be an array of three or four numbers: [hour, minute, second, optional milliseconds].
+      def typecast(value)
 
-    # If the column type is 'string'    , the value should be a string.
-    # If the column type is 'number'    , the value should be a number.
-    # If the column type is 'boolean'   , the value should be a boolean.
-    # If the column type is 'date'      , the value should be a Date object.
-    # If the column type is 'datetime'  , the value should be a DateTime or Time object.
-    # If the column type is 'timeofday' , the value should be an array of three or four numbers: [hour, minute, second, optional milliseconds].
-    def typecast(value)
+        case
+          when value.is_a?(String)
+            return "'#{value.gsub(/[']/, '\\\\\'')}'"
+          when value.is_a?(Integer)   || value.is_a?(Float)
+            return value
+          when value.is_a?(TrueClass) || value.is_a?(FalseClass)
+            return "#{value}"
+          when value.is_a?(Date)
+            return "new Date(#{value.year}, #{value.month-1}, #{value.day})"
+          when value.is_a?(DateTime)  ||  value.is_a?(Time)
+            return "new Date(#{value.year}, #{value.month-1}, #{value.day}, #{value.hour}, #{value.min}, #{value.sec})"
+          else
+            return value
+        end
 
-      case
-        when value.is_a?(String)
-          return "'#{value.gsub(/[']/, '\\\\\'')}'"
-        when value.is_a?(Integer)   || value.is_a?(Float)
-          return value
-        when value.is_a?(TrueClass) || value.is_a?(FalseClass)
-          return "#{value}"
-        when value.is_a?(Date)
-          return "new Date(#{value.year}, #{value.month-1}, #{value.day})"
-        when value.is_a?(DateTime)  ||  value.is_a?(Time)
-          return "new Date(#{value.year}, #{value.month-1}, #{value.day}, #{value.hour}, #{value.min}, #{value.sec})"
-        else
-          return value
       end
 
     end
