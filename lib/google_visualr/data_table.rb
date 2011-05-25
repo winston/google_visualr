@@ -49,22 +49,22 @@ module GoogleVisualr
     #   To indicate a null cell, you can either specify null, or set empty string for a cell in an array, or omit trailing array members.
     #   So, to indicate a row with null for the first two cells, you could specify [ '', '', {cell_val}] or [null, null, {cell_val}].
     def initialize(options = {})
-
+      
       @cols = Array.new
       @rows = Array.new
 
        unless options.empty?
 
-        cols = options[:cols]
-        new_columns(cols)
+         cols = options[:cols]
+         new_columns(cols)
 
-        rows = options[:rows]
-        rows.each do |row|
-          add_row(row[:c])
-        end
-
+         rows = options[:rows]
+         rows.each do |row|
+           add_row(row[:c])
+         end
+        
       end
-
+      
     end
 
     # Adds a new column to the visualization.
