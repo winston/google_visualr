@@ -1,1 +1,1 @@
-rvm use 1.9.2-p180@google_visualr
+rvm use ruby-1.9.2-p180@google_visualr --create
