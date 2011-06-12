@@ -1,5 +1,5 @@
 module GoogleVisualr
-  module Charts
+  module Image
 
     # http://code.google.com/apis/visualization/documentation/gallery/imagesparkline.html
     class ImageSparkLine < BaseChart

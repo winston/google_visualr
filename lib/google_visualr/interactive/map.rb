@@ -1,5 +1,5 @@
 module GoogleVisualr
-  module Visualizations
+  module Interactive
 
     # http://code.google.com/apis/visualization/documentation/gallery/map.html
     class Map < BaseChart

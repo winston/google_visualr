@@ -1,5 +1,5 @@
 module GoogleVisualr
-  module Visualizations
+  module Interactive
 
     # http://code.google.com/apis/visualization/documentation/gallery/intensitymap.html
     class IntensityMap < BaseChart

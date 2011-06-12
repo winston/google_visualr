@@ -1,5 +1,5 @@
 module GoogleVisualr
-  module Visualizations
+  module Interactive
 
     # http://code.google.com/apis/visualization/documentation/gallery/barchart.html
     class BarChart < BaseChart

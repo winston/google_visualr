@@ -1,5 +1,5 @@
 module GoogleVisualr
-  module Visualizations
+  module Interactive
 
     # http://code.google.com/apis/visualization/documentation/gallery/gauge.html
     class Gauge < BaseChart

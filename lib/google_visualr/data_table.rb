@@ -9,10 +9,10 @@ module GoogleVisualr
     # Constructors
     ##############################
     #
-    # GoogleVisualr::visualization.new:
+    # GoogleVisualr::Interactive.new:
     # Creates an empty visualization instance. Use add_columns, add_rows and set_value or set_cell methods to populate the visualization.
     #
-    # GoogleVisualr::visualization.new(data object):
+    # GoogleVisualr::Interactive.new(data object):
     # creates a visualization by passing a JavaScript-string-literal like data object into the data parameter. This object can contain formatting options.
     #
     ##############################

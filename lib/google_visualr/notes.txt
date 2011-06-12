@@ -1,7 +1,5 @@
 write tests for formatters
 
-rename to interactive vs image
-
 gem it
 test inclusion of gem.
 
