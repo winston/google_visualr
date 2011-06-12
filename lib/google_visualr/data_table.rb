@@ -49,12 +49,10 @@ module GoogleVisualr
     #   To indicate a null cell, you can either specify null, or set empty string for a cell in an array, or omit trailing array members.
     #   So, to indicate a row with null for the first two cells, you could specify [ '', '', {cell_val}] or [null, null, {cell_val}].
     def initialize(options = {})
-      
       @cols = Array.new
       @rows = Array.new
 
        unless options.empty?
-
          cols = options[:cols]
          new_columns(cols)
 
@@ -62,9 +60,7 @@ module GoogleVisualr
          rows.each do |row|
            add_row(row[:c])
          end
-        
       end
-      
     end
 
     # Adds a new column to the visualization.
@@ -78,24 +74,22 @@ module GoogleVisualr
     #     - 'boolean'   : Boolean value ('true' or 'false'). Example values: v: true
     #   * label           [Optional] A string value that some visualizations display for this column. Example: label:'Height'
     #   * id              [Optional] A unique (basic alphanumeric) string ID of the column. Be careful not to choose a JavaScript keyword. Example: id:'col_1'
-    #
+    def new_column(column)
+      @cols << { :type => column[:type], :label => column[:label], :id => column[:id] }
+    end
+
     # Adds multiple columns to the visualization.
     #
     # Parameters:
     #   * columns         [Required] An array of column objects {:type, :label, :id}. Calls add_column for each column object.
-    def new_column(*args)
-
-      columns = args.pop
-
+    def new_columns(columns)
       columns.each do |column|
-        @cols << { :type => column[:type], :label => column[:label], :id => column[:id] }
+        new_column(column)
       end
-
     end
-    alias :new_columns :new_column
 
-    def add_column(column_index, column_values)
-
+    # Sets a column of cell values to the visualization, at column_index. column_index starts from 0.
+    def set_column(column_index, column_values)
       if @rows.size < column_values.size
         1.upto(column_values.size - @rows.size) { @rows << Array.new }
       end
@@ -103,11 +97,11 @@ module GoogleVisualr
       column_values.each_with_index do |column_value, row_index|
         set_cell(row_index, column_index, column_value)
       end
-
     end
 
-    def get_column_values(column_index)
-        @rows.transpose[column_index]
+    # Gets a column of cell values from the visualization, at column_index. column_index starts from 0.
+    def get_column(column_index)
+      @rows.transpose[column_index].collect(&:v)
     end
 
     # Adds a new row to the visualization.
@@ -118,15 +112,13 @@ module GoogleVisualr
     #     - You can specify a value for a cell (e.g. 'hi') or specify a formatted value using cell objects (e.g. {v:55, f:'Fifty-five'}) as described in the constructor section.
     #     - You can mix simple values and cell objects in the same method call.
     #     - To create an empty cell, use nil or empty string.
-    def add_row(row_values = [])
-
+    def add_row(row_values=[])
       @rows    << Array.new
       row_index = @rows.size-1
 
       row_values.each_with_index do |row_value, column_index|
-        set_cell( row_index, column_index, row_value )
+        set_cell(row_index, column_index, row_value)
       end
-
     end
 
     # Adds multiple rows to the visualization. You can call this method with data to populate a set of new rows or create new empty rows.
@@ -136,7 +128,6 @@ module GoogleVisualr
     #     - Array: An array of row objects used to populate a set of new rows. Each row is an object as described in add_row().
     #     - Number: A number specifying the number of new empty rows to create.
     def add_rows(array_or_num)
-
       if array_or_num.is_a?(Array)
         array_or_num.each do |row|
           add_row(row)
@@ -146,11 +137,11 @@ module GoogleVisualr
           add_row
         end
       end
-
     end
 
-    def get_row_values(row_index)
-      @rows[row_index]
+    # Gets a row of cell values from the visualization, at row_index. row_index starts from 0.
+    def get_row(row_index)
+      @rows[row_index].collect(&:v)
     end
 
     # Sets the value and/or formatted value of a cell.
@@ -160,31 +151,24 @@ module GoogleVisualr
     #   * column_index    [Required] A number greater than or equal to zero, but smaller than the total number of columns.
     #   * value           [Required] The cell value. Either a value, or a cell object.
     def set_cell(row_index, column_index, value)
-
-      if within_range?( row_index, column_index )
-
+      if within_range?(row_index, column_index)
         verify_against_column_type( @cols[column_index][:type], value )
-
         @rows[row_index][column_index] = GoogleVisualr::DataTable::Cell.new(value)
-
       else
         raise RangeError, "row_index and column_index MUST be < @rows.size and @cols.size", caller
       end
-
     end
 
+    # Gets a cell value from the visualization, at row_index, column_index. row_index and column_index start from 0.
     def get_cell(row_index, column_index)
-
-      if within_range?( row_index, column_index )
-        @rows[row][column]
+      if within_range?(row_index, column_index)
+        @rows[row_index][column_index].v
       else
         raise RangeError, "row_index and column_index MUST be < @rows.size and @cols.size", caller
       end
-
     end
 
     def to_js
-
       js = "var chart_data = new google.visualization.DataTable();"
 
       @cols.each do |column|
@@ -200,9 +184,9 @@ module GoogleVisualr
       end
 
       js
-
     end
 
+# Rails 3 has built-in CSV support 
 #    def to_csv(*args)
 #
 #      options = args.pop
@@ -231,7 +215,6 @@ module GoogleVisualr
     end
 
     def verify_against_column_type(type, value)
-
       v = value.is_a?(Hash) ? value[:v] : value
 
       case
@@ -245,8 +228,7 @@ module GoogleVisualr
           raise ArgumentError, "cell value '#{v}' is not a DateTime", caller            unless v.is_a?(DateTime)
         when type == "boolean"
           raise ArgumentError, "cell value '#{v}' is not a Boolean", caller             unless v.is_a?(TrueClass) || v.is_a?(FalseClass)
-       end
-
+      end
     end
 
     class Cell
@@ -256,7 +238,6 @@ module GoogleVisualr
       attr_accessor :p # properties
 
       def initialize(*args)
-
         options = args.pop
 
         if options.is_a?(Hash)
@@ -266,14 +247,13 @@ module GoogleVisualr
         else
           @v = options
         end
-
       end
 
       def to_js
         js  = "{"
         js += "v: #{typecast(@v)}"
-        js += ", f: #{@f}" unless @f.nil?
-        js += ", p: #{@p}" unless @p.nil?
+        js += ", f: '#{@f}'"  unless @f.nil?
+        js += ", p: #{@p}"    unless @p.nil?
         js += "}"
         js
       end
@@ -287,7 +267,6 @@ module GoogleVisualr
       # If the column type is 'datetime'  , the value should be a DateTime or Time object.
       # If the column type is 'timeofday' , the value should be an array of three or four numbers: [hour, minute, second, optional milliseconds].
       def typecast(value)
-
         case
           when value.is_a?(String)
             return "'#{value.gsub(/[']/, '\\\\\'')}'"
@@ -302,7 +281,6 @@ module GoogleVisualr
           else
             return value
         end
-
       end
 
     end

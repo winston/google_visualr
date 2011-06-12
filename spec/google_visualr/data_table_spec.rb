@@ -43,25 +43,166 @@ describe GoogleVisualr::DataTable do
       end
     end
   end
-  
-  describe "#add_column" do
-  end
-  
-  describe "#add_columns" do
-  end
-  
-  describe "#get_column_values" do
+
+  describe "#new_column" do
+    it "initializes a new column" do
+      column = {:id => 'A', :label => 'NEW A', :type => 'string'}
+
+      dt = GoogleVisualr::DataTable.new
+      dt.new_column(column)
+      dt.cols.first.should == column
+    end
   end
 
-  describe "#add_row" do
+  describe "new_columns" do
+    it "initializes new columns" do
+      columns = [ {:id => 'A', :label => 'NEW A', :type => 'string'}, {:id => 'B', :label => 'NEW B', :type => 'string'} ]
+
+      dt = GoogleVisualr::DataTable.new
+      dt.new_columns(columns)
+      dt.cols.first.should  == columns.first
+      dt.cols.last.should   == columns.last
+    end
   end
 
-  describe "#add_rows" do
+  context "column values" do
+    before do
+      @dt = GoogleVisualr::DataTable.new
+      @dt.new_column({:type => 'number'})
+      @dt.set_column(0, [1,2,3])
+    end
+
+    describe "#set_column" do
+      it "sets a column of values to column #index" do
+        @dt.rows[0][0].v.should == 1
+        @dt.rows[1][0].v.should == 2
+        @dt.rows[2][0].v.should == 3
+      end
+    end
+
+    describe "#get_column" do
+      it "retrieves values in column #index" do
+        @dt.get_column(0).should == [1,2,3]
+      end
+    end
   end
-  
-  describe "#get_row_values" do
+
+  context "row values" do
+    before do
+      @dt = GoogleVisualr::DataTable.new
+      @dt.new_columns( [ {:type => 'number'}, {:type => 'string'} ] )
+      @dt.rows.should be_empty
+    end
+
+    describe "#add_row" do
+      context "when param is empty" do
+        it "adds an empty row to the visualization" do
+          @dt.add_row
+          @dt.rows.size.should == 1
+          @dt.rows[0].should be_empty
+        end
+      end
+
+      context "when param is not empty" do
+        it "adds the row values to the visualization" do
+          @dt.add_row([1, 'A'])
+          @dt.rows.size.should == 1
+          @dt.rows[0][0].v.should == 1
+          @dt.rows[0][1].v.should == 'A'
+        end
+      end
+    end
+
+
+    describe "#add_rows" do
+      context "when param is number" do
+        it "adds x number of empty rows to the visualization" do
+          @dt.add_rows(2)
+          @dt.rows.size.should == 2
+          @dt.rows[0].should be_empty
+          @dt.rows[1].should be_empty
+        end
+      end
+
+      context "when param is an array" do
+        it "adds the rows to the visualization" do
+          @dt.add_rows( [ [1, 'A'], [2, 'B'] ] )
+          @dt.rows.size.should == 2
+
+          @dt.rows[0][0].v.should == 1
+          @dt.rows[0][1].v.should == 'A'
+          @dt.rows[1][0].v.should == 2
+          @dt.rows[1][1].v.should == 'B'
+        end
+      end
+    end
+
+    describe "@get_row" do
+      it "retrieves values in row #index" do
+        @dt.add_rows( [ [1, 'A'], [2, 'B'] ] )
+        @dt.rows.size.should == 2
+
+        @dt.get_row(0).should == [1, 'A']
+        @dt.get_row(1).should == [2, 'B']
+      end
+    end
   end
-  
+
+  context "cell value" do
+    before do
+      @dt = GoogleVisualr::DataTable.new
+      @dt.new_columns( [ {:type => 'number'}, {:type => 'string'} ] )
+      @dt.add_row
+    end
+
+
+    describe "#set_cell" do
+      it "sets cell" do
+        @dt.set_cell(0, 0, 1000)
+        @dt.set_cell(0, 1, 'ABCD')
+
+        @dt.get_row(0).should == [1000, 'ABCD']
+      end
+
+      it "raises an exception if the row_index or column_index specified is out of range" do
+        expect {
+          @dt.set_cell(5, 0, 1000)
+        }.to raise_exception(RangeError)
+
+        expect {
+          @dt.set_cell(0, 5, 1000)
+        }.to raise_exception(RangeError)
+      end
+
+      it "raises an exception if the value does not correspond to its column type" do
+        expect {
+          @dt.set_cell(0, 0, 'ABCD')
+        }.to raise_exception(ArgumentError)
+
+        expect {
+          @dt.set_cell(0, 1, 1234)
+        }.to raise_exception(ArgumentError)
+      end
+    end
+
+    describe "#get_cell" do
+      it "gets cell" do
+        @dt.set_cell(0, 0, 1000)
+        @dt.get_cell(0, 0).should == 1000
+      end
+
+      it "raises an exception if the row_index or column_index specified is out of range" do
+        expect {
+          @dt.get_cell(0, 5)
+        }.to raise_exception(RangeError)
+
+        expect {
+          @dt.get_cell(5, 0)
+        }.to raise_exception(RangeError)
+      end
+    end
+  end
+
   describe "#to_js" do
     it "converts object to js string" do
       dt = valid_object
@@ -72,4 +213,35 @@ describe GoogleVisualr::DataTable do
     end
   end
 
+  describe "Cell" do
+    describe "#new" do
+      it "initializes with a value" do
+        cell = GoogleVisualr::DataTable::Cell.new(1)
+        cell.v.should == 1 
+      end
+
+      it "initializes with a hash" do
+        cell = GoogleVisualr::DataTable::Cell.new({:v => 1, :f => "1.0", :p => "{style: 'border: 1px solid green;'}"})
+        cell.v.should == 1
+        cell.f.should == "1.0"
+        cell.p.should == "{style: 'border: 1px solid green;'}"
+      end
+    end
+
+    describe "#to_js" do
+      context "initialized with a value" do
+        it "returns a json string" do
+          cell = GoogleVisualr::DataTable::Cell.new(1)
+          cell.to_js.should == "{v: 1}"
+        end
+      end
+
+      context "initialized with a hash" do
+        it "returns a json string" do
+          cell = GoogleVisualr::DataTable::Cell.new({:v => 1, :f => "1.0", :p => "{style: 'border: 1px solid green;'}"})
+          cell.to_js.should == "{v: 1, f: '1.0', p: {style: 'border: 1px solid green;'}}"
+        end
+      end
+    end
+  end
 end

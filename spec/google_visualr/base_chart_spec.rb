@@ -21,20 +21,20 @@ describe GoogleVisualr::BaseChart do
 
   before do
     @dt    = data_table
-    @chart = GoogleVisualr::BaseChart.new( @dt, { legend: "Test Chart", width: 800 } )
+    @chart = GoogleVisualr::BaseChart.new( @dt, { :legend => "Test Chart", :width =>  800, :is3D => true } )
   end
 
   describe "#initialize" do
     it "works" do
       @chart.data_table.should == @dt
-      @chart.options.should    == { "legend" => "Test Chart", "width" => 800 }
+      @chart.options.should    == { "legend" => "Test Chart", "width" => 800, "is3D" => true }
     end
   end
 
   describe "#options=" do
     it "works" do
-      @chart.options = { legend: "Awesome Chart", width: 1000 }
-      @chart.options.should    == { "legend" => "Awesome Chart", "width" => 1000 }
+      @chart.options = { :legend => "Awesome Chart", :width =>  1000, :is3D => false }
+      @chart.options.should    == { "legend" => "Awesome Chart", "width" => 1000, "is3D" => false }
     end
   end
 
