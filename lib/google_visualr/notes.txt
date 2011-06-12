@@ -1,9 +1,6 @@
-write tests for cell
 write tests for formatters
-remove attr accessors for all charts and visualizations
 
 rename to interactive vs image
-
 
 gem it
 test inclusion of gem.
