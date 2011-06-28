@@ -1,5 +1,8 @@
 lib_path = File.dirname(__FILE__)
 
+# Common
+require "#{lib_path}/google_visualr/type_caster"
+
 require "#{lib_path}/google_visualr/data_table"
 
 require "#{lib_path}/google_visualr/packages"
@@ -25,3 +28,4 @@ require "#{lib_path}/google_visualr/interactive/table"
 
 # Image Charts
 require "#{lib_path}/google_visualr/image/image_spark_line"
+

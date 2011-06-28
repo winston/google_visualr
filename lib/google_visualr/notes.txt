@@ -1,5 +1,3 @@
-write tests for formatters
-
 gem it
 test inclusion of gem.
 
