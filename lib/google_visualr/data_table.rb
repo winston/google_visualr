@@ -73,9 +73,9 @@ module GoogleVisualr
     #     - 'datetime'  : Date object including the time. Example values: v:Date.parse('2010-01-01 14:20:25')
     #     - 'boolean'   : Boolean value ('true' or 'false'). Example values: v: true
     #   * label           [Optional] A string value that some visualizations display for this column. Example: label:'Height'
-    #   * id              [Optional] A unique (basic alphanumeric) string ID of the column. Be careful not to choose a JavaScript keyword. Example: id:'col_1'
-    def new_column(column)
-      @cols << { :type => column[:type], :label => column[:label], :id => column[:id] }
+    #   * id              [Optional] A unique (basic alphanumeric) string ID of the column. Be careful not to choose a JavaScript keyword. Example: id:'col_0'
+    def new_column(type, label="", id ="")
+      @cols << { :type => type, :label => label, :id => id }
     end
 
     # Adds multiple columns to the visualization.
@@ -84,7 +84,7 @@ module GoogleVisualr
     #   * columns         [Required] An array of column objects {:type, :label, :id}. Calls add_column for each column object.
     def new_columns(columns)
       columns.each do |column|
-        new_column(column)
+        new_column(column[:type], column[:label], column[:id])
       end
     end
 

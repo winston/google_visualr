@@ -45,12 +45,16 @@ describe GoogleVisualr::DataTable do
   end
 
   describe "#new_column" do
-    it "initializes a new column" do
-      column = {:id => 'A', :label => 'NEW A', :type => 'string'}
-
+    it "initializes a new column with only type param" do
       dt = GoogleVisualr::DataTable.new
-      dt.new_column(column)
-      dt.cols.first.should == column
+      dt.new_column('string')
+      dt.cols.first.should == {:id => '', :label => '', :type => 'string'}
+    end
+
+    it "initializes a new column with all params" do
+      dt = GoogleVisualr::DataTable.new
+      dt.new_column('string', 'A LABEL', 'col_0')
+      dt.cols.first.should == {:id => 'col_0', :label => 'A LABEL', :type => 'string'}
     end
   end
 
