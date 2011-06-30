@@ -184,8 +184,6 @@ module GoogleVisualr
         js += "chart_data.addColumn('#{column[:type]}', '#{column[:label]}', '#{column[:id]}');"
       end
 
-      js += "chart_data.addRows(#{@rows.size});"
-
       @rows.each do |row|
         js += "chart_data.addRow("
         js += "[ #{row.collect { |cell| cell.to_js }.join(", ")} ]" unless row.empty?
