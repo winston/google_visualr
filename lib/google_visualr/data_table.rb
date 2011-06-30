@@ -240,7 +240,7 @@ module GoogleVisualr
 
 
     class Cell
-      include GoogleVisualr::TypeCaster
+      include GoogleVisualr::ParamHelpers
 
       attr_accessor :v # value
       attr_accessor :f # formatted

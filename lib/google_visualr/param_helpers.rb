@@ -1,6 +1,19 @@
 module GoogleVisualr
 
-  module TypeCaster
+  module ParamHelpers
+
+    def stringify_keys!(options)
+      options.keys.each do |key|
+        options[key.to_s] = options.delete(key)
+      end
+      options
+    end
+
+    def js_parameters(options)
+      return "" if options.nil?
+      attributes = options.collect { |(key, value)| "#{key}: #{typecast(value)}" }
+      "{" + attributes.join(", ") + "}"
+    end
 
     # If the column type is 'string'    , the value should be a string.
     # If the column type is 'number'    , the value should be a number.
@@ -23,16 +36,11 @@ module GoogleVisualr
           return "new Date(#{value.year}, #{value.month-1}, #{value.day}, #{value.hour}, #{value.min}, #{value.sec})"
         when value.nil?
           return "null"
+        when value.is_a?(Hash)
+          return js_parameters(value)
         else
           return value
       end
-    end
-
-    def stringify_keys!(options)
-      options.keys.each do |key|
-        options[key.to_s] = options.delete(key)
-      end
-      options
     end
 
   end

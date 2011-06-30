@@ -2,7 +2,7 @@ module GoogleVisualr
 
   class BaseChart
     include GoogleVisualr::Packages
-    include GoogleVisualr::TypeCaster
+    include GoogleVisualr::ParamHelpers
 
     attr_accessor :data_table
     attr_accessor :formatters
@@ -37,7 +37,7 @@ module GoogleVisualr
       end
 
       js << "\n    var chart = new google.visualization.#{class_name}(document.getElementById('#{element_id}'));"
-      js << "\n    chart.draw(chart_data, #{js_parameters});"
+      js << "\n    chart.draw(chart_data, #{js_parameters(@options)});"
       js << "\n  }});"
       js << "\n</script>"
       js
@@ -49,10 +49,6 @@ module GoogleVisualr
       self.class.to_s.split('::').last
     end
 
-    def js_parameters
-      attributes = @options.collect { |(key, value)| "#{key}: #{typecast(value)}" }
-      "{" + attributes.join(", ") + "}"
-    end
   end
 
 end

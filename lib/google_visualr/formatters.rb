@@ -2,7 +2,7 @@ module GoogleVisualr
 
   # http://code.google.com/apis/visualization/documentation/reference.html#formatters
   class Formatter
-    include GoogleVisualr::TypeCaster
+    include GoogleVisualr::ParamHelpers
 
     def initialize(options={})
       @options = options
@@ -19,7 +19,7 @@ module GoogleVisualr
 
     def to_js(&block)
       script   = "\nvar formatter = new google.visualization.#{self.class.to_s.split('::').last}("
-      script  <<  js_parameters
+      script  <<  js_parameters(@options)
       script  << ");"
 
       yield script if block_given?
@@ -29,15 +29,6 @@ module GoogleVisualr
       end
 
       script
-    end
-
-    private
-
-    def js_parameters
-      return "" if @options.nil?
-
-      attributes = @options.collect { |(key, value)| "#{key}: #{typecast(value)}" }
-      "{" + attributes.join(", ") + "}"
     end
 
   end

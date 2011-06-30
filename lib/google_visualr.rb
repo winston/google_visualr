@@ -1,7 +1,7 @@
 lib_path = File.dirname(__FILE__)
 
 # Common
-require "#{lib_path}/google_visualr/type_caster"
+require "#{lib_path}/google_visualr/param_helpers"
 
 require "#{lib_path}/google_visualr/data_table"
 
