@@ -8,6 +8,19 @@ Please refer to the {GoogleVisualr API Reference site}[http://googlevisualr.hero
 
 == Differences Between Gem and Plugin
 
+Gem
+* is Rails 3 compatible.
+* implements many of the newer versions of Google Charts E.g. Core Charts.
+* enjoyed a major refactoring, and also now has Tests!
+
+Plugin
+* has not been tested for Rails 3 compatibility
+* implements the older versions of Google Charts.
+* has deprecated methods.
+
+This gem, however, is not a drop-in replacement for the plugin, as there are numerous changes in its usage.
+
+Notably, you will have to interact mostly with GoogleVisualr::DataTable which was absent in the plugin.
 
 == The Gist
 
