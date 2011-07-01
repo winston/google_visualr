@@ -1,6 +1,8 @@
 = Overview
 
-This Ruby gem, GoogleVisualr, is a wrapper around the {Google Chart Tools}[http://code.google.com/apis/chart/interactive/docs/index.html] that allows anyone to create the same beautiful charts with just plain Ruby; you don't have to write any JavaScript at all.
+This Ruby gem, GoogleVisualr, is a wrapper around the {Google Chart Tools}[http://code.google.com/apis/chart/interactive/docs/index.html] that allows anyone to create the same beautiful charts with just plain Ruby.
+
+You don't have to write any JavaScript at all!
 
 Good for any Ruby on Rails setup whereby you prefer to work your logic in models or controllers.
 
