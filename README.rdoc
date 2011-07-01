@@ -10,15 +10,15 @@ Please refer to the {GoogleVisualr reference site}[http://googlevisualr.heroku.c
 == The Gist
 
 * In your model or controller, write Ruby code to create your visualization (e.g. Area Chart, Bar Chart, even Spark Lines etc).
-* Configure your visualization with all the options as listed in Google Visualization API Docs. E.g. {Area Chart's configuration options}[http://code.google.com/apis/visualization/documentation/gallery/areachart.html#Configuration_Options].
+* Configure your visualization with all the options as listed in Google Visualization API Docs. E.g. {Area Chart's configuration options}[http://code.google.com/apis/chart/interactive/docs/gallery/areachart.html#Configuration_Options].
 * In your view, just call a <em>visualization.render(div_id)</em> method that will magically generate and insert JavaScript into the final HTML output.
 * You get your visualization, and you didn't write any JavaScript!
 
 == Limitations
 
 Do note that GoogleVisualr is not a 100% complete wrapper for the Google Visualization API. These are not implemented for sake of simplicity:
-* JavaScript Methods for use after a visualization has been rendered in a view. E.g. {Area Chart's methods}[http://code.google.com/apis/visualization/documentation/gallery/areachart.html#Methods].
-* JavaScript Events for use after a visualization has been rendered in a view. E.g. {Area Chart's events}[http://code.google.com/apis/visualization/documentation/gallery/areachart.html#Events].
+* JavaScript Methods for use after a visualization has been rendered in a view. E.g. {Area Chart's methods}[http://code.google.com/apis/chart/interactive/docs/gallery/areachart.html#Methods].
+* JavaScript Events for use after a visualization has been rendered in a view. E.g. {Area Chart's events}[http://code.google.com/apis/chart/interactive/docs/gallery/areachart.html#Events].
 * Visualizations not created by Google, and a few image-only charts.
 
 = Install
