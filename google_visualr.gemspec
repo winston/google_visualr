@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Winston Teo"]
   s.email       = ["winston.yongwei+google_visualr@gmail.com"]
   s.homepage    = "https://github.com/winston/google_visualr"
-  s.summary     = "Ruby wrapper around the Google Visualization API."
+  s.summary     = "A Ruby wrapper around the Google Chart Tools that allows anyone to create the same beautiful charts with just plain Ruby."
   s.description = "This Ruby gem, GoogleVisualr, is a wrapper around the Google Chart Tools that allows anyone to create the same beautiful charts with just Ruby; you don't have to write any JavaScript at all."
   s.extra_rdoc_files = ["README.rdoc"]
 
