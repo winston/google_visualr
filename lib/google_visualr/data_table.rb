@@ -178,20 +178,22 @@ module GoogleVisualr
     end
 
     def to_js
-      js = "var chart_data = new google.visualization.DataTable();"
+      js = "var data_table = new google.visualization.DataTable();"
 
       @cols.each do |column|
-        js += "chart_data.addColumn('#{column[:type]}', '#{column[:label]}', '#{column[:id]}');"
+        js += "data_table.addColumn('#{column[:type]}', '#{column[:label]}', '#{column[:id]}');"
       end
 
       @rows.each do |row|
-        js += "chart_data.addRow("
+        js += "data_table.addRow("
         js += "[ #{row.collect { |cell| cell.to_js }.join(", ")} ]" unless row.empty?
         js += ");"
       end
 
-      @formatters.each do |formatter|
-        js += formatter.to_js
+      if @formatters
+        @formatters.each do |formatter|
+          js += formatter.to_js
+        end
       end
 
       js

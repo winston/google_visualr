@@ -5,7 +5,6 @@ module GoogleVisualr
     include GoogleVisualr::ParamHelpers
 
     attr_accessor :data_table
-    attr_accessor :formatters
 
     def initialize(data_table, options={})
       @data_table = data_table
@@ -27,19 +26,12 @@ module GoogleVisualr
     def to_js(element_id)
       js  = "\n<script type='text/javascript'>"
       js << "\n  google.load('visualization','1', {packages: ['#{package_name}'], callback: function() {"
-
       js << "\n    #{@data_table.to_js}"
-
-      if @formatters
-        @formatters.each do |formatter|
-          js << formatter.script
-        end
-      end
-
       js << "\n    var chart = new google.visualization.#{class_name}(document.getElementById('#{element_id}'));"
-      js << "\n    chart.draw(chart_data, #{js_parameters(@options)});"
+      js << "\n    chart.draw(data_table, #{js_parameters(@options)});"
       js << "\n  }});"
       js << "\n</script>"
+
       js
     end
 
