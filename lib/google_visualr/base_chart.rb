@@ -19,10 +19,10 @@ module GoogleVisualr
       @options = stringify_keys!(options)
     end
 
-    # Generates JavaScript and renders the visualization in the final HTML output.
+    # Generates JavaScript and renders the Google Chart in the final HTML output.
     #
     # Parameters:
-    #  *div_id            [Required] The ID of the DIV element that the visualization should be rendered in.
+    #  *div_id            [Required] The ID of the DIV element that the Google Chart should be rendered in.
     def to_js(element_id)
       js  = "\n<script type='text/javascript'>"
       js << "\n  google.load('visualization','1', {packages: ['#{package_name}'], callback: function() {"

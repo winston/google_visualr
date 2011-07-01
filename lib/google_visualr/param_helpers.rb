@@ -11,6 +11,7 @@ module GoogleVisualr
 
     def js_parameters(options)
       return "" if options.nil?
+
       attributes = options.collect { |(key, value)| "#{key}: #{typecast(value)}" }
       "{" + attributes.join(", ") + "}"
     end
@@ -21,7 +22,8 @@ module GoogleVisualr
     # If the column type is 'date'      , the value should be a Date object.
     # If the column type is 'datetime'  , the value should be a DateTime or Time object.
     # If the column type is 'timeofday' , the value should be an array of three or four numbers: [hour, minute, second, optional milliseconds].
-    # Returns 'null' when value is nil'
+    # Returns 'null' when value is nil.
+    # Recursive typecasting when value is a hash.
     def typecast(value)
       case
         when value.is_a?(String)

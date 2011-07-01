@@ -9,14 +9,14 @@ module GoogleVisualr
     # Constructors
     ##############################
     #
-    # GoogleVisualr::Interactive.new:
-    # Creates an empty visualization instance. Use add_columns, add_rows and set_value or set_cell methods to populate the visualization.
+    # GoogleVisualr::DataTable.new
+    # Creates an empty data_table instance. Use new_column/s, add_row/s and set_cell methods to populate the data_table.
     #
-    # GoogleVisualr::Interactive.new(data object):
-    # creates a visualization by passing a JavaScript-string-literal like data object into the data parameter. This object can contain formatting options.
+    # GoogleVisualr::DataTable.new(data_object)
+    # Creates a data_table by passing a JavaScript-string-literal like data object into the data parameter. This object can contain formatting options.
     #
     ##############################
-    # Syntax Description of Data Object
+    # Syntax Description of a Data Object
     ##############################
     #
     # The data object consists of two required top-level properties, cols and rows.
@@ -63,7 +63,7 @@ module GoogleVisualr
       end
     end
 
-    # Adds a new column to the visualization.
+    # Adds a new column to the data_table.
     #
     # Parameters:
     #   * type            [Required] The data type of the data in the column. Supports the following string values:
@@ -73,22 +73,26 @@ module GoogleVisualr
     #     - 'datetime'  : Date object including the time. Example values: v:Date.parse('2010-01-01 14:20:25')
     #     - 'boolean'   : Boolean value ('true' or 'false'). Example values: v: true
     #   * label           [Optional] A string value that some visualizations display for this column. Example: label:'Height'
-    #   * id              [Optional] A unique (basic alphanumeric) string ID of the column. Be careful not to choose a JavaScript keyword. Example: id:'col_0'
+    #   * id              [Optional] A unique (basic alphanumeric) string ID of the column. Be careful not to choose a JavaScript keyword. Example: id:'col_1'
     def new_column(type, label="", id ="")
       @cols << { :type => type, :label => label, :id => id }
     end
 
-    # Adds multiple columns to the visualization.
+    # Adds multiple columns to the data_table.
     #
     # Parameters:
-    #   * columns         [Required] An array of column objects {:type, :label, :id}. Calls add_column for each column object.
+    #   * columns         [Required] An array of column objects {:type, :label, :id}. Calls new_column for each column object.
     def new_columns(columns)
       columns.each do |column|
         new_column(column[:type], column[:label], column[:id])
       end
     end
 
-    # Sets a column of cell values to the visualization, at column_index. column_index starts from 0.
+    # Sets a column in data_table, specified by column_index with an array of column_values. column_index starts from 0.
+    #
+    # Parameters
+    #   * column_index    [Required] The column to assign column_values. column_index starts from 0.
+    #   * column_values   [Required] An array of cell values.
     def set_column(column_index, column_values)
       if @rows.size < column_values.size
         1.upto(column_values.size - @rows.size) { @rows << Array.new }
@@ -99,12 +103,15 @@ module GoogleVisualr
       end
     end
 
-    # Gets a column of cell values from the visualization, at column_index. column_index starts from 0.
+    # Gets a column of cell values from the data_table, at column_index. column_index starts from 0.
+    #
+    # Parameters
+    #   * column_index    [Required] The column to retrieve column values. column_index starts from 0.
     def get_column(column_index)
       @rows.transpose[column_index].collect(&:v)
     end
 
-    # Adds a new row to the visualization.
+    # Adds a new row to the data_table.
     # Call method without any parameters to add an empty row, otherwise, call method with a row object.
     #
     # Parameters:
@@ -121,7 +128,7 @@ module GoogleVisualr
       end
     end
 
-    # Adds multiple rows to the visualization. You can call this method with data to populate a set of new rows or create new empty rows.
+    # Adds multiple rows to the data_table. You can call this method with data to populate a set of new rows or create new empty rows.
     #
     # Parameters:
     #   * array_or_num    [Required] Either an array or a number.
@@ -139,17 +146,23 @@ module GoogleVisualr
       end
     end
 
-    # Gets a row of cell values from the visualization, at row_index. row_index starts from 0.
+    # Gets a row of cell values from the data_table, at row_index. row_index starts from 0.
+    #
+    # Parameters
+    #   * row_index       [Required] The row to retrieve row values. row_index starts from 0.
     def get_row(row_index)
       @rows[row_index].collect(&:v)
     end
 
-    # Sets the value and/or formatted value of a cell.
+    # Sets the value (and formatted value) of a cell.
     #
     # Parameters:
     #   * row_index       [Required] A number greater than or equal to zero, but smaller than the total number of rows.
     #   * column_index    [Required] A number greater than or equal to zero, but smaller than the total number of columns.
-    #   * value           [Required] The cell value. Either a value, or a cell object.
+    #   * value           [Required] The cell value.
+    #                       The data type should match the column data type.
+    #                       You can specify a value for a cell (e.g. 'hi').
+    #                       Or specify a formatted value using cell objects (e.g. {v:55, f:'Fifty-five'}).
     def set_cell(row_index, column_index, value)
       if within_range?(row_index, column_index)
         verify_against_column_type( @cols[column_index][:type], value )
@@ -160,6 +173,10 @@ module GoogleVisualr
     end
 
     # Gets a cell value from the visualization, at row_index, column_index. row_index and column_index start from 0.
+    #
+    # Parameters:
+    #   * row_index       [Required] row_index starts from 0.
+    #   * column_index    [Required] column_index starts from 0.
     def get_cell(row_index, column_index)
       if within_range?(row_index, column_index)
         @rows[row_index][column_index].v
@@ -168,7 +185,7 @@ module GoogleVisualr
       end
     end
 
-    # Applies one or more formatters to the visualization to format the columns as specified by the formatter/s.
+    # Applies one or more formatters to the data_table to format the columns as specified by the formatter/s.
     #
     # Parameters:
     #   * formatter/s     [Required] One, or an array of formatters.
@@ -177,6 +194,7 @@ module GoogleVisualr
       @formatters  += formatters
     end
 
+    # Returns the JavaScript equivalent for this data_table instance.
     def to_js
       js = "var data_table = new google.visualization.DataTable();"
 
@@ -198,28 +216,6 @@ module GoogleVisualr
 
       js
     end
-
-# Rails 3 has built-in CSV support 
-#    def to_csv(*args)
-#
-#      options = args.pop
-#
-#      csv = FasterCSV.generate( { :force_quotes => true } ) do |file|
-#
-#              file << options[:prefix] if options && !options[:prefix].nil?
-#
-#              file << @columns.collect { |column| column[:label] }
-#              @rows.each do |row|
-#                file << row
-#              end
-#
-#              file << options[:suffix] if options && !options[:suffix].nil?
-#
-#            end
-#
-#      csv
-#
-#    end
 
     private
 
@@ -270,6 +266,7 @@ module GoogleVisualr
         js << ", f: '#{@f}'"  unless @f.nil?
         js << ", p: #{@p}"    unless @p.nil?
         js << "}"
+
         js
       end
 

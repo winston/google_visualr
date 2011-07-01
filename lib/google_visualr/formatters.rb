@@ -1,6 +1,6 @@
 module GoogleVisualr
 
-  # http://code.google.com/apis/visualization/documentation/reference.html#formatters
+  # http://code.google.com/apis/chart/interactive/docs/reference.html#formatters
   class Formatter
     include GoogleVisualr::ParamHelpers
 
@@ -33,13 +33,13 @@ module GoogleVisualr
 
   end
 
-  class ArrowFormat < Formatter
+  class ArrowFormat  < Formatter
   end
 
-  class BarFormat   < Formatter
+  class BarFormat    < Formatter
   end
 
-  class ColorFormat < Formatter
+  class ColorFormat  < Formatter
 
     attr_accessor :ranges
     attr_accessor :gradient_ranges
@@ -69,7 +69,7 @@ module GoogleVisualr
     end
   end
 
-  class DateFormat  < Formatter
+  class DateFormat   < Formatter
   end
 
   class NumberFormat < Formatter

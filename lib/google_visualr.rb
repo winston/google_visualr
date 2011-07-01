@@ -3,6 +3,7 @@ lib_path = File.dirname(__FILE__)
 # Common
 require "#{lib_path}/google_visualr/param_helpers"
 
+# Base Classes
 require "#{lib_path}/google_visualr/data_table"
 
 require "#{lib_path}/google_visualr/packages"
@@ -10,7 +11,7 @@ require "#{lib_path}/google_visualr/base_chart"
 
 require "#{lib_path}/google_visualr/formatters"
 
-# Interactive Charts (Previously known as Visualizations)
+# Interactive Charts
 
 ## Main
 require "#{lib_path}/google_visualr/interactive/area_chart"

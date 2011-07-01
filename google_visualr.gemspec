@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ["winston.yongwei+google_visualr@gmail.com"]
   s.homepage    = "https://github.com/winston/google_visualr"
   s.summary     = "Ruby wrapper around the Google Visualization API."
-  s.description = "This Ruby library, GoogleVisualr, is a wrapper around the Google Visualization API and allows you to create the same visualizations with just pure Ruby; you don’t have to write any JavaScript at all."
+  s.description = "This Ruby gem, GoogleVisualr, is a wrapper around the Google Chart Tools that allows anyone to create the same beautiful charts with just Ruby; you don't have to write any JavaScript at all."
   s.extra_rdoc_files = ["README.rdoc"]
 
   s.required_rubygems_version = ">= 1.3.6"

@@ -1,92 +1,88 @@
 = Overview
 
-This Ruby library, GoogleVisualr, is a wrapper around the {Google Visualization API}[http://code.google.com/apis/visualization/documentation/] and allows you to create the same visualizations with just pure Ruby;
-you don't have to write any JavaScript at all.
+This Ruby gem, GoogleVisualr, is a wrapper around the {Google Chart Tools}[http://code.google.com/apis/chart/interactive/docs/index.html] that allows anyone to create the same beautiful charts with just Ruby; you don't have to write any JavaScript at all.
 
 Good for any Ruby on Rails setup whereby you prefer to work your logic in models or controllers.
 
-Please refer to the {GoogleVisualr reference site}[http://googlevisualr.heroku.com/] for a complete list of visualizations that you can create with GoogleVisualr.
+Please refer to the {GoogleVisualr API Reference site}[http://googlevisualr.heroku.com/] for a complete list of Google charts that you can create with GoogleVisualr.
+
+== Differences Between Gem and Plugin
+
 
 == The Gist
 
-* In your model or controller, write Ruby code to create your visualization (e.g. Area Chart, Bar Chart, even Spark Lines etc).
-* Configure your visualization with all the options as listed in Google Visualization API Docs. E.g. {Area Chart's configuration options}[http://code.google.com/apis/chart/interactive/docs/gallery/areachart.html#Configuration_Options].
-* In your view, just call a <em>visualization.render(div_id)</em> method that will magically generate and insert JavaScript into the final HTML output.
-* You get your visualization, and you didn't write any JavaScript!
+* In your model or controller, write Ruby code to create your chart (e.g. Area Chart, Bar Chart, even Spark Lines etc).
+* Configure your chart with any of the options as listed in Google Chart Tools' API Docs. E.g. {Area Chart's Configuration Options}[http://code.google.com/apis/chart/interactive/docs/gallery/areachart.html#Configuration_Options].
+* In your view, invoke a <em>chart.to_js(div_id)</em> method and that will magically generate and insert JavaScript into the final HTML output.
+* You get your awesome Google chart, and you didn't write any JavaScript!
 
 == Limitations
 
-Do note that GoogleVisualr is not a 100% complete wrapper for the Google Visualization API. These are not implemented for sake of simplicity:
-* JavaScript Methods for use after a visualization has been rendered in a view. E.g. {Area Chart's methods}[http://code.google.com/apis/chart/interactive/docs/gallery/areachart.html#Methods].
-* JavaScript Events for use after a visualization has been rendered in a view. E.g. {Area Chart's events}[http://code.google.com/apis/chart/interactive/docs/gallery/areachart.html#Events].
-* Visualizations not created by Google, and a few image-only charts.
+GoogleVisualr is created solely for the aim of simplifying the display of a chart, and not the interactions.
+
+Hence, do note that GoogleVisualr is not a 100% complete wrapper for Google Chart Tools.
+
+For example, Methods and Events as described in Google Chart Tools' API Docs, for use after a chart has been rendered, are not implemented because they felt more native being written as JavaScript functions, within views or .js files.
 
 = Install
 
-Just install the GitHub repository into your app/vendor/plugin folder.
+Assuming you are on Rails 3, include the gem in your Gemfile.
 
-  > rails my_app; cd my_app;
-  > script/plugin install git://github.com/winston/google_visualr.git
+  gem "google_visualr", ">= 2.0"
 
 = Basics
 
-This section describes a basic implementation of the GoogleVisualr::AreaChart class.
+This section describes a basic implementation of the GoogleVisualr::DataTable and GoogleVisualr::AreaChart classes.
 
-Please review the {Docs}[http://googlevisualr.heroku.com/docs] for detailed documentation and advanced implementation of constructors and methods.
+For detailed documentation and advanced implementations, please refer to the {GoogleVisualr API Reference site}[http://googlevisualr.heroku.com/] or read the source.
+
 ---
 
 In your Rails layout, load Google Ajax API in the head tag, at the very top.
 
   <script src='http://www.google.com/jsapi'></script>
 
-In your Rails controller, initialize a visualization (area chart) with an empty constructor.
+In your Rails controller, initialize a GoogleVisualr::DataTable object with an empty constructor.
 
-  @chart = GoogleVisualr::AreaChart.new
+  data_table = GoogleVisualr::DataTable.new
 
-Populate visualization with column headers, and row values.
+Populate data_table with column headers, and row values.
 
   # Add Column Headers
-  @chart.add_column('string', 'Year' )
-  @chart.add_column('number', 'Sales')
-  @chart.add_column('number', 'Expenses')
+  data_table.new_column('string', 'Year' )
+  data_table.new_column('number', 'Sales')
+  data_table.new_column('number', 'Expenses')
 
   # Add Rows and Values
-  @chart.add_rows(4)
-  @chart.set_value(0, 0, '2004')
-  @chart.set_value(0, 1, 1000)
-  @chart.set_value(0, 2, 400)
-  @chart.set_value(1, 0, '2005')
-  @chart.set_value(1, 1, 1170)
-  @chart.set_value(1, 2, 460)
-  @chart.set_value(2, 0, '2006')
-  @chart.set_value(2, 1, 1500)
-  @chart.set_value(2, 2, 660)
-  @chart.set_value(3, 0, '2007')
-  @chart.set_value(3, 1, 1030)
-  @chart.set_value(3, 2, 540)
+  data_table.add_rows([
+    ['2004', 1000, 400],
+    ['2005', 1170, 460],
+    ['2006', 660, 1120],
+    ['2007', 1030, 540]
+  ])
 
-Configure visualization with options.
+Create a GoogleVisualr::AreaChart with data_table and configuration options.
 
-  @chart.width = 400
-  @chart.height = 240
+  option = { width: 400, height: 240, title: 'Company Performance' }
+  @chart = GoogleVisualr::Interactive::AreaChart.new(data_table, option)
 
-In your Rails view, render visualization.
+In your Rails view, render the Google chart.
 
   <div id='chart'></div>
-  <%= @chart.render('chart') %>
+  <%= raw @chart.to_js('chart') %>
 
 = Support
 
-Please submit all feedback, bugs and feature-requests to {GitHub Issues Tracker}[http://github.com/winston/google_visualr/issues].
+Please feel free to fork the project, make improvements or bug fixes and submit pull requests. Ideally, all pull requests should also come with tests!
 
-Please also feel free to clone/fork the project, and improve it further!
+Please submit all feedback, bugs and feature-requests to {GitHub Issues Tracker}[http://github.com/winston/google_visualr/issues].
 
 = Author
 
-GoogleVisualr is maintained by {Winston Teo}[mailto:winstonyw+googlevisualr@gmail.com], and his Ninja Penguin.
+GoogleVisualr is maintained by {Winston Teo}[mailto:winstonyw+googlevisualr@gmail.com].
 
-Who is Winston Teo? Find out more on {WinstonYW}[http://www.winstonyw.com], {LinkedIn}[http://sg.linkedin.com/in/winstonyw], or {follow Winston on Twitter}[http://www.twitter.com/winstonyw].
+Who is Winston Teo? {You should follow Winston on Twitter}[http://www.twitter.com/winstonyw], or find out more on {WinstonYW}[http://www.winstonyw.com] and {LinkedIn}[http://sg.linkedin.com/in/winstonyw].
 
 = License
 
-Copyright © 2010 Winston Teo Yong Wei. Free software, released under the MIT license.
+Copyright © 2011 Winston Teo Yong Wei. Free software, released under the MIT license.
