@@ -181,18 +181,18 @@ module GoogleVisualr
       js = "var data_table = new google.visualization.DataTable();"
 
       @cols.each do |column|
-        js += "data_table.addColumn('#{column[:type]}', '#{column[:label]}', '#{column[:id]}');"
+        js << "data_table.addColumn('#{column[:type]}', '#{column[:label]}', '#{column[:id]}');"
       end
 
       @rows.each do |row|
-        js += "data_table.addRow("
-        js += "[ #{row.collect { |cell| cell.to_js }.join(", ")} ]" unless row.empty?
-        js += ");"
+        js << "data_table.addRow("
+        js << "[ #{row.collect { |cell| cell.to_js }.join(", ")} ]" unless row.empty?
+        js << ");"
       end
 
       if @formatters
         @formatters.each do |formatter|
-          js += formatter.to_js
+          js << formatter.to_js
         end
       end
 
@@ -266,10 +266,10 @@ module GoogleVisualr
 
       def to_js
         js  = "{"
-        js += "v: #{typecast(@v)}"
-        js += ", f: '#{@f}'"  unless @f.nil?
-        js += ", p: #{@p}"    unless @p.nil?
-        js += "}"
+        js << "v: #{typecast(@v)}"
+        js << ", f: '#{@f}'"  unless @f.nil?
+        js << ", p: #{@p}"    unless @p.nil?
+        js << "}"
         js
       end
 

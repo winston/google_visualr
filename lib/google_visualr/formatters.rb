@@ -18,17 +18,17 @@ module GoogleVisualr
     end
 
     def to_js(&block)
-      script   = "\nvar formatter = new google.visualization.#{self.class.to_s.split('::').last}("
-      script  <<  js_parameters(@options)
-      script  << ");"
+      js   = "\nvar formatter = new google.visualization.#{self.class.to_s.split('::').last}("
+      js  <<  js_parameters(@options)
+      js  << ");"
 
-      yield script if block_given?
+      yield js if block_given?
 
       @columns.each do |column|
-       script << "\nformatter.format(data_table, #{column});"
+       js << "\nformatter.format(data_table, #{column});"
       end
 
-      script
+      js
     end
 
   end
@@ -58,13 +58,12 @@ module GoogleVisualr
     end
 
     def to_js
-      super do |script|
+      super do |js|
         @ranges.each do |r|
-          script << "\nformatter.addRange(#{typecast(r[:from])}, #{typecast(r[:to])}, '#{r[:color]}', '#{r[:bgcolor]}');"
+          js << "\nformatter.addRange(#{typecast(r[:from])}, #{typecast(r[:to])}, '#{r[:color]}', '#{r[:bgcolor]}');"
         end
-
         @gradient_ranges.each do |r|
-          script << "\nformatter.addGradientRange(#{typecast(r[:from])}, #{typecast(r[:to])}, '#{r[:color]}', '#{r[:fromBgColor]}', '#{r[:toBgColor]}');"
+          js << "\nformatter.addGradientRange(#{typecast(r[:from])}, #{typecast(r[:to])}, '#{r[:color]}', '#{r[:fromBgColor]}', '#{r[:toBgColor]}');"
         end
       end
     end
