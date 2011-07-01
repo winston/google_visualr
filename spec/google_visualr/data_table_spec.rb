@@ -100,7 +100,7 @@ describe GoogleVisualr::DataTable do
 
     describe "#add_row" do
       context "when param is empty" do
-        it "adds an empty row to the visualization" do
+        it "adds an empty row to the data_table" do
           @dt.add_row
           @dt.rows.size.should == 1
           @dt.rows[0].should be_empty
@@ -108,7 +108,7 @@ describe GoogleVisualr::DataTable do
       end
 
       context "when param is not empty" do
-        it "adds the row values to the visualization" do
+        it "adds the row values to the data_table" do
           @dt.add_row([1, 'A'])
           @dt.rows.size.should == 1
           @dt.rows[0][0].v.should == 1
@@ -120,7 +120,7 @@ describe GoogleVisualr::DataTable do
 
     describe "#add_rows" do
       context "when param is number" do
-        it "adds x number of empty rows to the visualization" do
+        it "adds x number of empty rows to the data_table" do
           @dt.add_rows(2)
           @dt.rows.size.should == 2
           @dt.rows[0].should be_empty
@@ -129,7 +129,7 @@ describe GoogleVisualr::DataTable do
       end
 
       context "when param is an array" do
-        it "adds the rows to the visualization" do
+        it "adds the rows to the data_table" do
           @dt.add_rows( [ [1, 'A'], [2, 'B'] ] )
           @dt.rows.size.should == 2
 
