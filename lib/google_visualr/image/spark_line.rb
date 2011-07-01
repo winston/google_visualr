@@ -2,7 +2,9 @@ module GoogleVisualr
   module Image
 
     # http://code.google.com/apis/visualization/documentation/gallery/imagesparkline.html
-    class ImageSparkLine < BaseChart
+    class SparkLine < BaseChart
+      include GoogleVisualr::Packages::ImageChart
+
       # For Configuration Options, please refer to:
       # http://code.google.com/apis/visualization/documentation/gallery/imagesparkline.html#Configuration_Options
     end
