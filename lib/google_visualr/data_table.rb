@@ -190,6 +190,10 @@ module GoogleVisualr
         js += ");"
       end
 
+      @formatters.each do |formatter|
+        js += formatter.to_js
+      end
+
       js
     end
 
