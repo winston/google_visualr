@@ -1,6 +1,0 @@
-gem it
-test inclusion of gem.
-
-upgrade to rails 3.1
-
-branch off a stable b4 merging.
