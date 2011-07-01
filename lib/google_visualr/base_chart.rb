@@ -35,12 +35,6 @@ module GoogleVisualr
       js
     end
 
-    private
-
-    def class_name
-      self.class.to_s.split('::').last
-    end
-
   end
 
 end
