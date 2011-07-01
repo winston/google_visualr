@@ -15,13 +15,16 @@ require "#{lib_path}/google_visualr/formatters"
 ## Main
 require "#{lib_path}/google_visualr/interactive/area_chart"
 require "#{lib_path}/google_visualr/interactive/bar_chart"
+require "#{lib_path}/google_visualr/interactive/candlestick_chart"
 require "#{lib_path}/google_visualr/interactive/column_chart"
+require "#{lib_path}/google_visualr/interactive/combo_chart"
 require "#{lib_path}/google_visualr/interactive/gauge"
 require "#{lib_path}/google_visualr/interactive/geo_chart"
 require "#{lib_path}/google_visualr/interactive/line_chart"
 require "#{lib_path}/google_visualr/interactive/pie_chart"
 require "#{lib_path}/google_visualr/interactive/scatter_chart"
 require "#{lib_path}/google_visualr/interactive/table"
+require "#{lib_path}/google_visualr/interactive/treemap"
 
 ## Additional
 require "#{lib_path}/google_visualr/interactive/annotated_time_line"
