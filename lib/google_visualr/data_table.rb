@@ -75,7 +75,7 @@ module GoogleVisualr
     #     - 'boolean'   : Boolean value ('true' or 'false'). Example values: v: true
     #   * label           [Optional] A string value that some visualizations display for this column. Example: label:'Height'
     #   * id              [Optional] A unique (basic alphanumeric) string ID of the column. Be careful not to choose a JavaScript keyword. Example: id:'col_1'
-    def new_column(type, label="", id ="")
+    def new_column(type, label=nil, id =nil)
       @cols << { :type => type, :label => label, :id => id }
     end
 
@@ -200,12 +200,16 @@ module GoogleVisualr
       js = "var data_table = new google.visualization.DataTable();"
 
       @cols.each do |column|
-        js << "data_table.addColumn('#{column[:type]}', '#{column[:label]}', '#{column[:id]}');"
+        js << "data_table.addColumn('"
+        js << "#{column[:type]}'"
+        js << ", '#{column[:label]}'" unless column[:label].nil?
+        js << ", '#{column[:id]}'"    unless column[:id].nil?
+        js << ");"
       end
 
       @rows.each do |row|
         js << "data_table.addRow("
-        js << "[ #{row.collect { |cell| cell.to_js }.join(", ")} ]" unless row.empty?
+        js << "[#{row.collect { |cell| cell.to_js }.join(", ")}]" unless row.empty?
         js << ");"
       end
 

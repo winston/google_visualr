@@ -48,7 +48,7 @@ describe GoogleVisualr::DataTable do
     it "initializes a new column with only type param" do
       dt = GoogleVisualr::DataTable.new
       dt.new_column('string')
-      dt.cols.first.should == {:id => '', :label => '', :type => 'string'}
+      dt.cols.first.should == {:id => nil, :label => nil, :type => 'string'}
     end
 
     it "initializes a new column with all params" do
@@ -208,6 +208,24 @@ describe GoogleVisualr::DataTable do
   end
 
   describe "#to_js" do
+    context "cols" do
+      it "includes :id and :label when these are specified" do
+        data_table = GoogleVisualr::DataTable.new()
+        data_table.new_column("Total", "Total", "1")
+        data_table.add_row([1])
+
+        data_table.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn('Total', 'Total', '1');data_table.addRow([{v: 1}]);"
+      end
+
+      it "excludes :id and :label when these are not specified" do
+        data_table = GoogleVisualr::DataTable.new()
+        data_table.new_column("Total")
+        data_table.add_row([1])
+
+        data_table.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn('Total');data_table.addRow([{v: 1}]);"
+      end
+    end
+
     it "converts object to js string" do
       dt = valid_object
       js = dt.to_js
