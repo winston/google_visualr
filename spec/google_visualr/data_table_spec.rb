@@ -221,14 +221,14 @@ describe GoogleVisualr::DataTable do
     describe "#new" do
       it "initializes with a value" do
         cell = GoogleVisualr::DataTable::Cell.new(1)
-        cell.v.should == 1 
+        cell.v.should == 1
       end
 
       it "initializes with a hash" do
-        cell = GoogleVisualr::DataTable::Cell.new({:v => 1, :f => "1.0", :p => "{style: 'border: 1px solid green;'}"})
+        cell = GoogleVisualr::DataTable::Cell.new( { :v => 1, :f => "1.0", :p => {:style => 'border: 1px solid green;'} } )
         cell.v.should == 1
         cell.f.should == "1.0"
-        cell.p.should == "{style: 'border: 1px solid green;'}"
+        cell.p.should == {:style => 'border: 1px solid green;'}
       end
     end
 
@@ -242,7 +242,7 @@ describe GoogleVisualr::DataTable do
 
       context "initialized with a hash" do
         it "returns a json string" do
-          cell = GoogleVisualr::DataTable::Cell.new({:v => 1, :f => "1.0", :p => "{style: 'border: 1px solid green;'}"})
+          cell = GoogleVisualr::DataTable::Cell.new( { :v => 1, :f => "1.0", :p => {:style => 'border: 1px solid green;'} } )
           cell.to_js.should == "{v: 1, f: '1.0', p: {style: 'border: 1px solid green;'}}"
         end
       end

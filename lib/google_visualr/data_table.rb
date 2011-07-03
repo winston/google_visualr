@@ -43,6 +43,7 @@ module GoogleVisualr
     #
     #   * v               [Optional] The cell value. The data type should match the column data type.
     #   * f               [Optional] A string version of the v value, formatted strictly for display only. If omitted, a string version of v will be used.
+    #   * p               [Optional] An object that is a map of custom values applied to the cell. Example: :p => { :style => 'border: 1px solid green;' }.
     #
     #   Cells in the row array should be in the same order as their column descriptions in cols.
     #
@@ -263,8 +264,8 @@ module GoogleVisualr
       def to_js
         js  = "{"
         js << "v: #{typecast(@v)}"
-        js << ", f: '#{@f}'"  unless @f.nil?
-        js << ", p: #{@p}"    unless @p.nil?
+        js << ", f: '#{@f}'"          unless @f.nil?
+        js << ", p: #{typecast(@p)}"  unless @p.nil?
         js << "}"
 
         js
