@@ -241,7 +241,6 @@ module GoogleVisualr
       end
     end
 
-
     class Cell
       include GoogleVisualr::ParamHelpers
 
@@ -262,6 +261,8 @@ module GoogleVisualr
       end
 
       def to_js
+        return "null" if @v.nil? && @f.nil? && @p.nil?
+
         js  = "{"
         js << "v: #{typecast(@v)}"
         js << ", f: '#{@f}'"          unless @f.nil?

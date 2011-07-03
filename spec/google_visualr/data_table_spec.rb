@@ -238,12 +238,22 @@ describe GoogleVisualr::DataTable do
           cell = GoogleVisualr::DataTable::Cell.new(1)
           cell.to_js.should == "{v: 1}"
         end
+
+        it "returns 'null' when v is nil" do
+          cell = GoogleVisualr::DataTable::Cell.new(nil)
+          cell.to_js.should == "null"
+        end
       end
 
       context "initialized with a hash" do
-        it "returns a json string" do
+        it "returns a json string when v is present" do
           cell = GoogleVisualr::DataTable::Cell.new( { :v => 1, :f => "1.0", :p => {:style => 'border: 1px solid green;'} } )
           cell.to_js.should == "{v: 1, f: '1.0', p: {style: 'border: 1px solid green;'}}"
+        end
+
+        it "returns a json string when v is nil" do
+          cell = GoogleVisualr::DataTable::Cell.new( { :v => nil, :f => "-", :p => {:style => 'border: 1px solid red;'} } )
+          cell.to_js.should == "{v: null, f: '-', p: {style: 'border: 1px solid red;'}}"
         end
       end
     end
