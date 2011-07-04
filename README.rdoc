@@ -1,3 +1,7 @@
+= Important
+
+This GoogleVisualr plugin is no longer supported. Please use the newer and better GoogleVisualr gem (master branch) instead.
+
 = Overview
 
 This Ruby library, GoogleVisualr, is a wrapper around the {Google Visualization API}[http://code.google.com/apis/visualization/documentation/] and allows you to create the same visualizations with just pure Ruby;
