@@ -232,6 +232,8 @@ module GoogleVisualr
       v = value.is_a?(Hash) ? value[:v] : value
 
       case
+        when v.nil?
+          return
         when type == "string"
           raise ArgumentError, "cell value '#{v}' is not a String", caller              unless v.is_a?(String)
         when type == "number"

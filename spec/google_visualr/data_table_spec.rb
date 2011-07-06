@@ -187,6 +187,16 @@ describe GoogleVisualr::DataTable do
           @dt.set_cell(0, 1, 1234)
         }.to raise_exception(ArgumentError)
       end
+
+      it "accepts 'nil' for all column types" do
+        expect {
+          @dt.set_cell(0, 0, nil)
+        }.to_not raise_exception(ArgumentError)
+
+        expect {
+          @dt.set_cell(0, 1, nil)
+        }.to_not raise_exception(ArgumentError)
+      end
     end
 
     describe "#get_cell" do
