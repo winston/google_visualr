@@ -26,7 +26,7 @@ require "#{lib_path}/google_visualr/interactive/line_chart"
 require "#{lib_path}/google_visualr/interactive/pie_chart"
 require "#{lib_path}/google_visualr/interactive/scatter_chart"
 require "#{lib_path}/google_visualr/interactive/table"
-require "#{lib_path}/google_visualr/interactive/treemap"
+require "#{lib_path}/google_visualr/interactive/tree_map"
 
 ## Additional
 require "#{lib_path}/google_visualr/interactive/annotated_time_line"
