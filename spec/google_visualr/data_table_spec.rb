@@ -155,17 +155,17 @@ describe GoogleVisualr::DataTable do
   context "cell value" do
     before do
       @dt = GoogleVisualr::DataTable.new
-      @dt.new_columns( [ {:type => 'number'}, {:type => 'string'} ] )
+      @dt.new_columns( [ {:type => 'string'}, {:type => 'number'}, {:type => 'boolean'}, {:type => 'datetime'}, {:type => 'date'} ] )
       @dt.add_row
     end
 
 
     describe "#set_cell" do
       it "sets cell" do
-        @dt.set_cell(0, 0, 1000)
-        @dt.set_cell(0, 1, 'ABCD')
+        @dt.set_cell(0, 0, {:v => 'ABCD'})
+        @dt.set_cell(0, 1, 1000)
 
-        @dt.get_row(0).should == [1000, 'ABCD']
+        @dt.get_row(0).should == ['ABCD', 1000]
       end
 
       it "raises an exception if the row_index or column_index specified is out of range" do
@@ -178,31 +178,45 @@ describe GoogleVisualr::DataTable do
         }.to raise_exception(RangeError)
       end
 
-      it "raises an exception if the value does not correspond to its column type" do
-        expect {
-          @dt.set_cell(0, 0, 'ABCD')
-        }.to raise_exception(ArgumentError)
+      describe "#verify_against_column_type" do
+        def assert_raises_exception(col, value)
+          expect {
+            @dt.set_cell(0, col, value)
+          }.to raise_exception(ArgumentError)
+        end
 
-        expect {
-          @dt.set_cell(0, 1, 1234)
-        }.to raise_exception(ArgumentError)
+        it "raises an exception if value is not string" do
+          assert_raises_exception(0, 1234)
+        end
+
+        it "raises an exception if value is not number" do
+          assert_raises_exception(1, 'ABCD')
+        end
+
+        it "raises an exception if value is not boolean" do
+          assert_raises_exception(2, 'ABCD')
+        end
+
+        it "raises an exception if value is not datetime or time" do
+          assert_raises_exception(3, 'ABCD')
+        end
+
+        it "raises an exception if value is not date" do
+          assert_raises_exception(4, 'ABCD')
+        end
       end
 
       it "accepts 'nil' for all column types" do
         expect {
           @dt.set_cell(0, 0, nil)
         }.to_not raise_exception(ArgumentError)
-
-        expect {
-          @dt.set_cell(0, 1, nil)
-        }.to_not raise_exception(ArgumentError)
       end
     end
 
     describe "#get_cell" do
       it "gets cell" do
-        @dt.set_cell(0, 0, 1000)
-        @dt.get_cell(0, 0).should == 1000
+        @dt.set_cell(0, 0, 'ABCD')
+        @dt.get_cell(0, 0).should == 'ABCD'
       end
 
       it "raises an exception if the row_index or column_index specified is out of range" do

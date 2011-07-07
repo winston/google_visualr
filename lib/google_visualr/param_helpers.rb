@@ -32,10 +32,10 @@ module GoogleVisualr
           return value
         when value.is_a?(TrueClass) || value.is_a?(FalseClass)
           return "#{value}"
-        when value.is_a?(Date)
-          return "new Date(#{value.year}, #{value.month-1}, #{value.day})"
         when value.is_a?(DateTime)  ||  value.is_a?(Time)
           return "new Date(#{value.year}, #{value.month-1}, #{value.day}, #{value.hour}, #{value.min}, #{value.sec})"
+        when value.is_a?(Date)
+          return "new Date(#{value.year}, #{value.month-1}, #{value.day})"
         when value.nil?
           return "null"
         when value.is_a?(Hash)

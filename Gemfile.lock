@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    google_visualr (2.0.3)
+    google_visualr (2.0.4)
 
 GEM
   remote: http://rubygems.org/
