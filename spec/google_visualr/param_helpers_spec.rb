@@ -31,6 +31,11 @@ describe "GoogleVisualr::ParamsHelper" do
       options = @klass.js_parameters(nil)
       options.should == ""
     end
+    
+    it "returns array of strings for array" do
+      options = @klass.js_parameters({:colors => ['a', 'b']})
+      options.should == "{colors: ['a','b']}"
+    end
   end
 
   describe "#typecast" do
