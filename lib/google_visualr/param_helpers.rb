@@ -22,6 +22,7 @@ module GoogleVisualr
     # If the column type is 'date'      , the value should be a Date object.
     # If the column type is 'datetime'  , the value should be a DateTime or Time object.
     # If the column type is 'timeofday' , the value should be an array of three or four numbers: [hour, minute, second, optional milliseconds].
+    # Returns an array of strings if given an array
     # Returns 'null' when value is nil.
     # Recursive typecasting when value is a hash.
     def typecast(value)
@@ -38,6 +39,8 @@ module GoogleVisualr
           return "new Date(#{value.year}, #{value.month-1}, #{value.day})"
         when value.nil?
           return "null"
+        when value.is_a?(Array)
+          return "[" + value.map{|v| typecast(v) }.join(',') + "]"
         when value.is_a?(Hash)
           return js_parameters(value)
         else

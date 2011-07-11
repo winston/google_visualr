@@ -74,6 +74,10 @@ describe "GoogleVisualr::ParamsHelper" do
       assert_equal(nil, "null")
     end
 
+    it "returns array of strings" do
+      assert_equal({:colors => ['a', 'b']}, "{colors: ['a','b']}")
+    end
+
     it "recursively calls js_parameters" do
       assert_equal({:a => {:b => {:c => 1}}}, "{a: {b: {c: 1}}}")
     end
