@@ -31,11 +31,6 @@ describe "GoogleVisualr::ParamsHelper" do
       options = @klass.js_parameters(nil)
       options.should == ""
     end
-    
-    it "returns array of strings for array" do
-      options = @klass.js_parameters({:colors => ['a', 'b']})
-      options.should == "{colors: ['a','b']}"
-    end
   end
 
   describe "#typecast" do
@@ -77,6 +72,10 @@ describe "GoogleVisualr::ParamsHelper" do
 
     it "returns null" do
       assert_equal(nil, "null")
+    end
+
+    it "returns array of strings" do
+      assert_equal({:colors => ['a', 'b']}, "{colors: ['a','b']}")
     end
 
     it "recursively calls js_parameters" do

@@ -40,7 +40,7 @@ module GoogleVisualr
         when value.nil?
           return "null"
         when value.is_a?(Array)
-          return "[" + value.map{|v| "'" + v + "'" }.join(',') + "]"          
+          return "[" + value.map{|v| typecast(v) }.join(',') + "]"
         when value.is_a?(Hash)
           return js_parameters(value)
         else
