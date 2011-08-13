@@ -38,3 +38,6 @@ require "#{lib_path}/google_visualr/interactive/org_chart"
 # Image Charts
 require "#{lib_path}/google_visualr/image/spark_line"
 
+
+# Rails Helper
+require "#{lib_path}/google_visualr/rails/railtie.rb" if defined?(Rails)
