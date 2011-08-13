@@ -40,4 +40,4 @@ require "#{lib_path}/google_visualr/image/spark_line"
 
 
 # Rails Helper
-require "#{lib_path}/google_visualr/rails/railtie.rb" if defined?(Rails)
+require "#{lib_path}/google_visualr/app/railtie.rb" if defined?(Rails)
