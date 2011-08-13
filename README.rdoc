@@ -43,7 +43,7 @@ For example, Methods and Events as described in Google Chart Tools' API Docs, fo
 
 Assuming you are on Rails 3, include the gem in your Gemfile.
 
-  gem "google_visualr", ">= 2.0"
+  gem "google_visualr", ">= 2.1"
 
 = Basics
 
@@ -84,13 +84,18 @@ Create a GoogleVisualr::AreaChart with data_table and configuration options.
 In your Rails view, render the Google chart.
 
   <div id='chart'></div>
-  <%= raw @chart.to_js('chart') %>
+  <%= render_chart(@chart, 'chart') %>
 
 = Support
 
 Please feel free to fork the project, make improvements or bug fixes and submit pull requests. Ideally, all pull requests should also come with tests!
 
 Please submit all feedback, bugs and feature-requests to {GitHub Issues Tracker}[http://github.com/winston/google_visualr/issues].
+
+= Change Log
+
+*Version 2.1.0*
+* Added `#render_chart` as a helper method in Rails views.
 
 = Author
 
