@@ -14,7 +14,7 @@ describe "ApplicationController" do
 
     it "returns html_safe javascript" do
       controller = ApplicationController.new
-      js = controller.render_chart "div_chart", base_chart
+      js = controller.render_chart base_chart, "div_chart"
       js.should == base_chart_js("div_chart")
     end
 
