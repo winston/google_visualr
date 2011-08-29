@@ -95,7 +95,7 @@ Please submit all feedback, bugs and feature-requests to {GitHub Issues Tracker}
 = Change Log
 
 <em>Version 2.1.0</em>
-* Added <code>#render_chart</code> as a helper method in Rails views.
+* Added +#render_chart+ as a helper method in Rails views.
 
 = Author
 
