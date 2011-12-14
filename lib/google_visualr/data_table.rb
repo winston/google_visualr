@@ -75,17 +75,18 @@ module GoogleVisualr
     #     - 'boolean'   : Boolean value ('true' or 'false'). Example values: v: true
     #   * label           [Optional] A string value that some visualizations display for this column. Example: label:'Height'
     #   * id              [Optional] A unique (basic alphanumeric) string ID of the column. Be careful not to choose a JavaScript keyword. Example: id:'col_1'
-    def new_column(type, label=nil, id =nil)
-      @cols << { :type => type, :label => label, :id => id }
+    #   * role            [Optional] A column role describes the purpose of the data in that column: for example, a column might hold data describing tooltip text, data point annotations, or uncertainty indicators. See http://code.google.com/apis/chart/interactive/docs/roles.html
+    def new_column(type, label=nil, id =nil, role=nil)
+      @cols << { :type => type, :label => label, :id => id, :role => role}
     end
 
     # Adds multiple columns to the data_table.
     #
     # Parameters:
-    #   * columns         [Required] An array of column objects {:type, :label, :id}. Calls new_column for each column object.
+    #   * columns         [Required] An array of column objects {:type, :label, :id, :role}. Calls new_column for each column object.
     def new_columns(columns)
       columns.each do |column|
-        new_column(column[:type], column[:label], column[:id])
+        new_column(column[:type], column[:label], column[:id], column[:role])
       end
     end
 
@@ -200,11 +201,19 @@ module GoogleVisualr
       js = "var data_table = new google.visualization.DataTable();"
 
       @cols.each do |column|
-        js << "data_table.addColumn('"
-        js << "#{column[:type]}'"
-        js << ", '#{column[:label]}'" unless column[:label].nil?
-        js << ", '#{column[:id]}'"    unless column[:id].nil?
-        js << ");"
+        if column[:role].nil?
+          js << "data_table.addColumn('"
+          js << "#{column[:type]}'"
+          js << ", '#{column[:label]}'" unless column[:label].nil?
+          js << ", '#{column[:id]}'"    unless column[:id].nil?
+          js << ");"
+        else
+          js << "data_table.addColumn("
+          js << "{type:'#{column[:type]}'"
+          js << ", label:'#{column[:label]}'" unless column[:label].nil?
+          js << ", role:'#{column[:role]}'}"
+          js << ");"
+        end
       end
 
       @rows.each do |row|
