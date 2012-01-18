@@ -17,6 +17,8 @@ module GoogleVisualr
     end
 
     module ImageChart
+      include GoogleVisualr::ParamHelpers
+
       def package_name
         "image#{self.class.to_s.split("::").last.downcase}"
       end
