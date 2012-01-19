@@ -8,11 +8,12 @@ module GoogleVisualr
       # For Configuration Options, please refer to:
       # http://code.google.com/apis/chart/image/docs/gallery/pie_charts.html
       
-      # Create URI for a Pie Chart image with sane defaults.  Override by passing in options.
+      # Create URI for a pie chart image with sane defaults.  Override by passing in options.
+      # (see http://code.google.com/apis/chart/image/docs/chart_params.html)
       #
       # Parameters:
-      #  *opts         [Optional] Hash of image pie chart options (see http://code.google.com/apis/chart/image/docs/chart_params.html)
-      def to_get(opts = {})
+      #  *opts         [Optional] Hash of image pie chart options
+      def url(opts = {})
         query_params = {}
         
         # Chart Type: normal or 3D
@@ -30,7 +31,7 @@ module GoogleVisualr
         # Chart Colors
         query_params[:chco] = @options["colors"].join('|').gsub(/#/, '') if @options["colors"]
 
-        super(query_params.merge(opts))
+        chart_image_url(query_params.merge(opts))
       end
     
     end
