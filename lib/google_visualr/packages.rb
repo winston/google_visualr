@@ -62,11 +62,9 @@ module GoogleVisualr
         query_params = stringify_keys!(query_params.merge(superseding_options))
         base_url = "https://chart.googleapis.com/chart"
         query = ""
-        i = 0
-        query_params.each do |k, v|
+        query_params.each_with_index do |(k,v),i|
           query += (i == 0) ? "?" : "&"
           query += "#{k}=#{CGI.escape(v)}"
-          i += 1
         end
         URI.parse(base_url + query)
       end
