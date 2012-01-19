@@ -46,7 +46,7 @@ module GoogleVisualr
 
         # Size
         if options["height"] && options["width"]
-          query_params[:chs] = "#{options["height"]}x#{options["width"]}"
+          query_params[:chs] = "#{options["width"]}x#{options["height"]}"
         end
 
         # Title

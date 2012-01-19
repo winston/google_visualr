@@ -13,7 +13,7 @@ module GoogleVisualr
       #
       # Parameters:
       #  *opts         [Optional] Hash of image line chart options
-      def url(opts = {})
+      def uri(opts = {})
         query_params = {}
         
         # Chart Type: default to lc
@@ -21,13 +21,16 @@ module GoogleVisualr
         
         # Data
         query_params[:chd] = "t:"
-        for i in 0..(@data_table.cols.size - 1) do
-          query_params[:chd] += "|" if i > 0
+        for i in 1..(@data_table.cols.size - 1) do
+          query_params[:chd] += "|" if i > 1
           query_params[:chd] += @data_table.get_column(i).join(',')
         end
         
         # Legend
-        query_params[:chdl] = @data_table.cols.map{|col| col[:label] }.join('|')
+        query_params[:chdl] = @data_table.cols[1..-1].map{|col| col[:label] }.join('|')
+        
+        # Bar Labels
+        query_params[:chxl] = "0:|" + @data_table.get_column(0).join('|')
         
         # Axes
         query_params[:chxt] = "x,y"

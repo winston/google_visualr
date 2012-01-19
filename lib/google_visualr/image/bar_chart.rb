@@ -13,7 +13,7 @@ module GoogleVisualr
       #
       # Parameters:
       #  *opts         [Optional] Hash of image bar chart options
-      def url(opts = {})
+      def uri(opts = {})
         query_params = {}
         
         # Chart Type: default to "bvg"
