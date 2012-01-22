@@ -76,7 +76,7 @@ module GoogleVisualr
     #     - 'boolean'   : Boolean value ('true' or 'false'). Example values: v: true
     #   * label           [Optional] A string value that some visualizations display for this column. Example: label:'Height'
     #   * id              [Optional] A unique (basic alphanumeric) string ID of the column. Be careful not to choose a JavaScript keyword. Example: id:'col_1'
-    #   * role            [Optional] A column role describes the purpose of the data in that column: for example, a column might hold data describing tooltip text, data point annotations, or uncertainty indicators.
+    #   * role            [Optional] A string value that describes the purpose of the data in that column. Example, a column might hold data describing tooltip text, data point annotations, or uncertainty indicators.
     #   * pattern         [Optional] A number (or date) format string specifying how to display the column value; used in conjunction with role.
     def new_column(type, label=nil, id =nil, role=nil, pattern=nil)
       column = { :type => type, :label => label, :id => id, :role => role, :pattern => pattern }.reject { |key, value| value.nil? }
