@@ -235,22 +235,22 @@ describe GoogleVisualr::DataTable do
   describe "#to_js" do
     context "cols" do
       it "includes :id and :label when these are specified" do
-        dt.new_column("number", "Total", "1")
+        dt.new_column('number', 'Total', '1')
         dt.add_row([1])
 
         dt.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn('number', 'Total', '1');data_table.addRow([{v: 1}]);"
       end
 
       it "excludes :id and :label when these are not specified" do
-        dt.new_column("number")
+        dt.new_column('number')
         dt.add_row([1])
 
         dt.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn('number');data_table.addRow([{v: 1}]);"
       end
 
       it "includes :role and :pattern when these are specified" do
-        dt.new_column("string", nil, nil, "interval", "pattern")
-        dt.add_row(["interval"])
+        dt.new_column('string', nil, nil, 'interval', 'pattern')
+        dt.add_row(['interval'])
 
         dt.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn({type: 'string', role: 'interval', pattern: 'pattern'});data_table.addRow([{v: 'interval'}]);"
       end
@@ -275,9 +275,9 @@ describe GoogleVisualr::DataTable do
       end
 
       it "initializes with a hash" do
-        cell = GoogleVisualr::DataTable::Cell.new( { :v => 1, :f => "1.0", :p => {:style => 'border: 1px solid green;'} } )
+        cell = GoogleVisualr::DataTable::Cell.new( { :v => 1, :f => '1.0', :p => {:style => 'border: 1px solid green;'} } )
         cell.v.should == 1
-        cell.f.should == "1.0"
+        cell.f.should == '1.0'
         cell.p.should == {:style => 'border: 1px solid green;'}
       end
     end
@@ -286,12 +286,12 @@ describe GoogleVisualr::DataTable do
       context "initialized with a value" do
         it "returns a json string" do
           cell = GoogleVisualr::DataTable::Cell.new(1)
-          cell.to_js.should == "{v: 1}"
+          cell.to_js.should == '{v: 1}'
         end
 
         it "returns 'null' when v is nil" do
           cell = GoogleVisualr::DataTable::Cell.new(nil)
-          cell.to_js.should == "null"
+          cell.to_js.should == 'null'
         end
       end
 
