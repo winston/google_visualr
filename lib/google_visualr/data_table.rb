@@ -65,6 +65,7 @@ module GoogleVisualr
     end
 
     # Adds a new column to the data_table.
+    # Experimental support for role (and pattern): http://code.google.com/apis/chart/interactive/docs/roles.html.
     #
     # Parameters:
     #   * type            [Required] The data type of the data in the column. Supports the following string values:
@@ -75,7 +76,8 @@ module GoogleVisualr
     #     - 'boolean'   : Boolean value ('true' or 'false'). Example values: v: true
     #   * label           [Optional] A string value that some visualizations display for this column. Example: label:'Height'
     #   * id              [Optional] A unique (basic alphanumeric) string ID of the column. Be careful not to choose a JavaScript keyword. Example: id:'col_1'
-    #   * role            [Optional] A column role describes the purpose of the data in that column: for example, a column might hold data describing tooltip text, data point annotations, or uncertainty indicators. See http://code.google.com/apis/chart/interactive/docs/roles.html
+    #   * role            [Optional] A column role describes the purpose of the data in that column: for example, a column might hold data describing tooltip text, data point annotations, or uncertainty indicators.
+    #   * pattern         [Optional] A number (or date) format string specifying how to display the column value; used in conjunction with role.
     def new_column(type, label=nil, id =nil, role=nil, pattern=nil)
       column = { :type => type, :label => label, :id => id, :role => role, :pattern => pattern }.reject { |key, value| value.nil? }
       @cols << column
@@ -84,7 +86,7 @@ module GoogleVisualr
     # Adds multiple columns to the data_table.
     #
     # Parameters:
-    #   * columns         [Required] An array of column objects {:type, :label, :id, :role}. Calls new_column for each column object.
+    #   * columns         [Required] An array of column objects {:type, :label, :id, :role, :pattern}. Calls new_column for each column object.
     def new_columns(columns)
       columns.each do |column|
         new_column(column[:type], column[:label], column[:id], column[:role], column[:pattern])
