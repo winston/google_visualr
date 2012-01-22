@@ -94,6 +94,9 @@ Please submit all feedback, bugs and feature-requests to {GitHub Issues Tracker}
 
 = Change Log
 
+<em>Version 2.1.1</em>
+* Added support for +role+ and +pattern+ attributes in +#new_column+ and +#new_columns+ methods.
+
 <em>Version 2.1.0</em>
 * Added +#render_chart+ as a helper method in Rails views.
 
