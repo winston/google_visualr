@@ -48,7 +48,7 @@ describe GoogleVisualr::DataTable do
     it "initializes a new column with only type param" do
       dt = GoogleVisualr::DataTable.new
       dt.new_column('string')
-      dt.cols.first.should == {:id => nil, :label => nil, :type => 'string'}
+      dt.cols.first.should == {:type => 'string'}
     end
 
     it "initializes a new column with all params" do
@@ -56,16 +56,27 @@ describe GoogleVisualr::DataTable do
       dt.new_column('string', 'A LABEL', 'col_0')
       dt.cols.first.should == {:id => 'col_0', :label => 'A LABEL', :type => 'string'}
     end
+
+    it "initializes a new column with experimental role param" do
+      dt = GoogleVisualr::DataTable.new
+      dt.new_column('string', nil, nil, 'interval', 'pattern')
+      dt.cols.first.should == {:type => 'string', :role => 'interval', :pattern => 'pattern'}
+    end
   end
 
   describe "new_columns" do
-    it "initializes new columns" do
-      columns = [ {:id => 'A', :label => 'NEW A', :type => 'string'}, {:id => 'B', :label => 'NEW B', :type => 'string'} ]
+    it "initializes new columns (with experimental support)" do
+      columns = [
+        {:id => 'A', :label => 'NEW A', :type => 'string'},
+        {:id => 'B', :label => 'NEW B', :type => 'string'},
+        {:type => 'string', :role => 'interval', :pattern => 'pattern'}
+      ]
 
       dt = GoogleVisualr::DataTable.new
       dt.new_columns(columns)
-      dt.cols.first.should  == columns.first
-      dt.cols.last.should   == columns.last
+      dt.cols[0].should == columns[0]
+      dt.cols[1].should == columns[1]
+      dt.cols[2].should == columns[2]
     end
   end
 
@@ -235,18 +246,26 @@ describe GoogleVisualr::DataTable do
     context "cols" do
       it "includes :id and :label when these are specified" do
         data_table = GoogleVisualr::DataTable.new()
-        data_table.new_column("Total", "Total", "1")
+        data_table.new_column("number", "Total", "1")
         data_table.add_row([1])
 
-        data_table.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn('Total', 'Total', '1');data_table.addRow([{v: 1}]);"
+        data_table.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn('number', 'Total', '1');data_table.addRow([{v: 1}]);"
       end
 
       it "excludes :id and :label when these are not specified" do
         data_table = GoogleVisualr::DataTable.new()
-        data_table.new_column("Total")
+        data_table.new_column("number")
         data_table.add_row([1])
 
-        data_table.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn('Total');data_table.addRow([{v: 1}]);"
+        data_table.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn('number');data_table.addRow([{v: 1}]);"
+      end
+
+      it "includes :role and :pattern when these are specified" do
+        data_table = GoogleVisualr::DataTable.new
+        data_table.new_column("string", nil, nil, "interval", "pattern")
+        data_table.add_row(["interval"])
+
+        data_table.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn({type: 'string', role: 'interval', pattern: 'pattern'});data_table.addRow([{v: 'interval'}]);"
       end
     end
 
