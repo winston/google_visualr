@@ -26,40 +26,86 @@ module GoogleVisualr
         "Image#{self.class.to_s.split('::').last}"
       end
       
-      # Define some defaults that if missing would cause failure
+      # Set defaults according to http://code.google.com/apis/chart/interactive/docs/gallery/genericimagechart.html#Configuration_Options
       IMAGE_DEFAULTS = {
         # Automatic Scaling
         :chds => "a",
-        # Size must be defined
-        :chs => "500x500"
+        # Size
+        :chs => "400x200",
+        # Axes
+        :chxt => "x,y"
       }
 
       # Generates HTTP GET URL for the chart image
       #
       # Parameters:
       #  *opts         [Optional] Hash of standard chart options (see http://code.google.com/apis/chart/image/docs/chart_params.html)
-      def chart_image_url(superseding_options = {})
+      def chart_image_url(superseding_params = {})
 
         #####
-        # Standard image chart options and sane defaults
+        # Generic image chart defaults
         query_params = IMAGE_DEFAULTS
 
-        # Size
+        # backgroundColor
+        query_params[:chf] = "bg,s," + options["backgroundColor"].gsub(/#/, '') if options["backgroundColor"]
+        
+        # color, colors ('color' param is ignored if 'colors' is present)
+        if options["colors"]
+          query_params[:chco] = options["colors"].join(',').gsub(/#/, '')
+        elsif options["color"]
+          query_params[:chco] = options["color"].gsub(/#/, '')
+        end
+        
+        # fill (this will often not look good - better for user to override this parameter)
+        query_params[:chm] = "B,#{query_params[:chco].split(',').first},0,0,0" if options["fill"] && query_params[:chco]
+        
+        # firstHiddenColumn, singleColumnDisplay, data
+        firstHiddenColumn = options["firstHiddenColumn"] ? options["firstHiddenColumn"] : data_table.cols.size - 1
+        query_params[:chd] = "t:"
+        unless options["singleColumnDisplay"]
+          for i in 1..firstHiddenColumn do
+            query_params[:chd] += "|" if i > 1
+            query_params[:chd] += data_table.get_column(i).join(',')
+          end
+        else
+          query_params[:chd] += data_dable.get_column(options["singleColumnDisplay"])
+        end
+        
+        # height, width
         if options["height"] && options["width"]
           query_params[:chs] = "#{options["width"]}x#{options["height"]}"
         end
 
-        # Title
+        # title
         query_params[:chtt] = options["title"] if options["title"]
 
-        # Title Formatting
-        query_params[:chts] = "#{options["titleTextStyle"][:color].gsub(/#/, '')},#{options["titleTextStyle"][:fontSize]}" if options["titleTextStyle"]
-
-        # Legend Formatting
-        query_params[:chdls] = "#{options["legendTextStyle"][:color].gsub(/#/, '')},#{options["legendTextStyle"][:fontSize]}" if options["legendTextStyle"]
+        # legend
+        unless options["legend"] == 'none'
+          query_params[:chdlp] = options["legend"].first unless options["legend"].blank?
+          query_params[:chdl] = data_table.cols[1..-1].map{|col| col[:label] }.join('|')
+        end
+        
+        # min, max, valueLabelsInterval (works as long as :chxt => "x,y" and both 'min' and 'max' are set)
+        if options["min"] && options["max"]
+          query_params[:chxr] = "1,#{options['min']},#{options['max']}"
+          query_params[:chxr] += ",#{options['valueLabelsInterval']}" if options['valueLabelsInterval']
+        end
+        
+        # showCategoryLabels (works as long as :chxt => "x,y")
+        labels = ""
+        unless options["showCategoryLabels"].present? && options["showCategoryLabels"] == false
+          labels = "0:|" + data_table.get_column(0).join('|') + "|"
+        end
+        
+        # showValueLabels  (works as long as :chxt => "x,y")
+        if options["showValueLabels"].present? && options["showValueLabels"] == false
+          labels += "1:||"
+        end
+        
+        query_params[:chxl] = labels unless labels.blank?
         #####
 
-        query_params = stringify_keys!(query_params.merge(superseding_options))
+        query_params = stringify_keys!(query_params.merge(superseding_params))
         base_url = "https://chart.googleapis.com/chart"
         query = ""
         query_params.each_with_index do |(k,v),i|

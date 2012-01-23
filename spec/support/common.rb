@@ -53,7 +53,7 @@ def image_pie_chart(data_table=pie_data_table)
 end
 
 def image_pie_chart_uri
-  URI.parse("https://chart.googleapis.com/chart?chdl=Pie%7CCake%7CIce+Cream%7CCookies&chs=500x200&cht=p3&chtt=Favorite+Desserts&chl=Pie%7CCake%7CIce+Cream%7CCookies&chd=t%3A100%2C120%2C150%2C80&chds=a")
+  URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chdl=Pie%7CCake%7CIce+Cream%7CCookies&chs=500x200&chxl=0%3A%7CPie%7CCake%7CIce+Cream%7CCookies%7C&cht=p3&chtt=Favorite+Desserts&chd=t%3A100%2C120%2C150%2C80&chds=a")
 end
 
 def line_data_table
@@ -65,7 +65,7 @@ def image_line_chart
 end
 
 def image_line_chart_uri
-  URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chdl=Sales%7CExpenses&chs=500x200&chxl=0%3A%7C2004%7C2005%7C2006%7C2007&cht=lc&chtt=Test+Line+Chart&chco=437E9D%2CE6A65A&chd=t%3A1000%2C1200%2C1500%2C800%7C400%2C450%2C600%2C500&chds=a")
+  URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chdl=Sales%7CExpenses&chs=500x200&chxl=0%3A%7C2004%7C2005%7C2006%7C2007%7C&cht=lc&chtt=Test+Line+Chart&chco=437E9D%2CE6A65A&chd=t%3A1000%2C1200%2C1500%2C800%7C400%2C450%2C600%2C500&chds=a")
 end
 
 def bar_data_table
@@ -73,9 +73,9 @@ def bar_data_table
 end
 
 def image_bar_chart
-  GoogleVisualr::Image::BarChart.new( data_table, { :title => "Test Bar Chart", :width =>  500, :height => 200, :colors => ['#E6A65A', '#FFBF74'] } )
+  GoogleVisualr::Image::BarChart.new( data_table, { :title => "Test Bar Chart", :width =>  500, :height => 300, :colors => ['#E6A65A', '#FFBF74'] } )
 end
 
 def image_bar_chart_uri
-  URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chdl=Sales%7CExpenses&chs=500x200&chxl=0%3A%7C2004%7C2005%7C2006%7C2007&cht=bvg&chtt=Test+Bar+Chart&chco=E6A65A%2CFFBF74&chd=t%3A1000%2C1200%2C1500%2C800%7C400%2C450%2C600%2C500&chds=a")
+  URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chdl=Sales%7CExpenses&chs=500x300&chxl=1%3A%7C2004%7C2005%7C2006%7C2007%7C&cht=bhg&chtt=Test+Bar+Chart&chco=E6A65A%2CFFBF74&chd=t%3A1000%2C1200%2C1500%2C800%7C400%2C450%2C600%2C500&chds=a")
 end
