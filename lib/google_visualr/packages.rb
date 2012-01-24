@@ -44,7 +44,7 @@ module GoogleVisualr
 
         #####
         # Generic image chart defaults
-        query_params = IMAGE_DEFAULTS
+        query_params = IMAGE_DEFAULTS.clone
 
         # backgroundColor
         query_params[:chf] = "bg,s," + options["backgroundColor"].gsub(/#/, '') if options["backgroundColor"]
@@ -83,6 +83,9 @@ module GoogleVisualr
         unless options["legend"] == 'none'
           query_params[:chdlp] = options["legend"].first unless options["legend"].blank?
           query_params[:chdl] = data_table.cols[1..-1].map{|col| col[:label] }.join('|')
+        else
+          query_params.delete(:chdlp)
+          query_params.delete(:chdl)
         end
         
         # min, max, valueLabelsInterval (works as long as :chxt => "x,y" and both 'min' and 'max' are set)
@@ -90,19 +93,6 @@ module GoogleVisualr
           query_params[:chxr] = "1,#{options['min']},#{options['max']}"
           query_params[:chxr] += ",#{options['valueLabelsInterval']}" if options['valueLabelsInterval']
         end
-        
-        # showCategoryLabels (works as long as :chxt => "x,y")
-        labels = ""
-        unless options["showCategoryLabels"].present? && options["showCategoryLabels"] == false
-          labels = "0:|" + data_table.get_column(0).join('|') + "|"
-        end
-        
-        # showValueLabels  (works as long as :chxt => "x,y")
-        if options["showValueLabels"].present? && options["showValueLabels"] == false
-          labels += "1:||"
-        end
-        
-        query_params[:chxl] = labels unless labels.blank?
         #####
 
         query_params = stringify_keys!(query_params.merge(superseding_params))

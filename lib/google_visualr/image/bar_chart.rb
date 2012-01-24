@@ -12,30 +12,34 @@ module GoogleVisualr
       # (see http://code.google.com/apis/chart/image/docs/chart_params.html)
       #
       # Parameters:
-      #  *opts         [Optional] Hash of image bar chart options
-      def uri(opts = {})
+      #  *params         [Optional] Hash of url query parameters
+      def uri(params = {})
         query_params = {}
         
         # isStacked/isVertical, Chart Type
         chart_type = "b"
         chart_type += @options["isVertical"] ? "v" : "h"
-        chart_type += @options["isStacked"] ? "s" : "g"
+        chart_type += @options["isStacked"] == false ? "g" : "s"
         query_params[:cht] = chart_type
 
         # showCategoryLabels (works as long as :chxt => "x,y")
         labels = ""
         val_column = @options["isVertical"] ? 1 : 0
         cat_column = @options["isVertical"] ? 0 : 1
-        unless @options["showCategoryLabels"].present? && @options["showCategoryLabels"] == false
-          labels = "#{cat_column}:|" + @data_table.get_column(0).join('|') + "|"
+        if @options["showCategoryLabels"] == false
+          labels = "#{cat_column}:||"
+        else
+          labels = "#{cat_column}:|" + data_table.get_column(0).reverse.join('|') + "|"
         end
+        
         # showValueLabels  (works as long as :chxt => "x,y")
-        if @options["showValueLabels"].present? && @options["showValueLabels"] == false
+        if @options["showValueLabels"] == false
           labels += "#{val_column}:||"
         end
+        
         query_params[:chxl] = labels unless labels.blank?
         
-        chart_image_url(query_params.merge(opts))
+        chart_image_url(query_params.merge(params))
       end
     end
 

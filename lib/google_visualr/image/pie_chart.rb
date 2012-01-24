@@ -12,8 +12,8 @@ module GoogleVisualr
       # (see http://code.google.com/apis/chart/image/docs/chart_params.html)
       #
       # Parameters:
-      #  *opts         [Optional] Hash of image pie chart options
-      def uri(opts = {})
+      #  *params         [Optional] Hash of url query parameters
+      def uri(params = {})
         query_params = {}
         
         # Chart Type: normal or 3D
@@ -28,6 +28,8 @@ module GoogleVisualr
           query_params[:chl] = @data_table.get_column(0).join('|')
         when "value"
           query_params[:chl] = @data_table.get_column(1).join('|')
+        else
+          query_params[:chl] = ""
         end
         
         # data (override generic chart behavior)
@@ -36,7 +38,7 @@ module GoogleVisualr
         # Chart Colors (override generic chart default)
         query_params[:chco] = @options["colors"].join('|').gsub(/#/, '') if @options["colors"]
 
-        chart_image_url(query_params.merge(opts))
+        chart_image_url(query_params.merge(params))
       end
     
     end

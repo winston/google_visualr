@@ -1,49 +1,65 @@
 require 'spec_helper'
 
 describe GoogleVisualr::Image::PieChart do
-
-  before do
-    @pie_chart = image_pie_chart
-  end
-
   describe "#uri" do
-    it "generates GET url" do
-      uri = @pie_chart.uri
-      CGI.parse(uri.query).should == CGI.parse(image_pie_chart_uri.query)
-      uri.host.should == image_pie_chart_uri.host
+    let(:chart){ GoogleVisualr::Image::PieChart.new( data_table, {} )}
+    image_pie_options.each_with_index do |opts, i|
+      context "#{opts.inspect}" do
+        it "generates correct URI" do
+          chart.options = opts
+          uri = chart.uri
+          #puts uri.to_s
+          CGI.parse(uri.query).should == CGI.parse(image_pie_chart_uris[i].query)
+        end
+      end
     end
   end
-
 end
 
 describe GoogleVisualr::Image::LineChart do
-
-  before do
-    @line_chart = image_line_chart
-  end
-
   describe "#uri" do
-    it "generates GET uri" do
-      uri = @line_chart.uri
-      CGI.parse(uri.query).should == CGI.parse(image_line_chart_uri.query)
-      uri.host.should == image_line_chart_uri.host
+    let(:chart){ GoogleVisualr::Image::LineChart.new( data_table, {} )}
+    image_line_options.each_with_index do |opts, i|
+      context "#{opts.inspect}" do
+        it "generates correct URI" do
+          chart.options = opts
+          uri = chart.uri
+          #puts uri.to_s
+          CGI.parse(uri.query).should == CGI.parse(image_line_chart_uris[i].query)
+        end
+      end
     end
   end
-
 end
 
 describe GoogleVisualr::Image::BarChart do
-
-  before do
-    @bar_chart = image_bar_chart
-  end
-
   describe "#uri" do
-    it "generates GET uri" do
-      uri = @bar_chart.uri
-      CGI.parse(uri.query).should == CGI.parse(image_bar_chart_uri.query)
-      uri.host.should == image_bar_chart_uri.host
+    let(:chart){ GoogleVisualr::Image::BarChart.new( data_table, {} )}
+    image_bar_options.each_with_index do |opts, i|
+      context "#{opts.inspect}" do
+        it "generates correct URI" do
+          chart.options = opts
+          uri = chart.uri
+          #puts uri.to_s
+          CGI.parse(uri.query).should == CGI.parse(image_bar_chart_uris[i].query)
+        end
+      end
     end
   end
+end
 
+describe GoogleVisualr::Image::SparkLine do
+  describe "#uri" do
+    let(:chart){ GoogleVisualr::Image::SparkLine.new( data_table, {} )}
+    sparkline_options.each_with_index do |opts, i|
+      context "#{opts.inspect}" do
+        it "generates correct URI" do
+          chart.options = opts
+          uri = chart.uri
+          #puts uri.to_s
+          CGI.parse(uri.query).should == CGI.parse(sparkline_uris[i].query)
+        end
+      end
+    end
+  end
 end

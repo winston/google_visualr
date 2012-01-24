@@ -4,7 +4,7 @@ module GoogleVisualr
     include GoogleVisualr::Packages
     include GoogleVisualr::ParamHelpers
 
-    attr_accessor :data_table, :options
+    attr_accessor :data_table
 
     def initialize(data_table, options={})
       @data_table = data_table

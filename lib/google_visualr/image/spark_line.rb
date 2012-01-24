@@ -12,14 +12,22 @@ module GoogleVisualr
       # (see http://code.google.com/apis/chart/image/docs/chart_params.html)
       #
       # Parameters:
-      #  *opts         [Optional] Hash of image line chart options
-      def uri(opts = {})
+      #  *params         [Optional] Hash of url query parameters
+      def uri(params = {})
         query_params = {}
-
-        # Chart Type: sparkline
+        
+        # Chart type: line
         query_params[:cht] = "ls"
+        
+        # showValueLabels  (works as long as :chxt => "x,y")
+        labels = "0:||"
+        if @options["showValueLabels"] == false || !@options["showAxisLines"]
+          labels += "1:||"
+        end
+        
+        query_params[:chxl] = labels
 
-        chart_image_url(query_params.merge(opts))
+        chart_image_url(query_params.merge(params))
       end
     end
   end
