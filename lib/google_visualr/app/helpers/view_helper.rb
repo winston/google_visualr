@@ -10,10 +10,9 @@ module GoogleVisualr
         helper_method "render_chart"
       end
 
-      module InstanceMethods
-        def render_chart(chart, dom)
-          chart.to_js(dom).html_safe
-        end
+
+      def render_chart(chart, dom)
+        chart.to_js(dom).html_safe
       end
 
     end
