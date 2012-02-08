@@ -92,6 +92,7 @@ module GoogleVisualr
         if options["min"] && options["max"]
           query_params[:chxr] = "1,#{options['min']},#{options['max']}"
           query_params[:chxr] += ",#{options['valueLabelsInterval']}" if options['valueLabelsInterval']
+          query_params[:chds] = "#{options['min']},#{options['max']}"
         end
         #####
 
