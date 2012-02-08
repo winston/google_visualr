@@ -87,11 +87,11 @@ end
 
 def image_line_chart_uris
   [
-    URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chf=bg%2Cs%2CEFEFEF&chdl=Sales%7CExpenses&chs=400x200&chxl=0%3A%7C2007%7C2006%7C2005%7C2004%7C1%3A%7C%7C&cht=lc&chdlp=l&chtt=Test1+Line+Chart&chco=437E9D%2CE6A65A&chds=a&chd=t%3A1000%2C1200%2C1500%2C800%7C400%2C450%2C600%2C500"),
+    URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chf=bg%2Cs%2CEFEFEF&chdl=Sales%7CExpenses&chs=400x200&chxl=0%3A%7C2004%7C2005%7C2006%7C2007%7C1%3A%7C%7C&cht=lc&chdlp=l&chtt=Test1+Line+Chart&chco=437E9D%2CE6A65A&chd=t%3A1000%2C1200%2C1500%2C800%7C400%2C450%2C600%2C500&chds=a"),
     URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chf=bg%2Cs%2CFFFFFF&chdl=Sales%7CExpenses&chs=500x200&chxl=0%3A%7C%7C&cht=lc&chdlp=r&chtt=Test2+Line+Chart&chco=437E9D&chds=a&chd=t%3A1000%2C1200%2C1500%2C800%7C400%2C450%2C600%2C500"),
     URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chdl=Sales%7CExpenses&chs=500x200&chxl=0%3A%7C%7C1%3A%7C%7C&cht=lc%3Anda&chdlp=t&chtt=Test3+Line+Chart&chco=437E9D%2CE6A65A&chds=a&chd=t%3A1000%2C1200%2C1500%2C800%7C400%2C450%2C600%2C500"),
-    URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chdl=Sales%7CExpenses&chs=500x200&chxl=0%3A%7C2007%7C2006%7C2005%7C2004%7C&cht=lc&chdlp=b&chtt=Test4+Line+Chart&chco=437E9D&chds=a&chd=t%3A1000%2C1200%2C1500%2C800%7C400%2C450%2C600%2C500"),
-    URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chxl=0%3A%7C2007%7C2006%7C2005%7C2004%7C&chs=500x200&cht=lc&chtt=Test5+Line+Chart&chco=437E9D&chd=t%3A1000%2C1200%2C1500%2C800%7C400%2C450%2C600%2C500&chxr=1%2C200%2C2000%2C200&chds=a")
+    URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chdl=Sales%7CExpenses&chs=500x200&chxl=0%3A%7C2004%7C2005%7C2006%7C2007%7C&cht=lc&chdlp=b&chtt=Test4+Line+Chart&chco=437E9D&chd=t%3A1000%2C1200%2C1500%2C800%7C400%2C450%2C600%2C500&chds=a"),
+    URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chs=500x200&chxl=0%3A%7C2004%7C2005%7C2006%7C2007%7C&cht=lc&chtt=Test5+Line+Chart&chco=437E9D&chd=t%3A1000%2C1200%2C1500%2C800%7C400%2C450%2C600%2C500&chxr=1%2C200%2C2000%2C200&chds=a")
   ]
 end
 
@@ -112,11 +112,11 @@ end
 
 def image_bar_chart_uris
   [
-    URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chf=bg%2Cs%2CEFEFEF&chdl=Sales%7CExpenses&chs=400x200&chxl=1%3A%7C2007%7C2006%7C2005%7C2004%7C0%3A%7C%7C&cht=bhs&chdlp=l&chtt=Test1+Bar+Chart&chco=437E9D%2CE6A65A&chds=a&chd=t%3A1000%2C1200%2C1500%2C800%7C400%2C450%2C600%2C500"),
+    URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chf=bg%2Cs%2CEFEFEF&chdl=Sales%7CExpenses&chs=400x200&chxl=1%3A%7C2004%7C2005%7C2006%7C2007%7C0%3A%7C%7C&cht=bhs&chdlp=l&chtt=Test1+Bar+Chart&chco=437E9D%2CE6A65A&chd=t%3A1000%2C1200%2C1500%2C800%7C400%2C450%2C600%2C500&chds=a"),
     URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chf=bg%2Cs%2CFFFFFF&chdl=Sales%7CExpenses&chs=500x200&chxl=1%3A%7C%7C&cht=bhs&chdlp=r&chtt=Test2+Bar+Chart&chco=437E9D&chds=a&chd=t%3A1000%2C1200%2C1500%2C800%7C400%2C450%2C600%2C500"),
     URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chdl=Sales%7CExpenses&chs=500x200&chxl=1%3A%7C%7C0%3A%7C%7C&cht=bhs&chdlp=t&chtt=Test3+Bar+Chart&chco=437E9D%2CE6A65A&chds=a&chd=t%3A1000%2C1200%2C1500%2C800%7C400%2C450%2C600%2C500"),
-    URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chdl=Sales%7CExpenses&chs=500x200&chxl=0%3A%7C2007%7C2006%7C2005%7C2004%7C&cht=bvg&chdlp=b&chtt=Test4+Bar+Chart&chco=437E9D%2CE6A65A&chds=a&chd=t%3A1000%2C1200%2C1500%2C800%7C400%2C450%2C600%2C500"),
-    URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chs=500x200&chxl=0%3A%7C2007%7C2006%7C2005%7C2004%7C&cht=bvs&chtt=Test5+Bar+Chart&chco=437E9D%2CE6A65A&chds=a&chd=t%3A1000%2C1200%2C1500%2C800%7C400%2C450%2C600%2C500&chxr=1%2C200%2C2000%2C200")
+    URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chdl=Sales%7CExpenses&chs=500x200&chxl=0%3A%7C2004%7C2005%7C2006%7C2007%7C&cht=bvg&chdlp=b&chtt=Test4+Bar+Chart&chco=437E9D%2CE6A65A&chd=t%3A1000%2C1200%2C1500%2C800%7C400%2C450%2C600%2C500&chds=a"),
+    URI.parse("https://chart.googleapis.com/chart?chxt=x%2Cy&chs=500x200&chxl=0%3A%7C2004%7C2005%7C2006%7C2007%7C&cht=bvs&chtt=Test5+Bar+Chart&chco=437E9D%2CE6A65A&chd=t%3A1000%2C1200%2C1500%2C800%7C400%2C450%2C600%2C500&chxr=1%2C200%2C2000%2C200&chds=a")
   ]
 end
 
