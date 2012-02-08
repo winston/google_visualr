@@ -29,7 +29,7 @@ module GoogleVisualr
         if @options["showCategoryLabels"] == false
           labels = "0:||"
         else
-          labels = "0:|" + data_table.get_column(0).reverse.join('|') + "|"
+          labels = "0:|" + data_table.get_column(0).join('|') + "|"
         end
         
         # showValueLabels  (works as long as :chxt => "x,y")
