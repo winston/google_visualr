@@ -94,6 +94,10 @@ Please submit all feedback, bugs and feature-requests to {GitHub Issues Tracker}
 
 = Change Log
 
+<em>Version 2.1.2</em>
+* {Pull Request 28}[https://github.com/winston/google_visualr/pull/28] Removed InstanceMethods as it's deprecated in Rails 3.2.x.
+* {Pull Request 26}[https://github.com/winston/google_visualr/pull/26] Added 3 more image charts and #uri method to all image charts.
+
 <em>Version 2.1.1</em>
 * Added support for +role+ and +pattern+ attributes in +#new_column+ and +#new_columns+ methods.
 
