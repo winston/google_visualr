@@ -37,6 +37,9 @@ require "#{lib_path}/google_visualr/interactive/org_chart"
 
 # Image Charts
 require "#{lib_path}/google_visualr/image/spark_line"
+require "#{lib_path}/google_visualr/image/bar_chart"
+require "#{lib_path}/google_visualr/image/line_chart"
+require "#{lib_path}/google_visualr/image/pie_chart"
 
 
 # Rails Helper
