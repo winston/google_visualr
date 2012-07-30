@@ -6,7 +6,7 @@ module GoogleVisualr
       include GoogleVisualr::Packages::CoreChart
 
       # For Configuration Options, please refer to:
-      # https://google-developers.appspot.com/chart/interactive/docs/gallery/steppedareachart#Configuration_Options
+      # https://developers.google.com/chart/interactive/docs/gallery/steppedareachart#Configuration_Options
     end
 
   end

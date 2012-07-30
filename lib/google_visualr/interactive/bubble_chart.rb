@@ -1,12 +1,12 @@
 module GoogleVisualr
   module Interactive
 
-    # http://code.google.com/apis/chart/interactive/docs/gallery/bubblechart.html
+    # https://developers.google.com/chart/interactive/docs/gallery/bubblechart
     class BubbleChart < BaseChart
       include GoogleVisualr::Packages::CoreChart
 
       # For Configuration Options, please refer to:
-      # http://code.google.com/apis/chart/interactive/docs/gallery/bubblechart.html#Configuration_Options
+      # https://developers.google.com/chart/interactive/docs/gallery/bubblechart#Configuration_Options
     end
 
   end
