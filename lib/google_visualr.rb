@@ -16,6 +16,7 @@ require "#{lib_path}/google_visualr/formatters"
 ## Main
 require "#{lib_path}/google_visualr/interactive/area_chart"
 require "#{lib_path}/google_visualr/interactive/bar_chart"
+require "#{lib_path}/google_visualr/interactive/bubble_chart"
 require "#{lib_path}/google_visualr/interactive/candlestick_chart"
 require "#{lib_path}/google_visualr/interactive/column_chart"
 require "#{lib_path}/google_visualr/interactive/combo_chart"
@@ -25,9 +26,10 @@ require "#{lib_path}/google_visualr/interactive/geo_map"
 require "#{lib_path}/google_visualr/interactive/line_chart"
 require "#{lib_path}/google_visualr/interactive/pie_chart"
 require "#{lib_path}/google_visualr/interactive/scatter_chart"
+require "#{lib_path}/google_visualr/interactive/stepped_area_chart"
 require "#{lib_path}/google_visualr/interactive/table"
 require "#{lib_path}/google_visualr/interactive/tree_map"
-require "#{lib_path}/google_visualr/interactive/stepped_area_chart"
+
 
 ## Additional
 require "#{lib_path}/google_visualr/interactive/annotated_time_line"
