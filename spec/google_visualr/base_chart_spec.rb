@@ -28,4 +28,12 @@ describe GoogleVisualr::BaseChart do
     end
   end
 
+  describe "listener" do
+    it "added to JS" do
+      @chart.add_listener("select", "function() {test_event(chart);}")
+      js = @chart.to_js("body")
+      js.should == base_chart_listener_js("body")
+    end
+  end
+
 end
