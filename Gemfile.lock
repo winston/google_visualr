@@ -96,7 +96,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (>= 1.2.1)
+  bundler (>= 1.1.5)
   google_visualr!
   rails (>= 3.2.8)
   rspec (>= 2.11.0)
