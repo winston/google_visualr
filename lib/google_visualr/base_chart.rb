@@ -8,8 +8,12 @@ module GoogleVisualr
 
     def initialize(data_table, options={})
       @data_table = data_table
-      @listeners = []
       send(:options=, options)
+      @listeners  = []
+    end
+
+    def chart_name
+      class_name
     end
 
     def options
@@ -22,10 +26,6 @@ module GoogleVisualr
 
     def add_listener(event, callback)
       @listeners << { :event => event.to_s, :callback => callback }
-    end
-
-    def chart_name
-      class_name
     end
 
     # Generates JavaScript and renders the Google Chart in the final HTML output.
@@ -43,7 +43,6 @@ module GoogleVisualr
       end
       js << "\n  }});"
       js << "\n</script>"
-
       js
     end
 

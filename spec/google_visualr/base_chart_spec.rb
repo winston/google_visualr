@@ -21,18 +21,24 @@ describe GoogleVisualr::BaseChart do
     end
   end
 
+  describe "#add_listener" do
+    it "adds to listeners array" do
+      @chart.add_listener("select", "function() {test_event(chart);}")
+      @chart.listeners.should == [{ :event => "select", :callback => "function() {test_event(chart);}" }]
+    end
+  end
+
   describe "#to_js" do
     it "generates JS" do
       js = @chart.to_js("body")
       js.should == base_chart_js("body")
     end
-  end
 
-  describe "listener" do
-    it "added to JS" do
+    it "generates JS with listeners" do
       @chart.add_listener("select", "function() {test_event(chart);}")
+
       js = @chart.to_js("body")
-      js.should == base_chart_listener_js("body")
+      js.should == base_chart_with_listener_js("body")
     end
   end
 
