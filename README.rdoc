@@ -96,6 +96,10 @@ Please submit all feedback, bugs and feature-requests to {GitHub Issues Tracker}
 
 = Change Log
 
+<em>Version 2.1.4</em>
+* {Pull Request 39}[https://github.com/winston/google_visualr/pull/39] Added ability to use Listeners.
+* {Pull Request 40}[https://github.com/winston/google_visualr/pull/40] Allowed decoupling of class name and chart name.
+
 <em>Version 2.1.3</em>
 * Added support for Bubble Chart.
 * {Pull Request 37}[https://github.com/winston/google_visualr/pull/37] Added support for Stepped Area Chart.
@@ -118,4 +122,4 @@ Who is Winston Teo? {You should follow Winston on Twitter}[http://www.twitter.co
 
 = License
 
-Copyright © 2011 Winston Teo Yong Wei. Free software, released under the MIT license.
+Copyright © 2012 Winston Teo Yong Wei. Free software, released under the MIT license.
