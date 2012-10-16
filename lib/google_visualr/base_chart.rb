@@ -24,6 +24,10 @@ module GoogleVisualr
       @listeners << { :event => event.to_s, :callback => callback }
     end
 
+    def chart_name
+      class_name
+    end
+
     # Generates JavaScript and renders the Google Chart in the final HTML output.
     #
     # Parameters:
@@ -32,7 +36,7 @@ module GoogleVisualr
       js  = "\n<script type='text/javascript'>"
       js << "\n  google.load('visualization','1', {packages: ['#{package_name}'], callback: function() {"
       js << "\n    #{@data_table.to_js}"
-      js << "\n    var chart = new google.visualization.#{class_name}(document.getElementById('#{element_id}'));"
+      js << "\n    var chart = new google.visualization.#{chart_name}(document.getElementById('#{element_id}'));"
       js << "\n    chart.draw(data_table, #{js_parameters(@options)});"
       @listeners.each do |listener|
         js << "\n    google.visualization.events.addListener(chart, '#{listener[:event]}', #{listener[:callback]});"
