@@ -15,6 +15,10 @@ module GoogleVisualr
     def chart_name
       class_name
     end
+    
+    def draw_fn_name element_id
+      "draw_#{element_id.sub('-', '_')}_Chart"
+    end
 
     def options
       @options
@@ -34,17 +38,21 @@ module GoogleVisualr
     #  *div_id            [Required] The ID of the DIV element that the Google Chart should be rendered in.
     def to_js(element_id)
       js  = "\n<script type='text/javascript'>"
-      js << "\n  google.load('visualization','1', {packages: ['#{package_name}'], callback: function() {"
-      js << "\n    #{@data_table.to_js}"
+      js << "\n  google.load('visualization','1', {packages: ['#{package_name}']});"
+      js << "\n  google.setOnLoadCallback(#{draw_fn_name element_id});"
+      js << "\n "
+      js << "\n function #{draw_fn_name element_id}() { "
       js << "\n    var chart = new google.visualization.#{chart_name}(document.getElementById('#{element_id}'));"
+      js << "\n    #{@data_table.to_js}"
       js << "\n    chart.draw(data_table, #{js_parameters(@options)});"
       @listeners.each do |listener|
         js << "\n    google.visualization.events.addListener(chart, '#{listener[:event]}', #{listener[:callback]});"
       end
-      js << "\n  }});"
+      js << "\n  };"
+
       js << "\n</script>"
-      js
-    end
+      js    
+   end
 
   end
 
