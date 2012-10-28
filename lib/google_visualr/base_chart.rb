@@ -17,7 +17,7 @@ module GoogleVisualr
     end
     
     def draw_fn_name element_id
-      "draw_#{element_id.sub('-', '_')}_Chart"
+      "draw_#{element_id.gsub('-', '_')}_Chart"
     end
 
     def options
