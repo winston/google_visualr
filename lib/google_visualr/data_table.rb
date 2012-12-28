@@ -243,7 +243,7 @@ module GoogleVisualr
         when type == "string"
           raise ArgumentError, "cell value '#{v}' is not a String", caller              unless v.is_a?(String)
         when type == "number"
-          raise ArgumentError, "cell value '#{v}' is not an Integer or a Float", caller unless v.is_a?(Integer)   || v.is_a?(Float)
+          raise ArgumentError, "cell value '#{v}' is not an Integer, Float or BigDecimal", caller unless v.is_a?(Integer) || v.is_a?(Float) || v.is_a?(BigDecimal)
         when type == "boolean"
           raise ArgumentError, "cell value '#{v}' is not a Boolean", caller             unless v.is_a?(TrueClass) || v.is_a?(FalseClass)
         when type == 'datetime'
