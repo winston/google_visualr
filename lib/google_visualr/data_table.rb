@@ -211,7 +211,7 @@ module GoogleVisualr
 
       @rows.each do |row|
         js << "data_table.addRow("
-        js << "[#{row.collect { |cell| cell.to_js }.join(", ")}]" unless row.empty?
+        js << "[#{row.map(&:to_js).join(", ")}]" unless row.empty?
         js << ");"
       end
 
