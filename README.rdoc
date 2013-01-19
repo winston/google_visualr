@@ -96,6 +96,10 @@ Please submit all feedback, bugs and feature-requests to {GitHub Issues Tracker}
 
 = Change Log
 
+<em>Version 2.1.6</em>
+* {Issue 54}[https://github.com/winston/google_visualr/issues/54] Allow apostrophes in labels.
+* {Pull Request 55}[https://github.com/winston/google_visualr/pull/55] Added support to accept BigDecimal as number.
+
 <em>Version 2.1.5</em>
 * {Pull Request 48}[https://github.com/winston/google_visualr/pull/48] Fixed bug with Listener event registration.
 
