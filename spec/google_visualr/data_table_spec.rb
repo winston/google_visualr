@@ -205,6 +205,12 @@ describe GoogleVisualr::DataTable do
         it "raises an exception if value is not date" do
           assert_raises_exception(4, 'ABCD')
         end
+        
+        it "accepts BigDecimal as number" do
+          expect {
+            dt.set_cell(0, 1, BigDecimal.new(42))
+          }.to_not raise_exception(ArgumentError)
+        end
       end
 
       it "accepts 'nil' for all column types" do
