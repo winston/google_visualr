@@ -244,21 +244,29 @@ describe GoogleVisualr::DataTable do
         dt.new_column('number', 'Total', '1')
         dt.add_row([1])
 
-        dt.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn('number', 'Total', '1');data_table.addRow([{v: 1}]);"
+        dt.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn(\"number\", \"Total\", \"1\");data_table.addRow([{v: 1}]);"
       end
 
       it "excludes :id and :label when these are not specified" do
         dt.new_column('number')
         dt.add_row([1])
 
-        dt.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn('number');data_table.addRow([{v: 1}]);"
+        dt.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn(\"number\");data_table.addRow([{v: 1}]);"
       end
 
       it "includes :role and :pattern when these are specified" do
         dt.new_column('string', nil, nil, 'interval', 'pattern')
         dt.add_row(['interval'])
 
-        dt.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn({type: 'string', role: 'interval', pattern: 'pattern'});data_table.addRow([{v: 'interval'}]);"
+        dt.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn({type: \"string\", role: \"interval\", pattern: \"pattern\"});data_table.addRow([{v: 'interval'}]);"
+      end
+      
+      it "escapes labels with apostrophes properly" do
+        dt.new_column('number', 'Winston\'s')
+        dt.add_row([1])
+
+        pp dt.to_js.to_json
+        dt.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn(\"number\", \"Winston's\");data_table.addRow([{v: 1}]);"        
       end
     end
 

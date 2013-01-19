@@ -206,9 +206,9 @@ module GoogleVisualr
       @cols.each do |column|
         js << "data_table.addColumn("
         if column[:role].nil?
-          js << column.map{ |key, value| "'#{value}'" }.join(", ")
+          js << column.values.map(&:to_json).join(", ")
         else
-          js << "{" + column.map{ |key, value| "#{key}: '#{value}'" }.join(", ") + "}"
+          js << "{" + column.map{ |key, value| "#{key}: #{value.to_json}" }.join(", ") + "}"
         end
         js << ");"
       end
