@@ -25,13 +25,13 @@ Hence, do note that GoogleVisualr is not a 100% complete wrapper for Google Char
 
 For example, Methods and Events as described in Google Chart Tools' API Docs - for use after a chart has been rendered, are not implemented because they feel more natural being written as JavaScript functions, within views or .js files.
 
-= Install
+== Install
 
 Assuming you are on Rails 3, include the gem in your Gemfile.
 
   gem "google_visualr", ">= 2.1"
 
-= Basics
+== Basics
 
 This section describes a basic implementation of the GoogleVisualr::DataTable and GoogleVisualr::AreaChart classes.
 
@@ -72,7 +72,7 @@ In your Rails view, render the Google chart.
   <div id='chart'></div>
   <%= render_chart(@chart, 'chart') %>
 
-= Support
+== Support
 
 Please submit all feedback, bugs and feature-requests to {GitHub Issues Tracker}[http://github.com/winston/google_visualr/issues].
 
@@ -82,7 +82,7 @@ Feel free to fork the project, make improvements or bug fixes and submit pull re
 
 I would like to collect some data about who's using this Gem. {Please drop me a line}[[mailto:winstonyw+googlevisualr@gmail.com]] and I may put up the link here.
 
-= Change Log
+== Change Log
 
 <em>Version 2.1.7</em>
 * {Issue 56}[https://github.com/winston/google_visualr/issues/56] Typecast to proper JSON strings.
@@ -128,12 +128,12 @@ This gem, however, is not a drop-in replacement for the plugin, as there are num
 
 Notably, you will have to interact mostly with GoogleVisualr::DataTable which was absent in the plugin.
 
-= Author
+== Author
 
 GoogleVisualr is maintained by {Winston Teo}[mailto:winstonyw+googlevisualr@gmail.com].
 
 Who is Winston Teo? {You should follow Winston on Twitter}[http://www.twitter.com/winstonyw], or find out more on {WinstonYW}[http://www.winstonyw.com] and {LinkedIn}[http://sg.linkedin.com/in/winstonyw].
 
-= License
+== License
 
 Copyright © 2012 Winston Teo Yong Wei. Free software, released under the MIT license.
