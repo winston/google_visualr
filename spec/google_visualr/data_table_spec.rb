@@ -205,7 +205,7 @@ describe GoogleVisualr::DataTable do
         it "raises an exception if value is not date" do
           assert_raises_exception(4, 'ABCD')
         end
-        
+
         it "accepts BigDecimal as number" do
           expect {
             dt.set_cell(0, 1, BigDecimal.new(42))
@@ -258,14 +258,14 @@ describe GoogleVisualr::DataTable do
         dt.new_column('string', nil, nil, 'interval', 'pattern')
         dt.add_row(['interval'])
 
-        dt.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn({\"type\":\"string\",\"role\":\"interval\",\"pattern\":\"pattern\"});data_table.addRow([{v: 'interval'}]);"
+        dt.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn({\"type\":\"string\",\"role\":\"interval\",\"pattern\":\"pattern\"});data_table.addRow([{v: \"interval\"}]);"
       end
-      
+
       it "escapes labels with apostrophes properly" do
         dt.new_column('number', 'Winston\'s')
         dt.add_row([1])
 
-        dt.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn({\"type\":\"number\",\"label\":\"Winston's\"});data_table.addRow([{v: 1}]);"        
+        dt.to_js.should == "var data_table = new google.visualization.DataTable();data_table.addColumn({\"type\":\"number\",\"label\":\"Winston's\"});data_table.addRow([{v: 1}]);"
       end
     end
 
@@ -288,10 +288,10 @@ describe GoogleVisualr::DataTable do
       end
 
       it "initializes with a hash" do
-        cell = GoogleVisualr::DataTable::Cell.new( { :v => 1, :f => '1.0', :p => {:style => 'border: 1px solid green;'} } )
+        cell = GoogleVisualr::DataTable::Cell.new( { :v => 1, :f => "1.0", :p => {:style => "border: 1px solid green;"} } )
         cell.v.should == 1
-        cell.f.should == '1.0'
-        cell.p.should == {:style => 'border: 1px solid green;'}
+        cell.f.should == "1.0"
+        cell.p.should == {:style => "border: 1px solid green;"}
       end
     end
 
@@ -299,24 +299,29 @@ describe GoogleVisualr::DataTable do
       context "initialized with a value" do
         it "returns a json string" do
           cell = GoogleVisualr::DataTable::Cell.new(1)
-          cell.to_js.should == '{v: 1}'
+          cell.to_js.should == "{v: 1}"
         end
 
         it "returns 'null' when v is nil" do
           cell = GoogleVisualr::DataTable::Cell.new(nil)
-          cell.to_js.should == 'null'
+          cell.to_js.should == "null"
         end
       end
 
       context "initialized with a hash" do
         it "returns a json string when v is present" do
-          cell = GoogleVisualr::DataTable::Cell.new( { :v => 1, :f => "1.0", :p => {:style => 'border: 1px solid green;'} } )
-          cell.to_js.should == "{v: 1, f: '1.0', p: {style: 'border: 1px solid green;'}}"
+          cell = GoogleVisualr::DataTable::Cell.new( { :v => 1, :f => "1.0", :p => {:style => "border: 1px solid green;"} } )
+          cell.to_js.should == "{v: 1, f: \"1.0\", p: {style: \"border: 1px solid green;\"}}"
         end
 
         it "returns a json string when v is nil" do
-          cell = GoogleVisualr::DataTable::Cell.new( { :v => nil, :f => "-", :p => {:style => 'border: 1px solid red;'} } )
-          cell.to_js.should == "{v: null, f: '-', p: {style: 'border: 1px solid red;'}}"
+          cell = GoogleVisualr::DataTable::Cell.new( { :v => nil, :f => "-", :p => {:style => "border: 1px solid red;"} } )
+          cell.to_js.should == "{v: null, f: \"-\", p: {style: \"border: 1px solid red;\"}}"
+        end
+
+        it "returns a valid json string when there are apostrophes in v or f" do
+          cell = GoogleVisualr::DataTable::Cell.new( { :v => "I'm \"Winston\"", :f => "Winston<div style='color:red; font-style:italic'>Nice Guy</div>" } )
+          cell.to_js.should == "{v: \"I'm \\\"Winston\\\"\", f: \"Winston<div style='color:red; font-style:italic'>Nice Guy</div>\"}"
         end
       end
     end

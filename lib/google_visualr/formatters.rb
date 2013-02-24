@@ -60,10 +60,10 @@ module GoogleVisualr
     def to_js
       super do |js|
         @ranges.each do |r|
-          js << "\nformatter.addRange(#{typecast(r[:from])}, #{typecast(r[:to])}, '#{r[:color]}', '#{r[:bgcolor]}');"
+          js << "\nformatter.addRange(#{typecast(r[:from])}, #{typecast(r[:to])}, #{typecast(r[:color])}, #{typecast(r[:bgcolor])});"
         end
         @gradient_ranges.each do |r|
-          js << "\nformatter.addGradientRange(#{typecast(r[:from])}, #{typecast(r[:to])}, '#{r[:color]}', '#{r[:fromBgColor]}', '#{r[:toBgColor]}');"
+          js << "\nformatter.addGradientRange(#{typecast(r[:from])}, #{typecast(r[:to])}, #{typecast(r[:color])}, #{typecast(r[:fromBgColor])}, #{typecast(r[:toBgColor])});"
         end
       end
     end

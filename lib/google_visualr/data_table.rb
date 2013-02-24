@@ -273,7 +273,7 @@ module GoogleVisualr
 
         js  = "{"
         js << "v: #{typecast(@v)}"
-        js << ", f: '#{@f}'"          unless @f.nil?
+        js << ", f: #{typecast(@f)}"  unless @f.nil?
         js << ", p: #{typecast(@p)}"  unless @p.nil?
         js << "}"
 

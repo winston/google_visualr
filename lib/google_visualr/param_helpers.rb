@@ -28,7 +28,7 @@ module GoogleVisualr
     def typecast(value)
       case
         when value.is_a?(String)
-          return "'#{value.gsub(/[']/, '\\\\\'')}'"
+          return value.to_json
         when value.is_a?(Integer)   || value.is_a?(Float)
           return value
         when value.is_a?(TrueClass) || value.is_a?(FalseClass)

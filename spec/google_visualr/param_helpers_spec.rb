@@ -40,7 +40,7 @@ describe "GoogleVisualr::ParamsHelper" do
     end
 
     it "returns string" do
-      assert_equal("a's", "'a\\'s'")
+      assert_equal("I'm \"AWESOME\"", "I'm \"AWESOME\"".to_json)
     end
 
     it "returns number" do
@@ -75,7 +75,7 @@ describe "GoogleVisualr::ParamsHelper" do
     end
 
     it "returns array of strings" do
-      assert_equal({:colors => ['a', 'b']}, "{colors: ['a','b']}")
+      assert_equal({:colors => ['a', 'b']}, "{colors: [\"a\",\"b\"]}")
     end
 
     it "recursively calls js_parameters" do

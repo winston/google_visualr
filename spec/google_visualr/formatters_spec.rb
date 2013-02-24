@@ -50,7 +50,7 @@ describe GoogleVisualr::Formatter do
       it "works" do
         formatter = GoogleVisualr::BarFormat.new(:base => 100, :colorNegative => 'red', :colorPositive => 'green', :drawZeroLine => false, :max => 1000, :min => -1000, :showValue => false,  :width => '150px')
         formatter.columns(1)
-        formatter.to_js.should == "\nvar formatter = new google.visualization.BarFormat({base: 100, colorNegative: 'red', colorPositive: 'green', drawZeroLine: false, max: 1000, min: -1000, showValue: false, width: '150px'});\nformatter.format(data_table, 1);"
+        formatter.to_js.should == "\nvar formatter = new google.visualization.BarFormat({base: 100, colorNegative: \"red\", colorPositive: \"green\", drawZeroLine: false, max: 1000, min: -1000, showValue: false, width: \"150px\"});\nformatter.format(data_table, 1);"
       end
     end
   end
@@ -78,7 +78,7 @@ describe GoogleVisualr::Formatter do
         formatter.add_range(0, 1000, 'red', '#000000')
         formatter.add_gradient_range(2000, nil, 'blue', '#FFFFFF', '#333333')
         formatter.columns(1)
-        formatter.to_js.should == "\nvar formatter = new google.visualization.ColorFormat();\nformatter.addRange(0, 1000, 'red', '#000000');\nformatter.addGradientRange(2000, null, 'blue', '#FFFFFF', '#333333');\nformatter.format(data_table, 1);"
+        formatter.to_js.should == "\nvar formatter = new google.visualization.ColorFormat();\nformatter.addRange(0, 1000, \"red\", \"#000000\");\nformatter.addGradientRange(2000, null, \"blue\", \"#FFFFFF\", \"#333333\");\nformatter.format(data_table, 1);"
       end
     end
   end
@@ -88,7 +88,7 @@ describe GoogleVisualr::Formatter do
       it "works" do
         formatter = GoogleVisualr::DateFormat.new(:formatType => 'long', :timeZone => 8)
         formatter.columns(1)
-        formatter.to_js.should == "\nvar formatter = new google.visualization.DateFormat({formatType: 'long', timeZone: 8});\nformatter.format(data_table, 1);"
+        formatter.to_js.should == "\nvar formatter = new google.visualization.DateFormat({formatType: \"long\", timeZone: 8});\nformatter.format(data_table, 1);"
       end
     end
   end
@@ -98,7 +98,7 @@ describe GoogleVisualr::Formatter do
       it "works" do
         formatter = GoogleVisualr::NumberFormat.new(:decimalSymbol => '.', :fractionDigits => 4, :groupingSymbol => ',', :negativeColor => 'red', :negativeParens => false, :prefix => 'USD$', :suffix => '-')
         formatter.columns(1)
-        formatter.to_js.should == "\nvar formatter = new google.visualization.NumberFormat({decimalSymbol: '.', fractionDigits: 4, groupingSymbol: ',', negativeColor: 'red', negativeParens: false, prefix: 'USD$', suffix: '-'});\nformatter.format(data_table, 1);"
+        formatter.to_js.should == "\nvar formatter = new google.visualization.NumberFormat({decimalSymbol: \".\", fractionDigits: 4, groupingSymbol: \",\", negativeColor: \"red\", negativeParens: false, prefix: \"USD$\", suffix: \"-\"});\nformatter.format(data_table, 1);"
       end
     end
   end
