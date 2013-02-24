@@ -10,7 +10,7 @@ Good for any Ruby on Rails setup whereby you prefer to work your logic in models
 
 Please refer to the {GoogleVisualr API Reference site}[http://googlevisualr.heroku.com/] for a complete list of Google charts that you can create with GoogleVisualr.
 
-== The Gist
+== tl:dr
 
 * In your model or controller, write Ruby code to create your chart (e.g. Area Chart, Bar Chart, even Spark Lines etc).
 * Configure your chart with any of the options as listed in Google Chart Tools' API Docs. E.g. {Area Chart's Configuration Options}[http://code.google.com/apis/chart/interactive/docs/gallery/areachart.html#Configuration_Options].
@@ -23,23 +23,7 @@ GoogleVisualr is created solely for the aim of simplifying the display of a char
 
 Hence, do note that GoogleVisualr is not a 100% complete wrapper for Google Chart Tools.
 
-For example, Methods and Events as described in Google Chart Tools' API Docs, for use after a chart has been rendered, are not implemented because they felt more native being written as JavaScript functions, within views or .js files.
-
-== Differences Between Gem and Plugin
-
-Gem
-* is Rails 3 compatible.
-* implements many of the newer versions of Google Charts E.g. Core Charts.
-* enjoyed a major refactoring, and also now has Tests!
-
-Plugin
-* has not been tested for Rails 3 compatibility
-* implements the older versions of Google Charts.
-* has deprecated methods.
-
-This gem, however, is not a drop-in replacement for the plugin, as there are numerous changes in its usage.
-
-Notably, you will have to interact mostly with GoogleVisualr::DataTable which was absent in the plugin.
+For example, Methods and Events as described in Google Chart Tools' API Docs - for use after a chart has been rendered, are not implemented because they feel more natural being written as JavaScript functions, within views or .js files.
 
 = Install
 
@@ -90,9 +74,13 @@ In your Rails view, render the Google chart.
 
 = Support
 
-Please feel free to fork the project, make improvements or bug fixes and submit pull requests. Ideally, all pull requests should also come with tests!
-
 Please submit all feedback, bugs and feature-requests to {GitHub Issues Tracker}[http://github.com/winston/google_visualr/issues].
+
+Feel free to fork the project, make improvements or bug fixes and submit pull requests (with tests!). 
+
+= Who's Using GoogleVisualr?
+
+I would like to collect some data about who's using this Gem. {Please drop me a line}[[mailto:winstonyw+googlevisualr@gmail.com]] and I may put up the link here.
 
 = Change Log
 
@@ -123,6 +111,22 @@ Please submit all feedback, bugs and feature-requests to {GitHub Issues Tracker}
 
 <em>Version 2.1.0</em>
 * Added +#render_chart+ as a helper method in Rails views.
+
+== Differences Between Gem and Plugin
+
+Gem
+* is Rails 3 compatible.
+* implements many of the newer versions of Google Charts E.g. Core Charts.
+* enjoyed a major refactoring, and also now has Tests!
+
+Plugin
+* has not been tested for Rails 3 compatibility
+* implements the older versions of Google Charts.
+* has deprecated methods.
+
+This gem, however, is not a drop-in replacement for the plugin, as there are numerous changes in its usage.
+
+Notably, you will have to interact mostly with GoogleVisualr::DataTable which was absent in the plugin.
 
 = Author
 
