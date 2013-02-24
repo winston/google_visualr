@@ -96,6 +96,9 @@ Please submit all feedback, bugs and feature-requests to {GitHub Issues Tracker}
 
 = Change Log
 
+<em>Version 2.1.7</em>
+* {Issue 56}[https://github.com/winston/google_visualr/issues/56] Typecast to proper JSON strings.
+
 <em>Version 2.1.6</em>
 * {Issue 54}[https://github.com/winston/google_visualr/issues/54] Allow apostrophes in labels.
 * {Pull Request 55}[https://github.com/winston/google_visualr/pull/55] Added support to accept BigDecimal as number.
