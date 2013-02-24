@@ -80,7 +80,7 @@ Feel free to fork the project, make improvements or bug fixes and submit pull re
 
 == Who's Using GoogleVisualr?
 
-I would like to collect some data about who's using this Gem. {Please drop me a line}[[mailto:winstonyw+googlevisualr@gmail.com]] and I may put up the link here.
+I would like to collect some data about who's using this Gem. {Please drop me a line}[mailto:winstonyw+googlevisualr@gmail.com] and I may put up the link here.
 
 == Change Log
 
