@@ -41,7 +41,7 @@ For detailed documentation and advanced implementations, please refer to the {Go
 
 In your Rails layout, load Google Ajax API in the head tag, at the very top.
 
-  <script src='http://www.google.com/jsapi'></script>
+  <script src='https://www.google.com/jsapi'></script>
 
 In your Rails controller, initialize a GoogleVisualr::DataTable object with an empty constructor.
 
