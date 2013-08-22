@@ -14,6 +14,22 @@ describe GoogleVisualr::BaseChart do
     end
   end
 
+  describe "#chart_name" do
+    it "returns class name (less module)" do
+      @chart.chart_name.should == "BaseChart"
+    end
+  end
+
+  describe "#chart_function_name" do
+    it "returns a function name that is used to draw the chart in JS" do
+      @chart.chart_function_name("base_chart").should == "draw_base_chart"
+    end
+
+    it "handles 'dashes' in element id" do
+      @chart.chart_function_name("base-chart").should == "draw_base_chart"
+    end
+  end
+
   describe "#options=" do
     it "works" do
       @chart.options = { :legend => "Awesome Chart", :width =>  1000, :is3D => false }
