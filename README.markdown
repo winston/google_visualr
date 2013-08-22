@@ -4,7 +4,7 @@
 
 GoogleVisualr, is a wrapper around the [Google Chart Tools](http://code.google.com/apis/chart/interactive/docs/index.html) that allows anyone to create beautiful charts with just plain Ruby. You don't have to write any JavaScript at all.
 
-It's good for any Ruby (Rails/Sinatra) setup, and you can handle the charting logic in Ruby.
+It's good for any Ruby (Rails/Sinatra) setup, and you can handle the entire charting logic in Ruby.
 
 Please refer to the [GoogleVisualr API Reference site](http://googlevisualr.heroku.com/) for a complete list of Google charts that you can create with GoogleVisualr.
 
@@ -69,6 +69,12 @@ In your Rails view, render the Google chart.
 
 	<div id='chart'></div>
 	<%= render_chart(@chart, 'chart') %>
+
+## Listeners
+
+For an example usage of `listeners`, please refer to [this comment](https://github.com/winston/google_visualr/issues/36#issuecomment-9880256).
+
+Besides `listeners` you can now also redraw charts in your JavaScript maunally by calling `draw_<element id>()` function. See [this commit](https://github.com/winston/google_visualr/commit/e5554886bd83f56dd31bbc543fdcf1e24523776a) for more details.
 
 ## Support
 
