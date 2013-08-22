@@ -21,7 +21,7 @@ GoogleVisualr is created solely for the aim of simplifying the display of a char
 
 Hence, do note that GoogleVisualr is not a 100% complete wrapper for Google Chart Tools.
 
-For example, Methods and Events as described in Google's API Docs - for use after a chart has been rendered, are not implemented because they feel more natural being written as JavaScript functions, within the views or .js files.
+E.g., Methods and Events as described in Google's API Docs - for use after a chart has been rendered, are not implemented because they feel more natural being written as JavaScript functions, within the views or .js files.
 
 ## Install
 
