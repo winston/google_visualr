@@ -17,15 +17,13 @@ module GoogleVisualr
     end
 
     module ImageChart
-      include GoogleVisualr::ParamHelpers
-
       def package_name
         "image#{self.class.to_s.split("::").last.downcase}"
       end
       def class_name
         "Image#{self.class.to_s.split('::').last}"
       end
-      
+
       # Set defaults according to http://code.google.com/apis/chart/interactive/docs/gallery/genericimagechart.html#Configuration_Options
       IMAGE_DEFAULTS = {
         # Automatic Scaling
@@ -48,17 +46,17 @@ module GoogleVisualr
 
         # backgroundColor
         query_params[:chf] = "bg,s," + options["backgroundColor"].gsub(/#/, '') if options["backgroundColor"]
-        
+
         # color, colors ('color' param is ignored if 'colors' is present)
         if options["colors"]
           query_params[:chco] = options["colors"].join(',').gsub(/#/, '')
         elsif options["color"]
           query_params[:chco] = options["color"].gsub(/#/, '')
         end
-        
+
         # fill (this will often not look good - better for user to override this parameter)
         query_params[:chm] = "B,#{query_params[:chco].split(',').first},0,0,0" if options["fill"] && query_params[:chco]
-        
+
         # firstHiddenColumn, singleColumnDisplay, data
         firstHiddenColumn = options["firstHiddenColumn"] ? options["firstHiddenColumn"] : data_table.cols.size - 1
         query_params[:chd] = "t:"
@@ -70,7 +68,7 @@ module GoogleVisualr
         else
           query_params[:chd] += data_dable.get_column(options["singleColumnDisplay"])
         end
-        
+
         # height, width
         if options["height"] && options["width"]
           query_params[:chs] = "#{options["width"]}x#{options["height"]}"
@@ -87,7 +85,7 @@ module GoogleVisualr
           query_params.delete(:chdlp)
           query_params.delete(:chdl)
         end
-        
+
         # min, max, valueLabelsInterval (works as long as :chxt => "x,y" and both 'min' and 'max' are set)
         if options["min"] && options["max"]
           query_params[:chxr] = "1,#{options['min']},#{options['max']}"
@@ -106,7 +104,6 @@ module GoogleVisualr
         URI.parse(base_url + query)
       end
     end
-
   end
 
 end
