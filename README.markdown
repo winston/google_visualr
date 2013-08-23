@@ -90,6 +90,10 @@ I would like to collect some data about who's using this Gem. [Please drop me a 
 
 <em>Version 2.1.8</em>
 
+* [Issue 61](https://github.com/winston/google_visualr/issues/45) Add MIT license to gemspec.
+
+<em>Version 2.1.8</em>
+
 * [Issue 45](https://github.com/winston/google_visualr/issues/45) Support for redrawing chart from JS.
 
 <em>Version 2.1.7</em>
