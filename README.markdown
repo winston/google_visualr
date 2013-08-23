@@ -88,7 +88,7 @@ I would like to collect some data about who's using this Gem. [Please drop me a 
 
 ## Change Log
 
-<em>Version 2.1.8</em>
+<em>Version 2.1.9</em>
 
 * [Issue 61](https://github.com/winston/google_visualr/issues/45) Add MIT license to gemspec.
 
