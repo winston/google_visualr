@@ -1,0 +1,15 @@
+<html>
+<head>
+<script src="https://www.google.com/jsapi"></script>
+<script src="turbolinks.js"></script>
+</head>
+<body>
+  <h2>Different methods for loading a chart with Turbolinks support</h2>
+  You should test these in Firefox. In Chrome, each link click triggers a full page reload if running from localhost (which defeats the purpose of Turbolinks, and doesn't present the bug).
+  <ul>
+    <li><a href="old.html">One statement: anonymous function in callback</a></li>
+    <li><a href="broken.html">Three statements; load packages, set callback, define function. The first statement crashes.</a></li>
+    <li><a href="fixed.html">Two statements; load packages with callback defined, define function.</a></li>
+  </ul>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<html>
+<head>
+<script src="https://www.google.com/jsapi"></script>
+<script src="turbolinks.js"></script>
+</head>
+<body>
+  <a href="index.html">home</a>
+  <div id="chart"> </div>
+<script>
+  google.load('visualization','1', {packages: ['corechart']});
+  google.setOnLoadCallback(draw_chart);
+  function draw_chart() {
+    var data_table = new google.visualization.DataTable();data_table.addColumn({"type":"string","label":"Employee"});data_table.addColumn({"type":"number","label":"Base Hourly"});data_table.addRow([{v: "Mike Ross"}, {v: 8}]);data_table.addRow([{v: "Moe Syzlack"}, {v: 12}]);
+    var chart = new google.visualization.BarChart(document.getElementById('chart'));
+    chart.draw(data_table, {isStacked: true, width: 900, height: 900, title: "Hours Worked by Payroll Category by Employee", vAxis: {title: "Employee"}, hAxis: {title: "Hours Worked"}, chartArea: {top: 20, bottom: 0}});
+  };
+</script>
+</body>
+</html>
