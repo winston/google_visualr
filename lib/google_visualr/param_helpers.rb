@@ -25,7 +25,7 @@ module GoogleVisualr
     # Returns an array of strings if given an array
     # Returns 'null' when value is nil.
     # Recursive typecasting when value is a hash.
-    def typecast(value)
+    def typecast(value, type = nil)
       case
         when value.is_a?(String)
           return value.to_json
@@ -34,7 +34,11 @@ module GoogleVisualr
         when value.is_a?(TrueClass) || value.is_a?(FalseClass)
           return "#{value}"
         when value.is_a?(DateTime)  ||  value.is_a?(Time)
-          return "new Date(#{value.year}, #{value.month-1}, #{value.day}, #{value.hour}, #{value.min}, #{value.sec})"
+          if type == "timewithoutdate"
+            return "new Date(0, 0, 0, #{value.hour}, #{value.min}, #{value.sec})"
+          else
+            return "new Date(#{value.year}, #{value.month-1}, #{value.day}, #{value.hour}, #{value.min}, #{value.sec})"
+          end
         when value.is_a?(Date)
           return "new Date(#{value.year}, #{value.month-1}, #{value.day})"
         when value.nil?
