@@ -34,7 +34,7 @@ module GoogleVisualr
         when value.is_a?(TrueClass) || value.is_a?(FalseClass)
           return "#{value}"
         when value.is_a?(DateTime)  ||  value.is_a?(Time)
-          if type == "timewithoutdate"
+          if type == "time"
             return "new Date(0, 0, 0, #{value.hour}, #{value.min}, #{value.sec})"
           else
             return "new Date(#{value.year}, #{value.month-1}, #{value.day}, #{value.hour}, #{value.min}, #{value.sec})"
