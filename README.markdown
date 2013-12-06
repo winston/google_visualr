@@ -88,6 +88,11 @@ I would like to collect some data about who's using this Gem. [Please drop me a 
 
 ## Change Log
 
+<em>Version 2.2.0</em>
+
+* [Issue 64](https://github.com/winston/google_visualr/pull/64) Works with Turbolinks.
+* [Issue 65](https://github.com/winston/google_visualr/pull/65) Add InteractiveTimeline chart.
+
 <em>Version 2.1.9</em>
 
 * [Issue 61](https://github.com/winston/google_visualr/issues/45) Add MIT license to gemspec.
