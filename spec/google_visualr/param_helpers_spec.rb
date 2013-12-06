@@ -34,8 +34,8 @@ describe "GoogleVisualr::ParamsHelper" do
   end
 
   describe "#typecast" do
-    def assert_equal(input, expected)
-      options = @klass.typecast(input)
+    def assert_equal(input, expected, type = nil)
+      options = @klass.typecast(input, type)
       options.should == expected
     end
 
@@ -62,6 +62,12 @@ describe "GoogleVisualr::ParamsHelper" do
       date     = Time.now
       expected = "new Date(#{date.year}, #{date.month-1}, #{date.day}, #{date.hour}, #{date.min}, #{date.sec})"
       assert_equal(date, expected)
+    end
+
+    it "returns time, if specified" do
+      date = Time.now
+      expected = "new Date(0, 0, 0, #{date.hour}, #{date.min}, #{date.sec})"
+      assert_equal(date, expected, "time")
     end
 
     it "returns date" do

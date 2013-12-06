@@ -171,7 +171,7 @@ module GoogleVisualr
     def set_cell(row_index, column_index, value)
       if within_range?(row_index, column_index)
         verify_against_column_type( @cols[column_index][:type], value )
-        @rows[row_index][column_index] = GoogleVisualr::DataTable::Cell.new(value)
+        @rows[row_index][column_index] = GoogleVisualr::DataTable::Cell.new(value, @cols[column_index][:type])
       else
         raise RangeError, "row_index and column_index MUST be < @rows.size and @cols.size", caller
       end
@@ -205,7 +205,7 @@ module GoogleVisualr
 
       @cols.each do |column|
         js << "data_table.addColumn("
-        js << column.to_json
+        js << display(column)
         js << ");"
       end
 
@@ -226,6 +226,11 @@ module GoogleVisualr
 
     private
 
+    def display(column)
+      column[:type] = "datetime" if column[:type] == "time"
+      column.to_json
+    end
+
     def within_range?(row_index, column_index)
       row_index < @rows.size && column_index < @cols.size
     end
@@ -244,6 +249,8 @@ module GoogleVisualr
           raise ArgumentError, "cell value '#{v}' is not a Boolean", caller             unless v.is_a?(TrueClass) || v.is_a?(FalseClass)
         when type == 'datetime'
           raise ArgumentError, "cell value '#{v}' is not a DateTime", caller            unless v.is_a?(DateTime)  || v.is_a?(Time)
+        when type == 'time'
+          raise ArgumentError, "cell value '#{v}' is not a DateTime", caller            unless v.is_a?(DateTime)  || v.is_a?(Time)
         when type == "date"
           raise ArgumentError, "cell value '#{v}' is not a Date", caller                unless v.is_a?(Date)
       end
@@ -256,15 +263,15 @@ module GoogleVisualr
       attr_accessor :f # formatted
       attr_accessor :p # properties
 
-      def initialize(*args)
-        options = args.pop
-
+      def initialize(options, type = nil)
         if options.is_a?(Hash)
           @v = options[:v]
           @f = options[:f]
           @p = options[:p]
-        else
+          @type = type
+        else # should be a string
           @v = options
+          @type = type
         end
       end
 
@@ -272,7 +279,7 @@ module GoogleVisualr
         return "null" if @v.nil? && @f.nil? && @p.nil?
 
         js  = "{"
-        js << "v: #{typecast(@v)}"
+        js << "v: #{typecast(@v, @type)}"
         js << ", f: #{typecast(@f)}"  unless @f.nil?
         js << ", p: #{typecast(@p)}"  unless @p.nil?
         js << "}"
