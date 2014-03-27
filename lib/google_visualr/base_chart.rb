@@ -37,8 +37,9 @@ module GoogleVisualr
     # Parameters:
     #  *div_id            [Required] The ID of the DIV element that the Google Chart should be rendered in.
 
-    def to_js(element_id)
-      js  = "\n<script type='text/javascript'>"
+    def to_js(element_id, options = {})
+      js =  ""
+      js << "\n<script type='text/javascript'>" unless options[:script_tag] == false
       js << "\n  google.load('visualization','1', {packages: ['#{package_name}'], callback: #{chart_function_name(element_id)}});"
       js << "\n  function #{chart_function_name(element_id)}() {"
       js << "\n    #{@data_table.to_js}"
@@ -48,7 +49,7 @@ module GoogleVisualr
       end
       js << "\n    chart.draw(data_table, #{js_parameters(@options)});"
       js << "\n  };"
-      js << "\n</script>"
+      js << "\n</script>" unless options[:script_tag] == false
       js
     end
   end
