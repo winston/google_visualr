@@ -36,11 +36,29 @@ module GoogleVisualr
     #
     # Parameters:
     #  *div_id            [Required] The ID of the DIV element that the Google Chart should be rendered in.
-
-    def to_js(element_id, options = {})
+    def to_js(element_id)
       js =  ""
-      js << "\n<script type='text/javascript'>" unless options[:script_tag] == false
-      js << "\n  google.load('visualization','1', {packages: ['#{package_name}'], callback: #{chart_function_name(element_id)}});"
+      js << "\n<script type='text/javascript'>"
+      js << load_js(element_id)
+      js << draw_js(element_id)
+      js << "\n</script>"
+      js
+    end
+
+    # Generates JavaScript for loading the appropriate Google Visualization package, with callback to render chart.
+    #
+    # Parameters:
+    #  *div_id            [Required] The ID of the DIV element that the Google Chart should be rendered in.
+    def load_js(element_id)
+      "\n  google.load('visualization','1', {packages: ['#{package_name}'], callback: #{chart_function_name(element_id)}});"
+    end
+
+    # Generates JavaScript function for rendering the chart.
+    #
+    # Parameters:
+    #  *div_id            [Required] The ID of the DIV element that the Google Chart should be rendered in.
+    def draw_js(element_id)
+      js = ""
       js << "\n  function #{chart_function_name(element_id)}() {"
       js << "\n    #{@data_table.to_js}"
       js << "\n    var chart = new google.visualization.#{chart_name}(document.getElementById('#{element_id}'));"
@@ -49,7 +67,6 @@ module GoogleVisualr
       end
       js << "\n    chart.draw(data_table, #{js_parameters(@options)});"
       js << "\n  };"
-      js << "\n</script>" unless options[:script_tag] == false
       js
     end
   end

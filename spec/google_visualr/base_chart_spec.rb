@@ -51,11 +51,6 @@ describe GoogleVisualr::BaseChart do
       js.should include("<script")
     end
 
-    it "generates JS without script tag" do
-      js = @chart.to_js("body", :script_tag => false)
-      js.should_not include("<script")
-    end
-
     it "generates JS with listeners" do
       @chart.add_listener("select", "function() {test_event(chart);}")
 
