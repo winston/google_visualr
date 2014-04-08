@@ -88,6 +88,11 @@ I would like to collect some data about who's using this Gem. [Please drop me a 
 
 ## Change Log
 
+<em>Version 2.3.0</em>
+
+* [Issue 69](https://github.com/winston/google_visualr/pull/69) Support generating chart Javascript without <script> tag
+* Split `base_chart#to_js` into 3 methods - `to_js`, `load_js` and `draw_js` which can be used on their own.
+
 <em>Version 2.2.0</em>
 
 * [Issue 64](https://github.com/winston/google_visualr/pull/64) Works with Turbolinks.
