@@ -209,14 +209,14 @@ describe GoogleVisualr::DataTable do
         it "accepts BigDecimal as number" do
           expect {
             dt.set_cell(0, 1, BigDecimal.new(42))
-          }.to_not raise_exception(ArgumentError)
+          }.to_not raise_exception
         end
       end
 
       it "accepts 'nil' for all column types" do
         expect {
           dt.set_cell(0, 0, nil)
-        }.to_not raise_exception(ArgumentError)
+        }.to_not raise_exception
       end
     end
 
