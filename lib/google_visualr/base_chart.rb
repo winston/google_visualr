@@ -4,10 +4,13 @@ module GoogleVisualr
     include GoogleVisualr::Packages
     include GoogleVisualr::ParamHelpers
 
-    attr_accessor :data_table, :listeners
+    DEFAULT_VERSION = "1".freeze
+
+    attr_accessor :data_table, :listeners, :version
 
     def initialize(data_table, options={})
       @data_table = data_table
+      self.version = options.delete(:version) || DEFAULT_VERSION
       send(:options=, options)
       @listeners  = []
     end
@@ -50,7 +53,7 @@ module GoogleVisualr
     # Parameters:
     #  *div_id            [Required] The ID of the DIV element that the Google Chart should be rendered in.
     def load_js(element_id)
-      "\n  google.load('visualization','1', {packages: ['#{package_name}'], callback: #{chart_function_name(element_id)}});"
+      "\n  google.load('visualization','#{version}', {packages: ['#{package_name}'], callback: #{chart_function_name(element_id)}});"
     end
 
     # Generates JavaScript function for rendering the chart.
