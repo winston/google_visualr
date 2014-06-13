@@ -47,8 +47,8 @@ describe GoogleVisualr::BaseChart do
   describe '#add_function' do
     it 'adds to embedded functions array' do
       @chart.add_function("function() {alert(\"Nothing to see here\");}")
-      @chart.functions.should == [{ :callback => "function() 
-      {alert(\"Nothing to see here\");}" }]
+      @chart.functions.should == [{ callback: "function()
+    {alert(\"Nothing to see here\");}" }]
     end
   end
 
