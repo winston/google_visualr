@@ -38,6 +38,7 @@ require "#{lib_path}/google_visualr/interactive/map"
 require "#{lib_path}/google_visualr/interactive/motion_chart"
 require "#{lib_path}/google_visualr/interactive/org_chart"
 require "#{lib_path}/google_visualr/interactive/timeline"
+require "#{lib_path}/google_visualr/interactive/calendar_chart"
 
 # Image Charts
 require "#{lib_path}/google_visualr/image/spark_line"
