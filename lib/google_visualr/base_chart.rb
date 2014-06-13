@@ -34,7 +34,7 @@ module GoogleVisualr
     end
 
     def add_function(callback)
-	@functions << {:callback=> callback}
+      @functions << { :callback=> callback }
     end
 
     # Generates JavaScript and renders the Google Chart in the final HTML output.
