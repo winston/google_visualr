@@ -1,7 +1,7 @@
 module GoogleVisualr
   module Interactive
 
-    # http://code.google.com/apis/chart/interactive/docs/gallery/columnchart.html
+    # https://developers.google.com/chart/interactive/docs/gallery/histogram
     class Histogram < BaseChart
       include GoogleVisualr::Packages::CoreChart
 
