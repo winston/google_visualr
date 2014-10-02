@@ -88,6 +88,10 @@ I would like to collect some data about who's using this Gem. [Please drop me a 
 
 ## Change Log
 
+<em>Version 2.4.0</em>
+
+* [Pull Request 75](https://github.com/winston/google_visualr/pull/75) Add Histogram chart.
+
 <em>Version 2.3.0</em>
 
 * [Issue 69](https://github.com/winston/google_visualr/pull/69) Support generating chart Javascript without `<script>` tag
