@@ -4,12 +4,13 @@ module GoogleVisualr
     include GoogleVisualr::Packages
     include GoogleVisualr::ParamHelpers
 
-    attr_accessor :data_table, :listeners
+    attr_accessor :data_table, :listeners, :functions
 
     def initialize(data_table, options={})
       @data_table = data_table
       send(:options=, options)
       @listeners  = []
+      @functions = []
     end
 
     def chart_name
@@ -30,6 +31,10 @@ module GoogleVisualr
 
     def add_listener(event, callback)
       @listeners << { :event => event.to_s, :callback => callback }
+    end
+
+    def add_function(callback)
+      @functions << { callback: callback }
     end
 
     # Generates JavaScript and renders the Google Chart in the final HTML output.
@@ -66,6 +71,9 @@ module GoogleVisualr
         js << "\n    google.visualization.events.addListener(chart, '#{listener[:event]}', #{listener[:callback]});"
       end
       js << "\n    chart.draw(data_table, #{js_parameters(@options)});"
+      @functions.each do |efunction|
+        js << "\n\n #{efunction[:callback]}"
+      end
       js << "\n  };"
       js
     end

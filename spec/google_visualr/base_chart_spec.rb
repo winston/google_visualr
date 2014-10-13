@@ -43,6 +43,14 @@ describe GoogleVisualr::BaseChart do
       @chart.listeners.should == [{ :event => "select", :callback => "function() {test_event(chart);}" }]
     end
   end
+  
+  describe '#add_function' do
+    it 'adds to embedded functions array' do
+      @chart.add_function("function() {alert(\"Nothing to see here\");}")
+      @chart.functions.should == [{ callback: "function()
+    {alert(\"Nothing to see here\");}" }]
+    end
+  end
 
   describe "#to_js" do
     it "generates JS" do
