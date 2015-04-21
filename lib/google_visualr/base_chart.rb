@@ -72,7 +72,15 @@ module GoogleVisualr
 
     # material js option
     def material_package_name
-      chart_name.gsub("Chart","")
+      chart = chart_name.gsub("Chart","")
+      
+      # column chart uses the "Bar" namespace
+      # https://google-developers.appspot.com/chart/interactive/docs/gallery/columnchart#Material
+      if chart == "Column"
+        chart =  "Bar"
+      end
+
+      return chart
     end
 
     def to_material_js(element_id)
