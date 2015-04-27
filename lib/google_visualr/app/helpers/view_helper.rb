@@ -9,7 +9,13 @@ module GoogleVisualr
 
       def render_chart(chart, dom, options={})
         script_tag = options.fetch(:script_tag) { true }
-        if script_tag
+
+        # render material based charts
+        is_material_chart = options.fetch(:material) { false }
+
+        if is_material_chart
+          chart.to_material_js(dom).html_safe
+        elsif script_tag
           chart.to_js(dom).html_safe
         else
           html = ""

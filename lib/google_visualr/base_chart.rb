@@ -69,6 +69,46 @@ module GoogleVisualr
       js << "\n  };"
       js
     end
+
+    # material js option
+    def material_package_name
+      chart = chart_name.gsub("Chart","")
+      
+      # column chart uses the "Bar" namespace
+      # https://google-developers.appspot.com/chart/interactive/docs/gallery/columnchart#Material
+      if chart == "Column"
+        chart =  "Bar"
+      end
+
+      return chart
+    end
+
+    def to_material_js(element_id)
+      js =  ""
+      js << "\n<script type='text/javascript'>"
+      js << load_material_js(element_id)
+      js << draw_material_js(element_id)
+      js << "\n</script>"
+      js
+    end
+
+    def load_material_js(element_id)
+      "\n  google.load('visualization','1.1', {packages: ['#{material_package_name.downcase}'], callback: #{chart_function_name(element_id)}});"
+    end
+
+    def draw_material_js(element_id)
+      js = ""
+      js << "\n  function #{chart_function_name(element_id)}() {"
+      js << "\n    #{@data_table.to_js}"
+      js << "\n    var chart = new google.charts.#{material_package_name}(document.getElementById('#{element_id}'));"
+      @listeners.each do |listener|
+        js << "\n    google.visualization.events.addListener(chart, '#{listener[:event]}', #{listener[:callback]});"
+      end
+      js << "\n    chart.draw(data_table, google.charts.#{material_package_name}.convertOptions(#{js_parameters(@options)}));"
+      js << "\n  };"
+      js
+    end
+    # end material js option
   end
 
 end
