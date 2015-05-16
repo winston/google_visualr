@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe "ApplicationController" do
   describe "#render_chart" do
     it "has method" do

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe "GoogleVisualr::ParamsHelper" do
   module GoogleVisualr
     class Mock

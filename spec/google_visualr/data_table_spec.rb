@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe GoogleVisualr::DataTable do
 
   let(:dt) { GoogleVisualr::DataTable.new }

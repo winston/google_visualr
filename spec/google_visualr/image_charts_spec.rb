@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 # Warning..
 # Image Charts are deprecated as iof 20 Apr 2012, but supported till 2015.
 # We might remove these soon

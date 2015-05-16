@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe GoogleVisualr::Formatter do
 
   def valid_object(params={})
