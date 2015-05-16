@@ -1,6 +1,6 @@
 # GoogleVisualr
 
-[<img src="https://secure.travis-ci.org/winston/google_visualr.png?branch=master" alt="Build Status" />](http://travis-ci.org/winston/google_visualr)
+[![Build Status](https://travis-ci.org/winston/google_visualr.svg?branch=master)](https://travis-ci.org/winston/google_visualr)
 
 GoogleVisualr, is a wrapper around the [Google Chart Tools](http://code.google.com/apis/chart/interactive/docs/) that allows anyone to create beautiful charts with just plain Ruby. You don't have to write any JavaScript at all.
 
