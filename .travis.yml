@@ -1,4 +1,7 @@
 language: ruby
+bundler_args: --retry=3 --jobs=3 --no-deployment
+cache: bundler
+sudo: false
 rvm:
   - 2.0.0
   - 2.1
@@ -6,7 +9,8 @@ rvm:
   - 2.2.1
   - 2.2.0
   - jruby-head
-  - jruby-9.0.0.0.pre1
+  - jruby-1.7.20
+  - jruby-9.0.0.0.pre2
   - rbx-2
   - ruby-head
 gemfile:
@@ -23,7 +27,8 @@ matrix:
     - rvm: 2.2.1
     - rvm: 2.2.0
     - rvm: jruby-head
-    - rvm: jruby-9.0.0.0.pre1
+    - rvm: jruby-1.7.20
+    - rvm: jruby-9.0.0.0.pre2
     - rvm: rbx-2
     - rvm: ruby-head
   fast_finish: true
