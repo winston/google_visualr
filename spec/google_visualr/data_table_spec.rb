@@ -321,7 +321,9 @@ describe GoogleVisualr::DataTable do
 
         it "returns a valid json string when there are apostrophes in v or f" do
           cell = GoogleVisualr::DataTable::Cell.new( { :v => "I'm \"Winston\"", :f => "Winston<div style='color:red; font-style:italic'>Nice Guy</div>" } )
-          cell.to_js.should == "{v: \"I'm \\\"Winston\\\"\", f: \"Winston<div style='color:red; font-style:italic'>Nice Guy</div>\"}"
+          expected = "{v: \"I'm \\\"Winston\\\"\", f: \"Winston<div style='color:red; font-style:italic'>Nice Guy</div>\"}"
+
+          expect(normalize_javascript(cell.to_js)).to eq expected
         end
       end
     end

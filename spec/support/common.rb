@@ -13,10 +13,9 @@ def data_table
   GoogleVisualr::DataTable.new(:cols => @cols, :rows => @rows)
 end
 
-def base_chart(data_table=data_table)
+def base_chart(data_table = data_table())
   GoogleVisualr::BaseChart.new(data_table, { :legend => "Test Chart", :width => 800, :is3D => true })
 end
-
 
 def base_chart_js_without_script_tag(div_class="div_class")
   js =  "\n  google.load('visualization','1', {packages: ['basechart'], callback: draw_#{div_class}});"
