@@ -1,8 +1,34 @@
+language: ruby
+bundler_args: --retry=3 --jobs=3 --no-deployment
+cache: bundler
+sudo: false
 rvm:
-  - 1.9.3
   - 2.0.0
   - 2.1
-
-branches:
-  only:
-    - master
+  - 2.2.2
+  - 2.2.1
+  - 2.2.0
+  - jruby-head
+  - jruby-1.7.20
+  - jruby-9.0.0.0.pre2
+  - rbx-2
+  - ruby-head
+gemfile:
+  - spec/gemfiles/Gemfile.rails-4.2-stable
+  - spec/gemfiles/Gemfile.rails-4.1-stable
+  - spec/gemfiles/Gemfile.rails-4.0-stable
+  - spec/gemfiles/Gemfile.rails-3.2-stable
+  - Gemfile
+env:
+  global:
+    - JRUBY_OPTS="-J-Xmx1024M --debug"
+matrix:
+  allow_failures:
+    - rvm: 2.2.1
+    - rvm: 2.2.0
+    - rvm: jruby-head
+    - rvm: jruby-1.7.20
+    - rvm: jruby-9.0.0.0.pre2
+    - rvm: rbx-2
+    - rvm: ruby-head
+  fast_finish: true

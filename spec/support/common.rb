@@ -13,7 +13,7 @@ def data_table
   GoogleVisualr::DataTable.new(:cols => @cols, :rows => @rows)
 end
 
-def base_chart(data_table=data_table)
+def base_chart(data_table = data_table())
   GoogleVisualr::BaseChart.new(data_table, { :legend => "Test Chart", :width => 800, :is3D => true })
 end
 

@@ -1,23 +1,18 @@
-$:.push File.expand_path("../lib", __FILE__)
-
-# Maintain your gem's version:
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "google_visualr/version"
 
-Gem::Specification.new do |s|
-  s.name        = "google_visualr"
-  s.version     = GoogleVisualr::VERSION
-  s.authors     = ["Winston Teo"]
-  s.email       = ["winston.yongwei+google_visualr@gmail.com"]
-  s.homepage    = "https://github.com/winston/google_visualr"
-  s.summary     = "A Ruby wrapper around the Google Chart Tools that allows anyone to create the same beautiful charts with just plain Ruby."
-  s.description = "This Ruby gem, GoogleVisualr, is a wrapper around the Google Chart Tools that allows anyone to create the same beautiful charts with just Ruby; you don't have to write any JavaScript at all."
+Gem::Specification.new do |spec|
+  spec.name        = "google_visualr"
+  spec.version     = GoogleVisualr::VERSION
+  spec.authors     = ["Winston Teo"]
+  spec.email       = ["winston.yongwei+google_visualr@gmail.com"]
+  spec.homepage    = "https://github.com/winston/google_visualr"
+  spec.summary     = "A Ruby wrapper around the Google Chart Tools that allows anyone to create the same beautiful charts with just plain Ruby."
+  spec.description = "This Ruby gem, GoogleVisualr, is a wrapper around the Google Chart Tools that allows anyone to create the same beautiful charts with just Ruby; you don't have to write any JavaScript at all."
+  spec.files       = `git ls-files -z`.split("\x0")
+  spec.license     = 'MIT'
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.markdown"]
-  s.test_files = Dir["spec/**/*"]
-
-  s.add_development_dependency "bundler", ">= 1.3.5"
-  s.add_development_dependency "rspec"  , ">= 2.14.1"
-  s.add_development_dependency "rails"  , ">= 3.2"
-
-  s.license = 'MIT'
+  spec.required_ruby_version = '>= 2.0.0'
 end

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe GoogleVisualr::DataTable do
 
   let(:dt) { GoogleVisualr::DataTable.new }
@@ -321,7 +319,7 @@ describe GoogleVisualr::DataTable do
 
         it "returns a valid json string when there are apostrophes in v or f" do
           cell = GoogleVisualr::DataTable::Cell.new( { :v => "I'm \"Winston\"", :f => "Winston<div style='color:red; font-style:italic'>Nice Guy</div>" } )
-          cell.to_js.should == "{v: \"I'm \\\"Winston\\\"\", f: \"Winston<div style='color:red; font-style:italic'>Nice Guy</div>\"}"
+          cell.to_js.should == "{v: \"I'm \\\"Winston\\\"\", f: \"Winston\\u003cdiv style='color:red; font-style:italic'\\u003eNice Guy\\u003c/div\\u003e\"}"
         end
       end
     end
