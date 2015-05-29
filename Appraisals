@@ -1,15 +1,17 @@
 appraise "3.2" do
-  gem "rails", "~> 3.2.15"
+  group :development do
+    gem "rails", "~> 3.2.21"
+  end
 end
 
 appraise "4.0" do
-  gem "rails", "~> 4.0.0"
+  group :development do
+    gem "rails", "~> 4.0.13"
+  end
 end
 
 appraise "4.1" do
-  gem "rails", "~> 4.1.0"
-end
-
-appraise "4.2" do
-  gem "rails", "~> 4.2.0"
+  group :development do
+    gem "rails", "~> 4.1.10"
+  end
 end

@@ -1,8 +1,15 @@
-rvm:
-  - 1.9.3
-  - 2.0.0
-  - 2.1
+language: ruby
+bundler_args: --retry=3 --jobs=3 --no-deployment
+cache: bundler
+sudo: false
 
-branches:
-  only:
-    - master
+rvm:
+  - 2.0.0
+  - 2.1.6
+  - 2.2.2
+
+gemfile:
+  - gemfiles/3.2.gemfile
+  - gemfiles/4.0.gemfile
+  - gemfiles/4.1.gemfile
+  - Gemfile
