@@ -3,3 +3,4 @@ pkg/*
 .bundle
 .idea
 vendor/bundle
+/Gemfile.lock
