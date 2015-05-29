@@ -1,4 +1,10 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-# Specify your gem's dependencies in gv.gemspec
 gemspec
+
+group :development do
+  gem "bundler", ">= 1.3.5"
+  gem "rspec", "~> 2.99.0"
+  gem "appraisal"
+  gem "rails", "~> 4.2.1"
+end
