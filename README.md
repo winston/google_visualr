@@ -88,66 +88,6 @@ Feel free to fork the project, make improvements or bug fixes and submit pull re
 
 I would like to collect some data about who's using this Gem. [Please drop me a line](mailto:winstonyw+googlevisualr@gmail.com).
 
-## Change Log
-
-<em>Version 2.4.0</em>
-
-* [Pull Request 75](https://github.com/winston/google_visualr/pull/75) Add Histogram chart.
-
-<em>Version 2.3.0</em>
-
-* [Issue 69](https://github.com/winston/google_visualr/pull/69) Support generating chart Javascript without `<script>` tag
-* Split `base_chart#to_js` into 3 methods - `to_js`, `load_js` and `draw_js` which can be used on their own.
-
-<em>Version 2.2.0</em>
-
-* [Issue 64](https://github.com/winston/google_visualr/pull/64) Works with Turbolinks.
-* [Issue 65](https://github.com/winston/google_visualr/pull/65) Add InteractiveTimeline chart.
-
-<em>Version 2.1.9</em>
-
-* [Issue 61](https://github.com/winston/google_visualr/issues/45) Add MIT license to gemspec.
-
-<em>Version 2.1.8</em>
-
-* [Issue 45](https://github.com/winston/google_visualr/issues/45) Support for redrawing chart from JS.
-
-<em>Version 2.1.7</em>
-
-* [Issue 56](https://github.com/winston/google_visualr/issues/56) Typecast to proper JSON strings.
-
-<em>Version 2.1.6</em>
-
-* [Issue 54](https://github.com/winston/google_visualr/issues/54) Allow apostrophes in labels.
-* [Pull Request 55](https://github.com/winston/google_visualr/pull/55) Added support to accept BigDecimal as number.
-
-<em>Version 2.1.5</em>
-
-* [Pull Request 48](https://github.com/winston/google_visualr/pull/48) Fixed bug with Listener event registration.
-
-<em>Version 2.1.4</em>
-
-* [Pull Request 39](https://github.com/winston/google_visualr/pull/39) Added ability to use Listeners.
-* [Pull Request 40](https://github.com/winston/google_visualr/pull/40) Allowed decoupling of class name and chart name.
-
-<em>Version 2.1.3</em>
-
-* Added support for Bubble Chart.
-* [Pull Request 37](https://github.com/winston/google_visualr/pull/37) Added support for Stepped Area Chart.
-
-<em>Version 2.1.2</em>
-
-* [Pull Request 28](https://github.com/winston/google_visualr/pull/28) Removed InstanceMethods as it's deprecated in Rails 3.2.x.
-* [Pull Request 26](https://github.com/winston/google_visualr/pull/26) Added 3 more image charts and #uri method to all image charts.
-
-<em>Version 2.1.1</em>
-
-* Added support for `role` and `pattern` attributes in `#new_column` and `#new_columns` methods.
-
-<em>Version 2.1.0</em>
-
-* Added `#render_chart` as a helper method in Rails views.
-
 ## Author
 
 GoogleVisualr is maintained by [Winston Teo](mailto:winstonyw+googlevisualr@gmail.com).
