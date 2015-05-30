@@ -1,5 +1,9 @@
 ## Change Log
 
+### Unreleased
+
+* [Pull Request 72](https://github.com/winston/google_visualr/pull/72) Add ability to specify version of library.
+
 ### Version 2.4.0
 
 * [Pull Request 75](https://github.com/winston/google_visualr/pull/75) Add Histogram chart.
