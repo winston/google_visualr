@@ -4,7 +4,7 @@ module GoogleVisualr
     include GoogleVisualr::Packages
     include GoogleVisualr::ParamHelpers
 
-    DEFAULT_VERSION = "1".freeze
+    DEFAULT_VERSION = "1.0".freeze
 
     attr_accessor :data_table, :listeners, :version
 
