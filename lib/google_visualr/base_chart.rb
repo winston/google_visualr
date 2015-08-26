@@ -20,7 +20,7 @@ module GoogleVisualr
     end
 
     def class_name
-      self.class.to_s.split('::').last
+      self.class.to_s.split("::").last
     end
 
     def chart_class

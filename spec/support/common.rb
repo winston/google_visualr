@@ -42,7 +42,7 @@ def base_chart_with_listener_js(div_class="div_class")
   js << "\n</script>"
 end
 
-def material_chart(div_class="div_class")
+def material_chart(div_class = "div_class")
   js =  "\n<script type='text/javascript'>"
   js << "\n  google.load('visualization','1.0', {packages: ['basechart'], callback: draw_#{div_class}});"
   js << "\n  function draw_#{div_class}() {"
