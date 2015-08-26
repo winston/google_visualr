@@ -1,15 +1,5 @@
 module GoogleVisualr
-
   module Packages
-
-    def package_name
-      self.class.to_s.split("::").last.downcase
-    end
-
-    def class_name
-      self.class.to_s.split('::').last
-    end
-
     module CoreChart
       def package_name
         "corechart"
@@ -105,5 +95,4 @@ module GoogleVisualr
       end
     end
   end
-
 end
