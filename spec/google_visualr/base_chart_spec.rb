@@ -15,9 +15,18 @@ describe GoogleVisualr::BaseChart do
       @chart.options.should    == { "legend" => "Test Chart", "width" => 800, "is3D" => true }
     end
 
-    it "accepts material and version attributes" do
-      @chart = GoogleVisualr::BaseChart.new(@dt, { :version => "1.1", :material => true })
+    it "accepts version attribute" do
+      @chart = GoogleVisualr::BaseChart.new(@dt, version: "1.1")
       @chart.version.should    == "1.1"
+    end
+
+    it "accepts language attribute" do
+      @chart = GoogleVisualr::BaseChart.new(@dt, language: "ja")
+      @chart.language.should    == "ja"
+    end
+
+    it "accepts material attribute" do
+      @chart = GoogleVisualr::BaseChart.new(@dt, material: true)
       @chart.material.should   == true
     end
   end
@@ -87,6 +96,13 @@ describe GoogleVisualr::BaseChart do
       js = @chart.to_js("body")
       js.should == base_chart_js("body")
       js.should include("<script")
+    end
+
+    it "generates JS of a different locale" do
+      @chart.language = "ja"
+
+      js = @chart.to_js("body")
+      js.should == base_chart_js("body", "ja")
     end
 
     it "generates JS with listeners" do
