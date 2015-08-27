@@ -1,22 +1,43 @@
 module GoogleVisualr
 
   class BaseChart
-    include GoogleVisualr::Packages
     include GoogleVisualr::ParamHelpers
 
     DEFAULT_VERSION = "1.0".freeze
 
-    attr_accessor :data_table, :listeners, :version
+    attr_accessor :data_table, :listeners, :version, :language, :material
 
     def initialize(data_table, options={})
-      @data_table = data_table
-      self.version = options.delete(:version) || DEFAULT_VERSION
+      @data_table  = data_table
+      @listeners   = []
+      @version     = options.delete(:version)  || DEFAULT_VERSION
+      @language    = options.delete(:language) || "en"
+      @material    = options.delete(:material) || false
       send(:options=, options)
-      @listeners  = []
+    end
+
+    def package_name
+      self.class.to_s.split("::").last.downcase
+    end
+
+    def class_name
+      self.class.to_s.split("::").last
+    end
+
+    def chart_class
+      if material
+        "charts"
+      else
+        "visualization"
+      end
     end
 
     def chart_name
-      class_name
+      if material
+        class_name.gsub!("Chart", "")
+      else
+        class_name
+      end
     end
 
     def chart_function_name(element_id)
@@ -53,7 +74,7 @@ module GoogleVisualr
     # Parameters:
     #  *div_id            [Required] The ID of the DIV element that the Google Chart should be rendered in.
     def load_js(element_id)
-      "\n  google.load('visualization','#{version}', {packages: ['#{package_name}'], callback: #{chart_function_name(element_id)}});"
+      "\n  google.load('visualization', '#{version}', {packages: ['#{package_name}'], language: '#{language}', callback: #{chart_function_name(element_id)}});"
     end
 
     # Generates JavaScript function for rendering the chart.
@@ -64,7 +85,7 @@ module GoogleVisualr
       js = ""
       js << "\n  function #{chart_function_name(element_id)}() {"
       js << "\n    #{@data_table.to_js}"
-      js << "\n    var chart = new google.visualization.#{chart_name}(document.getElementById('#{element_id}'));"
+      js << "\n    var chart = new google.#{chart_class}.#{chart_name}(document.getElementById('#{element_id}'));"
       @listeners.each do |listener|
         js << "\n    google.visualization.events.addListener(chart, '#{listener[:event]}', #{listener[:callback]});"
       end
