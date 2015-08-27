@@ -34,6 +34,11 @@ require "#{lib_path}/google_visualr/interactive/tree_map"
 
 ## Additional
 require "#{lib_path}/google_visualr/interactive/annotated_time_line"
+require "#{lib_path}/google_visualr/interactive/annotation_chart"
+require "#{lib_path}/google_visualr/interactive/calendar"
+require "#{lib_path}/google_visualr/interactive/gantt_chart"
+require "#{lib_path}/google_visualr/interactive/sankey"
+require "#{lib_path}/google_visualr/interactive/word_tree"
 require "#{lib_path}/google_visualr/interactive/intensity_map"
 require "#{lib_path}/google_visualr/interactive/map"
 require "#{lib_path}/google_visualr/interactive/motion_chart"
