@@ -71,7 +71,7 @@ In your Rails view, render the Google chart.
 	<div id='chart'></div>
 	<%= render_chart(@chart, 'chart') %>
 
-## Chart Initializer - `GoogleVisualr::<ChartName>.new`
+## Chart Initializer
 
 The initializer of `GoogleVisualr::<ChartName>` takes in two parameters: `data_table` and `options`.
 
@@ -81,7 +81,7 @@ The initializer of `GoogleVisualr::<ChartName>` takes in two parameters: `data_t
 
 ### `options`
 
-`options` is a hash of configuration options for the Google chart (e.g. width, height, colors etc) 
+`options` is a hash of configuration options for the Google chart (e.g. width, height, colors etc). 
 
 The available configuration options are exactly the same as those specified in Google's API Docs.
 
