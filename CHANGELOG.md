@@ -1,5 +1,9 @@
 ## Change Log
 
+### Version 2.5.1
+
+* [Pull Request 98](https://github.com/winston/google_visualr/pull/97) Do not force `en` as the default language.
+
 ### Version 2.5.0
 
 * [Pull Request 97](https://github.com/winston/google_visualr/pull/97) Add new Google charts.
