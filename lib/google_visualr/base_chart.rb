@@ -11,7 +11,7 @@ module GoogleVisualr
       @data_table  = data_table
       @listeners   = []
       @version     = options.delete(:version)  || DEFAULT_VERSION
-      @language    = options.delete(:language) || "en"
+      @language    = options.delete(:language)
       @material    = options.delete(:material) || false
       send(:options=, options)
     end
@@ -74,7 +74,9 @@ module GoogleVisualr
     # Parameters:
     #  *div_id            [Required] The ID of the DIV element that the Google Chart should be rendered in.
     def load_js(element_id)
-      "\n  google.load('visualization', '#{version}', {packages: ['#{package_name}'], language: '#{language}', callback: #{chart_function_name(element_id)}});"
+      language_opt = ", language: '#{language}'" if language
+
+      "\n  google.load('visualization', '#{version}', {packages: ['#{package_name}']#{language_opt}, callback: #{chart_function_name(element_id)}});"
     end
 
     # Generates JavaScript function for rendering the chart.

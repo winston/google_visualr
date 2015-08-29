@@ -13,6 +13,7 @@ describe GoogleVisualr::BaseChart do
       @chart.version.should    == GoogleVisualr::BaseChart::DEFAULT_VERSION
       @chart.material.should   == false
       @chart.options.should    == { "legend" => "Test Chart", "width" => 800, "is3D" => true }
+      @chart.language.should   == nil
     end
 
     it "accepts version attribute" do
@@ -96,6 +97,11 @@ describe GoogleVisualr::BaseChart do
       js = @chart.to_js("body")
       js.should == base_chart_js("body")
       js.should include("<script")
+    end
+
+    it "generates JS without any locale as default" do
+      js = @chart.to_js("body")
+      js.should == base_chart_js("body", nil)
     end
 
     it "generates JS of a different locale" do
