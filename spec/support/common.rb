@@ -49,7 +49,7 @@ def material_chart(div_class = "div_class")
   js << "\n  google.load('visualization', '1.0', {packages: ['basechart'], callback: draw_#{div_class}});"
   js << "\n  function draw_#{div_class}() {"
   js << "\n    var data_table = new google.visualization.DataTable();data_table.addColumn({\"type\":\"string\",\"label\":\"Year\"});data_table.addColumn({\"type\":\"number\",\"label\":\"Sales\"});data_table.addColumn({\"type\":\"number\",\"label\":\"Expenses\"});data_table.addRow([{v: \"2004\"}, {v: 1000}, {v: 400}]);data_table.addRow([{v: \"2005\"}, {v: 1200}, {v: 450}]);data_table.addRow([{v: \"2006\"}, {v: 1500}, {v: 600}]);data_table.addRow([{v: \"2007\"}, {v: 800}, {v: 500}]);\n    var chart = new google.charts.Base(document.getElementById('#{div_class}'));"
-  js << "\n    chart.draw(data_table, {legend: \"Test Chart\", width: 800, is3D: true});"
+  js << "\n    chart.draw(data_table, google.charts.Line.convertOptions({legend: \"Test Chart\", width: 800, is3D: true}));"
   js << "\n  };"
   js << "\n</script>"
 end

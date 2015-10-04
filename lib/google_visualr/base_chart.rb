@@ -91,7 +91,11 @@ module GoogleVisualr
       @listeners.each do |listener|
         js << "\n    google.visualization.events.addListener(chart, '#{listener[:event]}', #{listener[:callback]});"
       end
-      js << "\n    chart.draw(data_table, #{js_parameters(@options)});"
+      if @material
+        js << "\n    chart.draw(data_table, google.charts.Line.convertOptions(#{js_parameters(@options)}));"
+      else
+        js << "\n    chart.draw(data_table, #{js_parameters(@options)});"
+      end
       js << "\n  };"
       js
     end
