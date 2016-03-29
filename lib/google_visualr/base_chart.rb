@@ -97,6 +97,7 @@ module GoogleVisualr
       end
       js << "\n    options = #{js_parameters(@options)}"
       js << "\n    chart.draw(data_table, options);"
+      js << "\n    window.formatter_#{global_name(element_id)} = formatter;"
       js << "\n    window.options_#{global_name(element_id)} = options;"
       js << "\n    window.data_table_#{global_name(element_id)} = data_table;"
       js << "\n    window.#{global_name(element_id)} = chart;"
