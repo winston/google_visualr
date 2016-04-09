@@ -76,7 +76,7 @@ module GoogleVisualr
     def load_js(element_id)
       language_opt = ", language: '#{language}'" if language
 
-      "\n  google.load('visualization', '#{version}', {packages: ['#{package_name}']#{language_opt}, callback: #{chart_function_name(element_id)}});"
+      "\n  google.charts.load('visualization', '#{version}', {packages: ['#{package_name}']#{language_opt}, callback: #{chart_function_name(element_id)}});"
     end
 
     # Generates JavaScript function for rendering the chart.

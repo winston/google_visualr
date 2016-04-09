@@ -2,7 +2,7 @@ module GoogleVisualr
   module Interactive
 
     # https://developers.google.com/chart/interactive/docs/gallery/ganttchart
-    class GanttChart < BaseChart
+    class Gantt < BaseChart
 
       def package_name
         "gantt"
