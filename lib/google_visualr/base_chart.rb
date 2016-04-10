@@ -3,7 +3,7 @@ module GoogleVisualr
   class BaseChart
     include GoogleVisualr::ParamHelpers
 
-    DEFAULT_VERSION = "1.0".freeze
+    DEFAULT_VERSION = "current".freeze
 
     attr_accessor :data_table, :listeners, :version, :language, :material
 
@@ -76,7 +76,7 @@ module GoogleVisualr
     def load_js(element_id)
       language_opt = ", language: '#{language}'" if language
 
-      "\n  google.charts.load('visualization', '#{version}', {packages: ['#{package_name}']#{language_opt}, callback: #{chart_function_name(element_id)}});"
+      "\n  google.charts.load('#{version}', {packages: ['#{package_name}']#{language_opt}, callback: #{chart_function_name(element_id)}});"
     end
 
     # Generates JavaScript function for rendering the chart.
