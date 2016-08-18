@@ -13,6 +13,7 @@ module GoogleVisualr
       @version     = options.delete(:version)  || DEFAULT_VERSION
       @language    = options.delete(:language)
       @material    = options.delete(:material) || false
+      @packages    = ['corechart']
       send(:options=, options)
     end
 
@@ -62,9 +63,20 @@ module GoogleVisualr
     #  *div_id            [Required] The ID of the DIV element that the Google Chart should be rendered in.
     def to_js(element_id)
       js =  ""
-      js << "\n<script type='text/javascript'>"
+      js << "\n<script type=\"text/javascript\">"
       js << callback_js(element_id)
       js << draw_js(element_id)
+      js << "\n</script>"
+      js
+    end
+
+    def loader_js
+      language_opt = ", language: '#{@language}'" unless @language.nil?
+      packages_list = @packages.nil? ? 'corechart' : @packages.join("','")
+      packages_opt = "'packages': ['#{packages_list}']"
+
+      js =  "\n<script type=\"text/javascript\">"
+      js << "\n  google.charts.load('current', {#{packages_opt}#{language_opt}});"
       js << "\n</script>"
       js
     end
@@ -74,9 +86,6 @@ module GoogleVisualr
     # Parameters:
     #  *div_id            [Required] The ID of the DIV element that the Google Chart should be rendered in.
     def callback_js(element_id)
-      # language_opt = ", language: '#{language}'" if language
-
-      # "\n  google.charts.load('#{version}', {packages: ['#{package_name}']#{language_opt}, callback: #{chart_function_name(element_id)}});"
       "\n  google.charts.setOnLoadCallback(#{chart_function_name(element_id)});"
     end
 

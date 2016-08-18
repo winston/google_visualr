@@ -94,20 +94,23 @@ describe GoogleVisualr::BaseChart do
 
   describe "#to_js" do
     it "generates JS" do
-      js = @chart.to_js("body")
+      js = @chart.loader_js
+      js << @chart.to_js("body")
       js.should == base_chart_js("body")
       js.should include("<script")
     end
 
     it "generates JS without any locale as default" do
-      js = @chart.to_js("body")
+      js = @chart.loader_js
+      js << @chart.to_js("body")
       js.should == base_chart_js("body", nil)
     end
 
     it "generates JS of a different locale" do
       @chart.language = "ja"
 
-      js = @chart.to_js("body")
+      js = @chart.loader_js
+      js << @chart.to_js("body")
       js.should == base_chart_js("body", "ja")
     end
 
