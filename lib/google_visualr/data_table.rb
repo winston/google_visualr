@@ -200,26 +200,63 @@ module GoogleVisualr
     end
 
     # Returns the JavaScript equivalent for this data_table instance.
-    def to_js
-      js = "var data_table = new google.visualization.DataTable();"
+    def to_js(remote_url = '')
+      remote_data = remote_url.empty? ? '' : 'var jsonData = $.ajax({ ' \
+                                         "url: \"#{remote_url}\", " \
+                                         'dataType: "json", ' \
+                                         'async: false ' \
+                                         '}).responseText; '
+      js = "#{remote_data}var data_table = new google.visualization.DataTable(#{remote_url.empty? ? '' : 'jsonData'});"
+
+      if remote_url.empty?
+        @cols.each do |column|
+          js << "data_table.addColumn("
+          js << display(column)
+          js << ");"
+        end
+
+        @rows.each do |row|
+          js << "data_table.addRow("
+          js << "[#{row.map(&:to_js).join(", ")}]" unless row.empty?
+          js << ");"
+        end
+
+        if @formatters
+          @formatters.each do |formatter|
+            js << formatter.to_js
+          end
+        end
+      end
+
+      js
+    end
+
+    # Returns the JavaScript equivalent for this data_table instance.
+    def to_controller_js()
+      js = '{ "cols": ['
 
       @cols.each do |column|
-        js << "data_table.addColumn("
         js << display(column)
-        js << ");"
+        js << ', ' unless column == @cols.last
       end
+      js << '], "rows": ['
 
       @rows.each do |row|
-        js << "data_table.addRow("
-        js << "[#{row.map(&:to_js).join(", ")}]" unless row.empty?
-        js << ");"
+        js << '{"c": '
+        js << "[#{row.map(&:to_js).join(', ')}]" unless row.empty?
+        js << '}'
+        js << ', ' unless row == @rows.last
       end
+      js << ']'
 
       if @formatters
+        js << ', "p": { '
         @formatters.each do |formatter|
           js << formatter.to_js
         end
+        js << ' }'
       end
+      js << ' }'
 
       js
     end
@@ -279,9 +316,9 @@ module GoogleVisualr
         return "null" if @v.nil? && @f.nil? && @p.nil?
 
         js  = "{"
-        js << "v: #{typecast(@v, @type)}"
-        js << ", f: #{typecast(@f)}"  unless @f.nil?
-        js << ", p: #{typecast(@p)}"  unless @p.nil?
+        js << "\"v\": #{typecast(@v, @type)}"
+        js << ", \"f\": #{typecast(@f)}"  unless @f.nil?
+        js << ", \"p\": #{typecast(@p)}"  unless @p.nil?
         js << "}"
 
         js

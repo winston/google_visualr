@@ -61,11 +61,11 @@ module GoogleVisualr
     #
     # Parameters:
     #  *div_id            [Required] The ID of the DIV element that the Google Chart should be rendered in.
-    def to_js(element_id)
+    def to_js(element_id, remote_url = '')
       js =  ""
       js << "\n<script type=\"text/javascript\">"
       js << callback_js(element_id)
-      js << draw_js(element_id)
+      js << draw_js(element_id, remote_url)
       js << "\n</script>"
       js
     end
@@ -93,10 +93,10 @@ module GoogleVisualr
     #
     # Parameters:
     #  *div_id            [Required] The ID of the DIV element that the Google Chart should be rendered in.
-    def draw_js(element_id)
+    def draw_js(element_id, remote_url = '')
       js = ""
       js << "\n  function #{chart_function_name(element_id)}() {"
-      js << "\n    #{@data_table.to_js}"
+      js << "\n    #{@data_table.to_js(remote_url)}"
       js << "\n    var chart = new google.#{chart_class}.#{chart_name}(document.getElementById('#{element_id}'));"
       @listeners.each do |listener|
         js << "\n    google.visualization.events.addListener(chart, '#{listener[:event]}', #{listener[:callback]});"

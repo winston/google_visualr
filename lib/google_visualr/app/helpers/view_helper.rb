@@ -12,7 +12,7 @@ module GoogleVisualr
       def add_chart(chart, dom, options={})
         script_tag = options.fetch(:script_tag) { true }
         if script_tag
-          chart.to_js(dom).html_safe
+          chart.to_js(dom, options.fetch(:remote, '')).html_safe
         else
           html = ''
           html << chart.callback_js(dom)
