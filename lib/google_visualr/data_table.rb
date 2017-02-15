@@ -78,18 +78,19 @@ module GoogleVisualr
     #   * id              [Optional] A unique (basic alphanumeric) string ID of the column. Be careful not to choose a JavaScript keyword. Example: id:'col_1'
     #   * role            [Optional] A string value that describes the purpose of the data in that column. Example, a column might hold data describing tooltip text, data point annotations, or uncertainty indicators.
     #   * pattern         [Optional] A number (or date) format string specifying how to display the column value; used in conjunction with role.
-    def new_column(type, label=nil, id =nil, role=nil, pattern=nil)
-      column = { :type => type, :label => label, :id => id, :role => role, :pattern => pattern }.reject { |key, value| value.nil? }
+    #   * p               [Optional] A hash of custom values applied to the cell. These values can be of any type that responds to #to_json. If your visualization supports any cell-level properties, it will describe them; otherwise, this property will be ignored.
+    def new_column(type, label=nil, id =nil, role=nil, pattern=nil, p=nil)
+      column = { :type => type, :label => label, :id => id, :role => role, :pattern => pattern, :p => p }.reject { |key, value| value.nil? }
       @cols << column
     end
 
     # Adds multiple columns to the data_table.
     #
     # Parameters:
-    #   * columns         [Required] An array of column objects {:type, :label, :id, :role, :pattern}. Calls new_column for each column object.
+    #   * columns         [Required] An array of column objects {:type, :label, :id, :role, :pattern, :p}. Calls new_column for each column object.
     def new_columns(columns)
       columns.each do |column|
-        new_column(column[:type], column[:label], column[:id], column[:role], column[:pattern])
+        new_column(column[:type], column[:label], column[:id], column[:role], column[:pattern], column[:p])
       end
     end
 
