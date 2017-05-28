@@ -8,7 +8,7 @@ GoogleVisualr, is a wrapper around the [Google Charts](https://developers.google
 
 It's good for any Ruby (Rails/Sinatra) setup, and you can handle the entire charting logic in Ruby.
 
-Please refer to the [GoogleVisualr API Reference site](http://googlevisualr.heroku.com/) for a complete list of Google charts that you can create with GoogleVisualr.
+Please refer to the [GoogleVisualr API Reference site](http://googlevisualr.herokuapp.com/) for a complete list of Google charts that you can create with GoogleVisualr.
 
 ## tl:dr
 
@@ -34,7 +34,7 @@ Assuming you are on Rails 3/4, include the gem in your Gemfile.
 
 This is a basic implementation of `GoogleVisualr::DataTable` and `GoogleVisualr::AreaChart`.
 
-For detailed documentation, please refer to the [GoogleVisualr API Reference](http://googlevisualr.heroku.com/) or [read the source](https://github.com/winston/google_visualr_app).
+For detailed documentation, please refer to the [GoogleVisualr API Reference](http://googlevisualr.herokuapp.com/) or [read the source](https://github.com/winston/google_visualr_app).
 
 ---
 
