@@ -1,4 +1,3 @@
-require 'byebug'
 module GoogleVisualr
 
   # generate initializing code

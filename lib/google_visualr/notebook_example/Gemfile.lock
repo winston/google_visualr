@@ -1,0 +1,35 @@
+PATH
+  remote: ../../..
+  specs:
+    google_visualr (2.5.1)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    bond (0.5.1)
+    data_uri (0.1.0)
+    ffi (1.9.18)
+    ffi-rzmq (2.0.5)
+      ffi-rzmq-core (>= 1.0.6)
+    ffi-rzmq-core (1.0.6)
+      ffi
+    iruby (0.3)
+      bond (~> 0.5)
+      data_uri (~> 0.1)
+      mimemagic (~> 0.3)
+      multi_json (~> 1.11)
+    mimemagic (0.3.2)
+    multi_json (1.12.1)
+    rbczmq (1.7.9)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  ffi-rzmq
+  google_visualr!
+  iruby
+  rbczmq
+
+BUNDLED WITH
+   1.15.1

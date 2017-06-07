@@ -4,9 +4,9 @@ Dir.foreach(js_dir) do |item|
   next if item == '.' or item == '..'
   contents = IO.read(File.join(js_dir, item), mode: 'r:UTF-8')
 %>
-  /* BEGIN <%= name %>.js */
+  /* BEGIN <%= item %>.js */
 <%= contents %>
-  /* END <%= name %>.js */
+  /* END <%= item %>.js */
 <% end %>
 
 var event = document.createEvent("HTMLEvents");
