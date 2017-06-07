@@ -1,0 +1,15 @@
+
+<%
+Dir.foreach(js_dir) do |item|
+  next if item == '.' or item == '..'
+  contents = IO.read(File.join(js_dir, item), mode: 'r:UTF-8')
+%>
+  /* BEGIN <%= name %>.js */
+<%= contents %>
+  /* END <%= name %>.js */
+<% end %>
+
+var event = document.createEvent("HTMLEvents");
+event.initEvent("load_googlecharts", false, false);
+window.dispatchEvent(event);
+console.log("Finish loading google chart js");
