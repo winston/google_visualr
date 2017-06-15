@@ -58,6 +58,11 @@ describe GoogleVisualr::DataTable do
       dt.new_column('string', nil, nil, 'interval', 'pattern')
       dt.cols.first.should == {:type => 'string', :role => 'interval', :pattern => 'pattern'}
     end
+
+    it "initializes a new column with custom 'p' param" do
+      dt.new_column('string', nil, nil, 'role', nil, {:my_property => 'value'})
+      dt.cols.first.should == {:type => 'string', :role => 'role', :p => {:my_property => 'value'}}
+    end
   end
 
   describe "new_columns" do
@@ -65,13 +70,15 @@ describe GoogleVisualr::DataTable do
       columns = [
         {:id => 'A', :label => 'NEW A', :type => 'string'},
         {:id => 'B', :label => 'NEW B', :type => 'string'},
-        {:type => 'string', :role => 'interval', :pattern => 'pattern'}
+        {:type => 'string', :role => 'interval', :pattern => 'pattern'},
+        {:type => 'string', :role => 'tooltip', :p => {:html => true}}
       ]
 
       dt.new_columns(columns)
       dt.cols[0].should == columns[0]
       dt.cols[1].should == columns[1]
       dt.cols[2].should == columns[2]
+      dt.cols[3].should == columns[3]
     end
   end
 
