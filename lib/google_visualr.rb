@@ -2,6 +2,8 @@ lib_path = File.dirname(__FILE__)
 
 # Common
 require "#{lib_path}/google_visualr/param_helpers"
+require "#{lib_path}/google_visualr/display"
+require "#{lib_path}/google_visualr/iruby_notebook"
 
 # Base Classes
 require "#{lib_path}/google_visualr/data_table"

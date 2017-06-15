@@ -2,6 +2,7 @@ module GoogleVisualr
 
   class BaseChart
     include GoogleVisualr::ParamHelpers
+    include GoogleVisualr::Display
 
     DEFAULT_VERSION = "1.0".freeze
 
@@ -95,6 +96,15 @@ module GoogleVisualr
       js << "\n  };"
       js
     end
+
+    def show_in_html(dom=nil)
+      show_html(self, dom)
+    end
+
+    def show_in_iruby(dom=nil)
+      show_iruby(self, dom)
+    end
+
   end
 
 end

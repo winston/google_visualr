@@ -1,0 +1,8 @@
+source "http://rubygems.org"
+
+# iruby dependencies
+gem 'rbczmq'
+gem 'ffi-rzmq'
+gem 'iruby'
+
+gemspec  :path => '../../../'

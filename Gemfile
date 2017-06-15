@@ -7,4 +7,7 @@ group :development do
   gem "rspec", "~> 2.99.0"
   gem "appraisal"
   gem "rails", "~> 4.2.1"
+  gem 'json'
+  gem 'byebug'
+  gem 'iruby'
 end
