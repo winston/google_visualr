@@ -44,6 +44,10 @@ module GoogleVisualr
       "draw_#{element_id.gsub('-', '_')}"
     end
 
+    def global_name(element_id)
+      "#{element_id.gsub('-', '_')}"
+    end
+
     def options
       @options
     end
@@ -91,7 +95,12 @@ module GoogleVisualr
       @listeners.each do |listener|
         js << "\n    google.visualization.events.addListener(chart, '#{listener[:event]}', #{listener[:callback]});"
       end
-      js << "\n    chart.draw(data_table, #{js_parameters(@options)});"
+      js << "\n    options = #{js_parameters(@options)}"
+      js << "\n    chart.draw(data_table, options);"
+      js << "\n    window.formatter_#{global_name(element_id)} = formatter;"
+      js << "\n    window.options_#{global_name(element_id)} = options;"
+      js << "\n    window.data_table_#{global_name(element_id)} = data_table;"
+      js << "\n    window.#{global_name(element_id)} = chart;"
       js << "\n  };"
       js
     end
