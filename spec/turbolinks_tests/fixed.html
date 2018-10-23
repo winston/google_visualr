@@ -7,7 +7,7 @@
   <a href="index.html">home</a>
   <div id="chart"> </div>
 <script>
-  google.load('visualization','1', {packages: ['corechart'], callback: draw_chart});
+google.charts.load('visualization','1', {packages: ['corechart'], callback: draw_chart});
   function draw_chart() {
     var data_table = new google.visualization.DataTable();data_table.addColumn({"type":"string","label":"Employee"});data_table.addColumn({"type":"number","label":"Base Hourly"});data_table.addRow([{v: "Mike Ross"}, {v: 8}]);data_table.addRow([{v: "Moe Syzlack"}, {v: 12}]);
     var chart = new google.visualization.BarChart(document.getElementById('chart'));
