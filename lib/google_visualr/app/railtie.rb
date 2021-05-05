@@ -7,7 +7,7 @@ module GoogleVisualr
     class Railtie < ::Rails::Railtie
 
       initializer "google_visualr" do
-        ActiveSupport.on_load(:action_controller) do
+        ActiveSupport.on_load(:action_controller_base) do
           include GoogleVisualr::Rails::ViewHelper
         end
       end
